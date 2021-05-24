@@ -1,0 +1,40 @@
+{% extends 'baseAr.html.twig' %}
+
+{% block body %}
+
+    <!--================Categories Banner Area =================-->
+    <section class="solid_banner_area">
+        <div class="container">
+            <div class="solid_banner_inner">
+                <h3>Confirmation</h3>
+                <ul>
+                    <li><a href="{{ path('home', { locale: 'ar' }) }}">الصفحة الرئيسية</a></li>
+                    <li><a href="">التأكيد</a></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <!--================End Categories Banner Area =================-->
+
+    <!--================login Area =================-->
+    <section class="login_area p-t-100 p-b-100">
+        <div class="container">
+            <div class="login_inner">
+                <div class="row justify-content-center">
+                    <div class="col-md-4">
+                        <div class="login_title text-center"  >
+                            <h2 style="font-size: 25px;">شكرا لك!</h2>
+                            <p>تم إرسال بريد إلكتروني يحتوي على ارتباط يمكنك النقر فوقه لتأكيد حسابك</p>
+                            <a href="{{ path('home', { locale: 'ar' }) }}">&larr; اذهب إلى الصفحة الرئيسية</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================End login Area =================-->
+
+{% endblock %}
+
+
+

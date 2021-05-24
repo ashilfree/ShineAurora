@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <!-- Begin Shine AuroraBreadcrumb Area -->
+    <div class="breadcrumb-area">
+        <div class="container">
+            <div class="breadcrumb-content">
+                <h2>Other</h2>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li class="active">Login & Register</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Shine AuroraBreadcrumb Area End Here -->
+    <!-- Begin Shine AuroraLogin Register Area -->
+    <div class="hiraola-login-register_area">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-8 col-xs-12 offset-lg-2">
+                    {% for message in app.flashes('success') %}
+                        <div class="alert alert-success">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                    {{ form_start(form) }}
+                    <div class="login-form">
+                        <h4 class="login-title">Register</h4>
+                        <div class="row">
+                            <div class="col-md-6 col-12 mb--20">
+                                <label>Full Name</label>
+                                {{ form_row(form.fullName, {'attr': {'placeholder':'Full Name'}}) }}
+                            </div>
+                            <div class="col-md-6 col-12 mb--20">
+                                <label>UserName</label>
+                                {{ form_row(form.username, {'attr': {'placeholder':'User Name'}}) }}
+                            </div>
+                            <div class="col-md-12">
+                                <label>Email Address*</label>
+                                {{ form_row(form.email, {'attr': {'placeholder':'Email'}}) }}
+                            </div>
+                            <div class="col-md-12">
+                                <label>Phone*</label>
+                                {{ form_row(form.phone, {'attr': {'placeholder':'Phone'}}) }}
+                            </div>
+                            <div class="col-md-6">
+                                <label>Password</label>
+                                {{ form_row(form.password.first, {'attr': {'placeholder':'Password'}}) }}
+                            </div>
+                            <div class="col-md-6">
+                                <label>Confirm Password</label>
+                                {{ form_row(form.password.second, {'attr': {'placeholder':'Confirm Password'}}) }}
+                            </div>
+                            <div class="col-12">
+                                <button type="submit" class="hiraola-register_btn">Register</button>
+                            </div>
+                        </div>
+                    </div>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Shine AuroraLogin Register Area  End Here -->
+
+
+{% endblock %}
+

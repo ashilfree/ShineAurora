@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <!-- Begin Shine AuroraBreadcrumb Area -->
+    <div class="breadcrumb-area">
+        <div class="container">
+            <div class="breadcrumb-content">
+                <h2>Other</h2>
+                <ul>
+                    <li><a href="{{ path('home', { locale: 'en' }) }}">Home</a></li>
+                    <li class="active">Login & Register</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Shine AuroraBreadcrumb Area End Here -->
+    <!-- Begin Shine AuroraLogin Register Area -->
+    <div class="hiraola-login-register_area">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-xs-12 col-lg-8 offset-2">
+                    <!-- Login Form s-->
+                    {{ form_start(resetForm) }}
+                        <div class="login-form">
+                            <h4 class="login-title">Login</h4>
+                            <div class="row">
+                                <div class="col-md-12 col-12">
+                                    <label>New Password</label>
+                                    {{ form_row(resetForm.plainPassword.first, {'attr': {'class': 'form-control', 'placeholder':'New Password'}}) }}
+                                </div>
+                                <div class="col-12 mb--20">
+                                    <label>Confirm New Password</label>
+                                    {{ form_row(resetForm.plainPassword.second, {'attr': {'class': 'form-control', 'placeholder':'Confirm New Password'}}) }}
+                                </div>
+                                <div class="col-md-12">
+                                    <button type="submit" class="hiraola-login_btn">Reset</button>
+                                </div>
+                            </div>
+                        </div>
+                    {{ form_end(resetForm) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Shine AuroraLogin Register Area  End Here -->
+
+{% endblock %}
+
