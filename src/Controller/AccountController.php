@@ -5,11 +5,14 @@ namespace App\Controller;
 use App\Classes\Cart;
 use App\Classes\WishList;
 use App\Entity\Customer;
+use App\Entity\Newsletter;
 use App\Entity\Order;
 use App\Entity\OrderDetails;
 use App\Form\EditAddressType;
 use App\Form\EditPasswordType;
 use App\Form\EditProfileType;
+use App\Form\NewsletterType;
+use App\Repository\BannerRepository;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -41,26 +44,45 @@ class AccountController extends AbstractController
      * @var CategoryRepository
      */
     private $categoryRepository;
+    /**
+     * @var BannerRepository
+     */
+    private $bannerRepository;
 
-    public function __construct(EntityManagerInterface $entityManager, CategoryRepository $categoryRepository, Cart $cart, WishList $wishlist)
+    public function __construct(EntityManagerInterface $entityManager, CategoryRepository $categoryRepository, Cart $cart, WishList $wishlist, BannerRepository $bannerRepository)
 	{
 		$this->entityManager = $entityManager;
         $this->cart = $cart;
         $this->wishlist = $wishlist;
         $this->categoryRepository = $categoryRepository;
+        $this->bannerRepository = $bannerRepository;
     }
 
     /**
      * @Route("/{locale}/account", name="account", defaults={"locale"="en"})
      * @param $locale
+     * @param Request $request
      * @return Response
      */
-	public function index($locale): Response
+	public function index($locale, Request $request): Response
 	{
         /**
          * @var Customer $customer
          */
         $customer = $this->getUser();
+        if(!$customer)
+            return $this->redirectToRoute('home', ['locale' => $locale]);
+        $newsletter = new Newsletter();
+        $newsletterType = $this->createForm(NewsletterType::class, $newsletter);
+        $newsletterType->handleRequest($request);
+        if ($newsletterType->isSubmitted() && $newsletterType->isValid()) {
+            $this->entityManager->persist($newsletter);
+            $this->entityManager->flush();
+            unset($newsletter);
+            unset($newsletterType);
+            $newsletter = new Newsletter();
+            $newsletterType = $this->createForm(NewsletterType::class, $newsletter);
+        }
         $pendingOrders = $this->entityManager->getRepository(Order::class)->findPendingOrders($customer);
         $successOrders = $this->entityManager->getRepository(Order::class)->findSuccessOrders($customer);
         $canceledOrders = $this->entityManager->getRepository(Order::class)->findCanceledOrders($customer);
@@ -74,6 +96,8 @@ class AccountController extends AbstractController
             'successOrders' => $successOrders,
             'canceledOrders' => $canceledOrders,
             'categories' => $this->categoryRepository->findAll(),
+            'banner' => $this->bannerRepository->findOneBy(['page'=>'Account']),
+            'newsletterForm' => $newsletterType->createView(),
         ]);
 	}
 
@@ -86,6 +110,8 @@ class AccountController extends AbstractController
     public function edit($locale, Request $request): Response
     {
         $customer = $this->getUser();
+        if(!$customer)
+            return $this->redirectToRoute('home', ['locale' => $locale]);
         $pendingOrders = $this->entityManager->getRepository(Order::class)->findPendingOrders( $customer);
         $successOrders = $this->entityManager->getRepository(Order::class)->findSuccessOrders($customer);
         $canceledOrders = $this->entityManager->getRepository(Order::class)->findCanceledOrders($customer);
@@ -95,9 +121,20 @@ class AccountController extends AbstractController
             $this->entityManager->flush();
             return $this->redirectToRoute('account', ['locale' => $locale]);
         }
+        $newsletter = new Newsletter();
+        $newsletterType = $this->createForm(NewsletterType::class, $newsletter);
+        $newsletterType->handleRequest($request);
+        if ($newsletterType->isSubmitted() && $newsletterType->isValid()) {
+            $this->entityManager->persist($newsletter);
+            $this->entityManager->flush();
+            unset($newsletter);
+            unset($newsletterType);
+            $newsletter = new Newsletter();
+            $newsletterType = $this->createForm(NewsletterType::class, $newsletter);
+        }
         $path = ($locale == "en") ? 'account/edit_profile.html.twig' : 'account/edit_profileAr.html.twig';
         return $this->render($path, [
-            'page' => 'edit.account',
+            'page' => 'account',
             'form' => $form->createView(),
             'cart' => $this->cart->getFull($this->cart->get()),
             'wishlist' => $this->wishlist->getFull(),
@@ -106,20 +143,36 @@ class AccountController extends AbstractController
             'successOrders' => $successOrders,
             'canceledOrders' => $canceledOrders,
             'categories' => $this->categoryRepository->findAll(),
+            'banner' => $this->bannerRepository->findOneBy(['page'=>'Account']),
+            'newsletterForm' => $newsletterType->createView(),
         ]);
     }
 
     /**
      * @Route("/{locale}/account/my-orders", name="my.orders", defaults={"locale"="en"})
      * @param $locale
+     * @param Request $request
      * @return Response
      */
-    public function myOrders($locale): Response
+    public function myOrders($locale, Request $request): Response
     {
         /**
          * @var Customer $customer
          */
         $customer = $this->getUser();
+        if(!$customer)
+            return $this->redirectToRoute('home', ['locale' => $locale]);
+        $newsletter = new Newsletter();
+        $newsletterType = $this->createForm(NewsletterType::class, $newsletter);
+        $newsletterType->handleRequest($request);
+        if ($newsletterType->isSubmitted() && $newsletterType->isValid()) {
+            $this->entityManager->persist($newsletter);
+            $this->entityManager->flush();
+            unset($newsletter);
+            unset($newsletterType);
+            $newsletter = new Newsletter();
+            $newsletterType = $this->createForm(NewsletterType::class, $newsletter);
+        }
         $orders = $this->entityManager->getRepository(Order::class)->findBy(['customer' => $customer]);
         $pendingOrders = $this->entityManager->getRepository(Order::class)->findPendingOrders( $customer);
         $successOrders = $this->entityManager->getRepository(Order::class)->findSuccessOrders($customer);
@@ -135,6 +188,8 @@ class AccountController extends AbstractController
             'successOrders' => $successOrders,
             'canceledOrders' => $canceledOrders,
             'categories' => $this->categoryRepository->findAll(),
+            'banner' => $this->bannerRepository->findOneBy(['page'=>'Account']),
+            'newsletterForm' => $newsletterType->createView(),
         ]);
     }
 
@@ -142,21 +197,35 @@ class AccountController extends AbstractController
      * @Route("/{locale}/account/my-order-detail/{id}", name="my.order.detail", defaults={"locale"="en"})
      * @param $locale
      * @param Order $order
+     * @param Request $request
      * @return Response
      */
-    public function myOrderDetail($locale, Order $order): Response
+    public function myOrderDetail($locale, Order $order, Request $request): Response
     {
         $customer = $this->getUser();
+        if(!$customer)
+            return $this->redirectToRoute('home', ['locale' => $locale]);
         if (!$order || $order->getCustomer() != $customer){
 			return $this->redirectToRoute('home', ['locale' => $locale]);
 		}
+        $newsletter = new Newsletter();
+        $newsletterType = $this->createForm(NewsletterType::class, $newsletter);
+        $newsletterType->handleRequest($request);
+        if ($newsletterType->isSubmitted() && $newsletterType->isValid()) {
+            $this->entityManager->persist($newsletter);
+            $this->entityManager->flush();
+            unset($newsletter);
+            unset($newsletterType);
+            $newsletter = new Newsletter();
+            $newsletterType = $this->createForm(NewsletterType::class, $newsletter);
+        }
         $orderDetails = $this->entityManager->getRepository(OrderDetails::class)->findBy(['myOrder' => $order]);
         $pendingOrders = $this->entityManager->getRepository(Order::class)->findPendingOrders( $customer);
         $successOrders = $this->entityManager->getRepository(Order::class)->findSuccessOrders($customer);
         $canceledOrders = $this->entityManager->getRepository(Order::class)->findCanceledOrders($customer);
         $path = ($locale == "en") ? 'account/my_order_detail.html.twig' : 'account/my_order_detailAr.html.twig';
         return $this->render($path, [
-            'page' => 'my.order.detail',
+            'page' => 'my.order',
             'cart' => $this->cart->getFull($this->cart->get()),
             'wishlist' => $this->wishlist->getFull(),
             'order' => $order,
@@ -166,6 +235,8 @@ class AccountController extends AbstractController
             'successOrders' => $successOrders,
             'canceledOrders' => $canceledOrders,
             'categories' => $this->categoryRepository->findAll(),
+            'banner' => $this->bannerRepository->findOneBy(['page'=>'Account']),
+            'newsletterForm' => $newsletterType->createView(),
         ]);
     }
 
@@ -179,6 +250,19 @@ class AccountController extends AbstractController
     public function editPassword($locale, Request $request, UserPasswordEncoderInterface $encoder): Response
     {
         $customer = $this->getUser();
+        if(!$customer)
+            return $this->redirectToRoute('home', ['locale' => $locale]);
+        $newsletter = new Newsletter();
+        $newsletterType = $this->createForm(NewsletterType::class, $newsletter);
+        $newsletterType->handleRequest($request);
+        if ($newsletterType->isSubmitted() && $newsletterType->isValid()) {
+            $this->entityManager->persist($newsletter);
+            $this->entityManager->flush();
+            unset($newsletter);
+            unset($newsletterType);
+            $newsletter = new Newsletter();
+            $newsletterType = $this->createForm(NewsletterType::class, $newsletter);
+        }
         $pendingOrders = $this->entityManager->getRepository(Order::class)->findPendingOrders( $customer);
         $successOrders = $this->entityManager->getRepository(Order::class)->findSuccessOrders($customer);
         $canceledOrders = $this->entityManager->getRepository(Order::class)->findCanceledOrders($customer);
@@ -206,7 +290,7 @@ class AccountController extends AbstractController
         }
         $path = ($locale == "en") ? 'account/edit_password.html.twig' : 'account/edit_passwordAr.html.twig';
         return $this->render($path, [
-            'page' => 'edit.password',
+            'page' => 'account',
             'form' => $form->createView(),
             'cart' => $this->cart->getFull($this->cart->get()),
             'wishlist' => $this->wishlist->getFull(),
@@ -215,20 +299,36 @@ class AccountController extends AbstractController
             'successOrders' => $successOrders,
             'canceledOrders' => $canceledOrders,
             'categories' => $this->categoryRepository->findAll(),
+            'banner' => $this->bannerRepository->findOneBy(['page'=>'Account']),
+            'newsletterForm' => $newsletterType->createView(),
         ]);
     }
 
     /**
      * @Route("/{locale}/account/my-address", name="address", defaults={"locale"="en"})
      * @param $locale
+     * @param Request $request
      * @return Response
      */
-    public function address($locale): Response
+    public function address($locale, Request $request): Response
     {
         /**
          * @var Customer $customer
          */
         $customer = $this->getUser();
+        if(!$customer)
+            return $this->redirectToRoute('home', ['locale' => $locale]);
+        $newsletter = new Newsletter();
+        $newsletterType = $this->createForm(NewsletterType::class, $newsletter);
+        $newsletterType->handleRequest($request);
+        if ($newsletterType->isSubmitted() && $newsletterType->isValid()) {
+            $this->entityManager->persist($newsletter);
+            $this->entityManager->flush();
+            unset($newsletter);
+            unset($newsletterType);
+            $newsletter = new Newsletter();
+            $newsletterType = $this->createForm(NewsletterType::class, $newsletter);
+        }
         $pendingOrders = $this->entityManager->getRepository(Order::class)->findPendingOrders($customer);
         $successOrders = $this->entityManager->getRepository(Order::class)->findSuccessOrders($customer);
         $canceledOrders = $this->entityManager->getRepository(Order::class)->findCanceledOrders($customer);
@@ -242,6 +342,8 @@ class AccountController extends AbstractController
             'successOrders' => $successOrders,
             'canceledOrders' => $canceledOrders,
             'categories' => $this->categoryRepository->findAll(),
+            'banner' => $this->bannerRepository->findOneBy(['page'=>'Account']),
+            'newsletterForm' => $newsletterType->createView(),
         ]);
     }
 
@@ -263,9 +365,20 @@ class AccountController extends AbstractController
             $this->entityManager->flush();
             return $this->redirectToRoute('address', ['locale' => $locale]);
         }
+        $newsletter = new Newsletter();
+        $newsletterType = $this->createForm(NewsletterType::class, $newsletter);
+        $newsletterType->handleRequest($request);
+        if ($newsletterType->isSubmitted() && $newsletterType->isValid()) {
+            $this->entityManager->persist($newsletter);
+            $this->entityManager->flush();
+            unset($newsletter);
+            unset($newsletterType);
+            $newsletter = new Newsletter();
+            $newsletterType = $this->createForm(NewsletterType::class, $newsletter);
+        }
         $path = ($locale == "en") ? 'account/edit_address.html.twig' : 'account/edit_addressAr.html.twig';
         return $this->render($path, [
-            'page' => 'edit.address',
+            'page' => 'address',
             'form' => $form->createView(),
             'cart' => $this->cart->getFull($this->cart->get()),
             'wishlist' => $this->wishlist->getFull(),
@@ -274,6 +387,8 @@ class AccountController extends AbstractController
             'successOrders' => $successOrders,
             'canceledOrders' => $canceledOrders,
             'categories' => $this->categoryRepository->findAll(),
+            'banner' => $this->bannerRepository->findOneBy(['page'=>'Account']),
+            'newsletterForm' => $newsletterType->createView(),
         ]);
     }
 }

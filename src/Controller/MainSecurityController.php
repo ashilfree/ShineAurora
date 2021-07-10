@@ -6,10 +6,14 @@ use App\Classes\Cart;
 use App\Classes\Mailer;
 use App\Classes\WishList;
 use App\Entity\Customer;
+use App\Entity\Newsletter;
 use App\Form\CustomerRegisterType;
+use App\Form\NewsletterType;
+use App\Repository\BannerRepository;
 use App\Repository\CategoryRepository;
 use App\Security\CustomerConfirmationService;
 use App\Security\TokenGenerator;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,6 +44,14 @@ class MainSecurityController extends AbstractController
      * @var CategoryRepository
      */
     private $categoryRepository;
+    /**
+     * @var BannerRepository
+     */
+    private $bannerRepository;
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
 
     /**
      * MainSecurityController constructor.
@@ -47,14 +59,18 @@ class MainSecurityController extends AbstractController
      * @param Cart $cart
      * @param CategoryRepository $categoryRepository
      * @param WishList $wishlist
+     * @param BannerRepository $bannerRepository
      * @param Mailer $mailer
+     * @param EntityManagerInterface $entityManager
      */
     public function __construct(
         AuthenticationUtils $authenticationUtils,
         Cart $cart,
         CategoryRepository $categoryRepository,
         WishList $wishlist,
-        Mailer $mailer
+        BannerRepository $bannerRepository,
+        Mailer $mailer,
+        EntityManagerInterface $entityManager
     )
     {
         $this->authenticationUtils = $authenticationUtils;
@@ -64,19 +80,33 @@ class MainSecurityController extends AbstractController
         $this->cart = $cart;
         $this->wishlist = $wishlist;
         $this->categoryRepository = $categoryRepository;
+        $this->bannerRepository = $bannerRepository;
+        $this->entityManager = $entityManager;
     }
 
 
     /**
      * @Route("/{locale}/login", name="login", defaults={"locale"="en"})
      * @param $locale
+     * @param Request $request
      * @return Response
      */
     // TODO: Use Facebook and Google to Login
-    public function login($locale): Response
+    public function login($locale, Request $request): Response
     {
         $error = $this->authenticationUtils->getLastAuthenticationError();
         $lastUsername = $this->authenticationUtils->getLastUsername();
+        $newsletter = new Newsletter();
+        $newsletterType = $this->createForm(NewsletterType::class, $newsletter);
+        $newsletterType->handleRequest($request);
+        if ($newsletterType->isSubmitted() && $newsletterType->isValid()) {
+            $this->entityManager->persist($newsletter);
+            $this->entityManager->flush();
+            unset($newsletter);
+            unset($newsletterType);
+            $newsletter = new Newsletter();
+            $newsletterType = $this->createForm(NewsletterType::class, $newsletter);
+        }
         $path = ($locale == "en") ? 'authentication/login.html.twig' : 'authentication/loginAr.html.twig';
             return $this->render($path, [
                 'page' => 'login',
@@ -85,6 +115,8 @@ class MainSecurityController extends AbstractController
                 'cart' => $this->cart->getFull($this->cart->get()),
                 'wishlist' => $this->wishlist->getFull(),
                 'categories' => $this->categoryRepository->findAll(),
+                'banner' =>$this->bannerRepository->findOneBy(['page'=>'Authentication']),
+                'newsletterForm' => $newsletterType->createView(),
             ]);
     }
 
@@ -103,6 +135,17 @@ class MainSecurityController extends AbstractController
         $form = $this->createForm(CustomerRegisterType::class, $customer);
         // 2) handle the submit (will only happen on POST)
         $form->handleRequest($request);
+        $newsletter = new Newsletter();
+        $newsletterType = $this->createForm(NewsletterType::class, $newsletter);
+        $newsletterType->handleRequest($request);
+        if ($newsletterType->isSubmitted() && $newsletterType->isValid()) {
+            $this->entityManager->persist($newsletter);
+            $this->entityManager->flush();
+            unset($newsletter);
+            unset($newsletterType);
+            $newsletter = new Newsletter();
+            $newsletterType = $this->createForm(NewsletterType::class, $newsletter);
+        }
         if ($form->isSubmitted() && $form->isValid()) {
             $password = $passwordEncoder->encodePassword($customer, $customer->getPassword());
             $customer->setPassword($password);
@@ -122,6 +165,8 @@ class MainSecurityController extends AbstractController
                 'wishlist' => $this->wishlist->getFull(),
                 'page'=> 'register',
                 'categories' => $this->categoryRepository->findAll(),
+                'banner' =>$this->bannerRepository->findOneBy(['page'=>'Authentication']),
+                'newsletterForm' => $newsletterType->createView(),
             ]);
         }
         $path = ($locale == "en") ? 'authentication/register.html.twig' : 'authentication/registerAr.html.twig';
@@ -131,6 +176,8 @@ class MainSecurityController extends AbstractController
             'cart' => $this->cart->getFull($this->cart->get()),
             'wishlist' => $this->wishlist->getFull(),
             'categories' => $this->categoryRepository->findAll(),
+            'banner' =>$this->bannerRepository->findOneBy(['page'=>'Authentication']),
+            'newsletterForm' => $newsletterType->createView(),
         ]);
     }
 
@@ -154,16 +201,30 @@ class MainSecurityController extends AbstractController
     /**
      * @Route("/{locale}/confirmation", name="confirmation", defaults={"locale"="en"})
      * @param $locale
+     * @param Request $request
      * @return Response
      */
-    public function confirmation($locale): Response
+    public function confirmation($locale, Request $request): Response
     {
+        $newsletter = new Newsletter();
+        $newsletterType = $this->createForm(NewsletterType::class, $newsletter);
+        $newsletterType->handleRequest($request);
+        if ($newsletterType->isSubmitted() && $newsletterType->isValid()) {
+            $this->entityManager->persist($newsletter);
+            $this->entityManager->flush();
+            unset($newsletter);
+            unset($newsletterType);
+            $newsletter = new Newsletter();
+            $newsletterType = $this->createForm(NewsletterType::class, $newsletter);
+        }
         $path = ($locale == "en") ? 'authentication/confirmation.html.twig' : 'authentication/confirmationAr.html.twig';
         return $this->render($path, [
             'page' => 'confirmation',
             'cart' => $this->cart->getFull($this->cart->get()),
             'wishlist' => $this->wishlist->getFull(),
             'categories' => $this->categoryRepository->findAll(),
+            'banner' =>$this->bannerRepository->findOneBy(['page'=>'Authentication']),
+            'newsletterForm' => $newsletterType->createView(),
         ]);
     }
 }

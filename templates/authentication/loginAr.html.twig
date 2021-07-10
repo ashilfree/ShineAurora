@@ -2,60 +2,64 @@
 
 {% block body %}
 
-    <!--================Categories Banner Area =================-->
-    <section class="solid_banner_area">
+    <!-- Begin Shine AuroraBreadcrumb Area -->
+    <div class="breadcrumb-area" style="background-image: url({{ vich_uploader_asset(banner, 'imageFile') | imagine_filter('Extra_large') }});background-repeat:no-repeat;background-position:center;">
         <div class="container">
-            <div class="solid_banner_inner">
-                <h3>تسجيل الدخول</h3>
+            <div class="breadcrumb-content">
+                <h2>تسجيل الدخول</h2>
                 <ul>
                     <li><a href="{{ path('home', { locale: 'ar' }) }}">الصفحة الرئيسية</a></li>
-                    <li><a>تسجيل الدخول</a></li>
+                    <li class="active">تسجيل الدخول</li>
                 </ul>
             </div>
         </div>
-    </section>
-    <!--================End Categories Banner Area =================-->
-
-    <!--================login Area =================-->
-    <section class="login_area p-t-100 p-b-100">
+    </div>
+    <!-- Shine AuroraBreadcrumb Area End Here -->
+    <!-- Begin Shine AuroraLogin Register Area -->
+    <div class="hiraola-login-register_area">
         <div class="container">
-            <div class="login_inner">
-                <div class="row justify-content-center">
-                    <div class="col-md-4">
-                        <div class="login_title">
-                            <h2>تسجيل الدخول إلى حسابك</h2>
-                            <p>قم بتسجيل الدخول إلى حسابك لاكتشاف جميع الميزات الرائعة في هذا النموذج.</p>
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-xs-12 col-lg-8 ml-auto mr-auto">
+                    <!-- Login Form s-->
+                    {% if error %}
+                        <div class="alert alert-danger">
+                            {{ error.message | trans(error.messageData, 'security') }}
                         </div>
-                        {% if error %}
-                            <div class="alert alert-danger">
-                                {{ error.message | trans(error.messageData, 'security') }}
-                            </div>
-                        {% endif %}
-                        <form class="login_form row" action="{{ path('login', { locale: 'ar'}) }}" method="post">
-                            <div class="col-lg-12 form-group">
-                                <input class="form-control" type="text" name="_username" placeholder="بريد إلكتروني" value="{{ last_username }}">
-                            </div>
-                            <div class="col-lg-12 form-group">
-                                <input class="form-control" type="password" name="_password" placeholder="كلمة المرور">
-                            </div>
-                            <div class="col-lg-12 form-group">
-                                <div class="creat_account">
-                                    <a href="{{ path('register', { locale: 'ar'}) }}"><h4>إنشاء حساب...</h4></a>
+                    {% endif %}
+                    <form action="{{ path('login', { locale: 'ar'}) }}"  method="post">
+                        <div class="login-form text-right">
+                            <h4 class="login-title">تسجيل الدخول</h4>
+                            <div class="row">
+                                <div class="col-md-12 col-12">
+                                    <label>عنوان البريد الإلكتروني*</label>
+                                    <input type="email" placeholder="البريد الإلكتروني" name="_username" value="{{ last_username }}">
                                 </div>
-                                <div>
-                                    <a href="{{ path('app_forgot_password_request', { locale: 'ar'}) }}"><h4>نسيت رقمك السري ؟</h4></a>
+                                <div class="col-12 mb--20">
+                                    <label>كلمة المرور</label>
+                                    <input type="password" placeholder="كلمة المرور" name="_password">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="forgotton-password_info">
+                                        <a href="{{ path('register', { locale: 'ar'}) }}"> إنشاء حساب...</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="forgotton-password_info">
+                                        <a href="{{ path('app_forgot_password_request', { locale: 'ar'}) }}"> نسيت كلمة المرور الخاصة بـ?</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <button type="submit" class="hiraola-login_btn">تسجيل الدخول</button>
                                 </div>
                             </div>
-                            <div class="col-lg-12 form-group">
-                                <button type="submit" value="submit" class="btn update_btn w-full">دخول</button>
-                            </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
-    </section>
-    <!--================End login Area =================-->
+    </div>
+    <!-- Shine AuroraLogin Register Area  End Here -->
+
 
 {% endblock %}
 

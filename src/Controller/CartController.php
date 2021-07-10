@@ -4,8 +4,12 @@ namespace App\Controller;
 
 use App\Classes\Cart;
 use App\Classes\WishList;
+use App\Entity\Newsletter;
+use App\Form\NewsletterType;
+use App\Repository\BannerRepository;
 use App\Repository\CategoryRepository;
 use App\Repository\GovernorateRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,24 +33,46 @@ class CartController extends AbstractController
      * @var CategoryRepository
      */
     private $categoryRepository;
+    /**
+     * @var BannerRepository
+     */
+    private $bannerRepository;
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
 
 
-    public function __construct(Cart $cart, CategoryRepository $categoryRepository, WishList $wishlist, GovernorateRepository $governorateRepository)
+    public function __construct(Cart $cart, CategoryRepository $categoryRepository, WishList $wishlist, GovernorateRepository $governorateRepository, BannerRepository $bannerRepository, EntityManagerInterface $entityManager)
     {
         $this->cart = $cart;
         $this->governorateRepository = $governorateRepository;
         $this->wishlist = $wishlist;
         $this->categoryRepository = $categoryRepository;
+        $this->bannerRepository = $bannerRepository;
+        $this->entityManager = $entityManager;
     }
 
     /**
      * @Route("/{locale}/cart", name="cart", defaults={"locale"="en"})
      * @param $locale
+     * @param Request $request
      * @return Response
      */
-    public function index($locale): Response
+    public function index($locale, Request $request): Response
     {
         $cart = $this->cart->getFull($this->cart->get());
+        $newsletter = new Newsletter();
+        $newsletterType = $this->createForm(NewsletterType::class, $newsletter);
+        $newsletterType->handleRequest($request);
+        if ($newsletterType->isSubmitted() && $newsletterType->isValid()) {
+            $this->entityManager->persist($newsletter);
+            $this->entityManager->flush();
+            unset($newsletter);
+            unset($newsletterType);
+            $newsletter = new Newsletter();
+            $newsletterType = $this->createForm(NewsletterType::class, $newsletter);
+        }
         if (empty($cart)) {
             $path = ($locale == "en") ? 'cart/empty-cart.html.twig' : 'cart/empty-cartAr.html.twig';
             return $this->render($path, [
@@ -54,6 +80,8 @@ class CartController extends AbstractController
                 'page' => 'cart',
                 'wishlist' => $this->wishlist->getFull(),
                 'categories' => $this->categoryRepository->findAll(),
+                'banner' =>$this->bannerRepository->findOneBy(['page'=>'Cart']),
+                'newsletterForm' => $newsletterType->createView(),
             ]);
         }else {
             $path = ($locale == "en") ? 'cart/index.html.twig' : 'cart/indexAr.html.twig';
@@ -62,22 +90,26 @@ class CartController extends AbstractController
                 'wishlist' => $this->wishlist->getFull(),
                 'page' => 'cart',
                 'delivery' => $this->cart->getDelivery(),
+                'deliveryIndex' => $this->cart->getDeliveryIndex(),
                 'governorates' => $this->governorateRepository->findAll(),
                 'categories' => $this->categoryRepository->findAll(),
+                'banner' =>$this->bannerRepository->findOneBy(['page'=>'Cart']),
+                'newsletterForm' => $newsletterType->createView(),
             ]);
         }
     }
 
     /**
-     * @Route("/{locale}/cart/add/{id}", name="add.cart", defaults={"id"=0, "locale"="en"})
+     * @Route("/{locale}/cart/add/{id}/{quantity}", name="add.cart", defaults={"id"=0, "quantity"=1, "locale"="en"})
      * @param $locale
      * @param $id
+     * @param $quantity
      * @param Request $request
      * @return Response
      */
-    public function add($locale, $id, Request $request): Response
+    public function add($locale, $id, $quantity, Request $request): Response
     {
-        $this->cart->add($id);
+        $this->cart->add($id, $quantity);
         return $this->redirectToRoute('products', ["locale" => $locale]);
     }
 

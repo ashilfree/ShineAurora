@@ -3,13 +3,13 @@
 {% block body %}
 
     <!-- Begin Shine AuroraBreadcrumb Area -->
-    <div class="breadcrumb-area">
+    <div class="breadcrumb-area" style="background-image: url({{ vich_uploader_asset(banner, 'imageFile') | imagine_filter('Extra_large') }});background-repeat:no-repeat;background-position:center;">
         <div class="container">
             <div class="breadcrumb-content">
-                <h2>Other</h2>
+                <h2>Login & Register</h2>
                 <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li class="active">Login & Register</li>
+                    <li><a href="{{ path('home', { locale: 'en' }) }}">Home</a></li>
+                    <li class="active">Register</li>
                 </ul>
             </div>
         </div>
@@ -53,8 +53,13 @@
                                 <label>Confirm Password</label>
                                 {{ form_row(form.password.second, {'attr': {'placeholder':'Confirm Password'}}) }}
                             </div>
-                            <div class="col-12">
+                            <div class="col-md-8">
                                 <button type="submit" class="hiraola-register_btn">Register</button>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="forgotton-password_info">
+                                    <a href="{{ path('login', { locale: 'en'}) }}"> I have already an account!</a>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -243,6 +243,7 @@
         {% endset %}
 
         <div class="ea-vich-file-actions">
+
             {# the container element is needed to allow customizing the <input type="file" /> #}
             <div class="btn btn-secondary input-file-container">
                 <i class="fa fa-fw fa-upload"></i> {{ 'action.choose_file'|trans({}, 'EasyAdminBundle') }}
@@ -265,37 +266,7 @@
 
 {% block vich_image_widget %}
     {% set formTypeOptions = ea_crud_form.ea_field.formTypeOptions|default('') %}
-    <div class="ea-vich-image">
-        {% if image_uri|default('') is not empty %}
-            {% if download_uri|default('') is empty %}
-                <div class="ea-lightbox-thumbnail">
-                    {% if formTypeOptions.imagine_pattern is defined and formTypeOptions.imagine_pattern is not empty %}
-                        <img style="cursor: initial" src="{{ asset(image_uri)|ea_apply_filter_if_exists('imagine_filter', formTypeOptions.imagine_pattern) }}">
-                    {% else %}
-                        <img style="cursor: initial" src="{{ asset(image_uri) }}">
-                    {% endif %}
-                </div>
-            {% else %}
-                {% set _lightbox_id = 'ea-lightbox-' ~ id %}
-
-                <a href="#" class="ea-lightbox-thumbnail" data-featherlight="#{{ _lightbox_id }}" data-featherlight-close-on-click="anywhere">
-                    {% if formTypeOptions.imagine_pattern is defined and formTypeOptions.imagine_pattern is not empty %}
-                        <img src="{{ asset(download_uri)|ea_apply_filter_if_exists('imagine_filter', formTypeOptions.imagine_pattern) }}">
-                    {% else %}
-                        <img src="{{ asset(download_uri) }}">
-                    {% endif %}
-                </a>
-
-                <div id="{{ _lightbox_id }}" class="ea-lightbox">
-                    {% if formTypeOptions.imagine_pattern is defined and formTypeOptions.imagine_pattern is not empty %}
-                        <img src="{{ asset(download_uri)|ea_apply_filter_if_exists('imagine_filter', formTypeOptions.imagine_pattern) }}">
-                    {% else %}
-                        <img src="{{ asset(download_uri) }}">
-                    {% endif %}
-                </div>
-            {% endif %}
-        {% endif %}
-
+    <div class="widget-content widget-content-area">
         {% set file_upload_js %}
             var newFile = document.getElementById('{{ form.file.vars.id }}').files[0];
             var fileSizeInMegabytes = newFile.size > 1024 * 1024;
@@ -303,18 +274,33 @@
             document.getElementById('{{ form.file.vars.id }}_new_file_name').innerText = newFile.name + ' (' + fileSize.toFixed(2) + ' ' + (fileSizeInMegabytes ? 'MB' : 'KB') + ')';
         {% endset %}
 
-        <div class="ea-vich-image-actions">
+        <div class="custom-file-container" data-upload-id="myFirstImage">
             {# the container element is needed to allow customizing the <input type="file" /> #}
-            <div class="btn btn-secondary input-file-container">
-                <i class="fa fa-fw fa-upload"></i> {{ 'action.choose_file'|trans({}, 'EasyAdminBundle') }}
-                {{ form_widget(form.file, { 'attr': { 'onchange': file_upload_js }, vich: true}) }}
-            </div>
-
-            {% if form.delete is defined %}
-                {{ form_row(form.delete, { label: 'form.label.delete'|trans({}, 'VichUploaderBundle') }) }}
-            {% endif %}
+            <label>Upload (Single File) <a href="javascript:void(0)" class="custom-file-container__image-clear" title="Clear Image">x</a></label>
+            <label class="custom-file-container__custom-file" >
+                {{ form_widget(form.file, {vich: true}) }}
+                <input type="hidden" name="MAX_FILE_SIZE" value="10485760" />
+                <span class="custom-file-container__custom-file__custom-file-control"></span>
+            </label>
+            <div class="custom-file-container__image-preview"></div>
         </div>
-        <div class="small" id="{{ form.file.vars.id }}_new_file_name"></div>
+        {% if image_uri|default('') is not empty %}
+            <script type="text/javascript">
+
+                var firstUpload  = new FileUploadWithPreview('myFirstImage', {
+                        showDeleteButtonOnImages: true,
+                        presetFiles: [
+                            "{{ image_uri }}",
+                        ],
+                    }
+                );
+            </script>
+        {% else %}
+            <script type="text/javascript">
+                var firstUpload  = new FileUploadWithPreview('myFirstImage');
+            </script>
+        {% endif %}
+        {#        <div class="small" id="{{ form.file.vars.id }}_new_file_name"></div>#}
     </div>
 {% endblock %}
 

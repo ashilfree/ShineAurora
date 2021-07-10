@@ -31,6 +31,7 @@
     "isotope-layout": "^3.0.6",
     "jquery": "3.4.1",
     "jquery-bridget": "2.0.1",
+    "lightzoom": "^1.0.0",
     "magnific-popup": "1.1.0",
     "maildev": "^1.1.0",
     "materialize": "^1.0.0",

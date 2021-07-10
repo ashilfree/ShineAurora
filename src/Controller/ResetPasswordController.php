@@ -6,9 +6,13 @@ use App\Classes\Cart;
 use App\Classes\Mailer;
 use App\Classes\WishList;
 use App\Entity\Customer;
+use App\Entity\Newsletter;
 use App\Form\ChangePasswordFormType;
+use App\Form\NewsletterType;
 use App\Form\ResetPasswordRequestFormType;
+use App\Repository\BannerRepository;
 use App\Repository\CategoryRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,13 +41,23 @@ class ResetPasswordController extends AbstractController
      * @var CategoryRepository
      */
     private $categoryRepository;
+    /**
+     * @var BannerRepository
+     */
+    private $bannerRepository;
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
 
-    public function __construct(ResetPasswordHelperInterface $resetPasswordHelper, Cart $cart, CategoryRepository $categoryRepository, WishList $wishlist)
+    public function __construct(ResetPasswordHelperInterface $resetPasswordHelper, Cart $cart, CategoryRepository $categoryRepository,  BannerRepository $bannerRepository,WishList $wishlist, EntityManagerInterface $entityManager)
     {
         $this->resetPasswordHelper = $resetPasswordHelper;
         $this->cart = $cart;
         $this->wishlist = $wishlist;
         $this->categoryRepository = $categoryRepository;
+        $this->bannerRepository = $bannerRepository;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -67,6 +81,17 @@ class ResetPasswordController extends AbstractController
                 $locale
             );
         }
+        $newsletter = new Newsletter();
+        $newsletterType = $this->createForm(NewsletterType::class, $newsletter);
+        $newsletterType->handleRequest($request);
+        if ($newsletterType->isSubmitted() && $newsletterType->isValid()) {
+            $this->entityManager->persist($newsletter);
+            $this->entityManager->flush();
+            unset($newsletter);
+            unset($newsletterType);
+            $newsletter = new Newsletter();
+            $newsletterType = $this->createForm(NewsletterType::class, $newsletter);
+        }
         $path = ($locale == "en") ? 'authentication/reset_password.html.twig' : 'authentication/reset_passwordAr.html.twig';
         return $this->render($path, [
             'requestForm' => $form->createView(),
@@ -74,6 +99,8 @@ class ResetPasswordController extends AbstractController
             'wishlist' => $this->wishlist->getFull(),
             'page' => 'reset_password',
             'categories' => $this->categoryRepository->findAll(),
+            'banner' =>$this->bannerRepository->findOneBy(['page'=>'Authentication']),
+            'newsletterForm' => $newsletterType->createView(),
         ]);
     }
 
@@ -82,13 +109,25 @@ class ResetPasswordController extends AbstractController
      *
      * @Route("/{locale}/reset-password/check-email", name="app_check_email", defaults={"locale"="en"})
      * @param $locale
+     * @param Request $request
      * @return Response
      */
-    public function checkEmail($locale): Response
+    public function checkEmail($locale, Request $request): Response
     {
         // We prevent users from directly accessing this page
         if (!$this->canCheckEmail()) {
             return $this->redirectToRoute('app_forgot_password_request', ['locale' => $locale]);
+        }
+        $newsletter = new Newsletter();
+        $newsletterType = $this->createForm(NewsletterType::class, $newsletter);
+        $newsletterType->handleRequest($request);
+        if ($newsletterType->isSubmitted() && $newsletterType->isValid()) {
+            $this->entityManager->persist($newsletter);
+            $this->entityManager->flush();
+            unset($newsletter);
+            unset($newsletterType);
+            $newsletter = new Newsletter();
+            $newsletterType = $this->createForm(NewsletterType::class, $newsletter);
         }
         $path = ($locale == "en") ? 'authentication/check_email.html.twig' : 'authentication/check_emailAr.html.twig';
         return $this->render($path, [
@@ -97,6 +136,8 @@ class ResetPasswordController extends AbstractController
             'wishlist' => $this->wishlist->getFull(),
             'page' => 'check_email',
             'categories' => $this->categoryRepository->findAll(),
+            'banner' =>$this->bannerRepository->findOneBy(['page'=>'Authentication']),
+            'newsletterForm' => $newsletterType->createView(),
         ]);
     }
 
@@ -160,6 +201,17 @@ class ResetPasswordController extends AbstractController
 
             return $this->redirectToRoute('login', ['locale' => $locale]);
         }
+        $newsletter = new Newsletter();
+        $newsletterType = $this->createForm(NewsletterType::class, $newsletter);
+        $newsletterType->handleRequest($request);
+        if ($newsletterType->isSubmitted() && $newsletterType->isValid()) {
+            $this->entityManager->persist($newsletter);
+            $this->entityManager->flush();
+            unset($newsletter);
+            unset($newsletterType);
+            $newsletter = new Newsletter();
+            $newsletterType = $this->createForm(NewsletterType::class, $newsletter);
+        }
         $path = ($locale == "en") ? 'authentication/reset.html.twig' : 'authentication/resetAr.html.twig';
         return $this->render($path, [
             'resetForm' => $form->createView(),
@@ -167,6 +219,8 @@ class ResetPasswordController extends AbstractController
             'wishlist' => $this->wishlist->getFull(),
             'page'=> 'reset',
             'categories' => $this->categoryRepository->findAll(),
+            'banner' =>$this->bannerRepository->findOneBy(['page'=>'Authentication']),
+            'newsletterForm' => $newsletterType->createView(),
         ]);
     }
 

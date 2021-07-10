@@ -877,23 +877,33 @@
 	/*----------------------------------------*/
 	/*  Cart Plus Minus Button
 /*----------------------------------------*/
-	$('.cart-plus-minus').append(
-		'<div class="dec qtybutton"><i class="fa fa-angle-down"></i></div><div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>'
-	);
+	// $('.cart-plus-minus').append(
+	// 	'<div class="dec qtybutton"><i class="fa fa-angle-down"></i></div><div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>'
+	// );
+	//TODO:2
 	$('.qtybutton').on('click', function () {
 		var $button = $(this);
-		var oldValue = $button.parent().find('input').val();
-		if ($button.hasClass('inc')) {
-			var newVal = parseFloat(oldValue) + 1;
-		} else {
-			// Don't allow decrementing below zero
-			if (oldValue > 1) {
-				var newVal = parseFloat(oldValue) - 1;
+		var oldValue = $button.parent().find('input');
+		if(!oldValue.is('[disabled]')) {
+			if ($button.hasClass('inc')) {
+				if(oldValue.val() < $button.data('max')){
+					var newVal = parseFloat(oldValue.val()) + 1;
+				}else{
+					var newVal = oldValue.val();
+				}
+
 			} else {
-				newVal = 1;
+				// Don't allow decrementing below zero
+				if (oldValue.val() > 1) {
+					var newVal = parseFloat(oldValue.val()) - 1;
+				} else {
+					newVal = 1;
+				}
 			}
+			oldValue.val(newVal);
+
 		}
-		$button.parent().find('input').val(newVal);
+
 	});
 
 	/*----------------------------------------*/
@@ -1080,17 +1090,23 @@
 -------------------------------- */
 	var sliderrange = $('#slider-range');
 	var amountprice = $('#amount');
+	var min = amountprice.data('min');
+	var max = amountprice.data('max');
+	var minfilter = amountprice.data('min-filter');
+	var maxfilter = amountprice.data('max-filter') ? amountprice.data('max-filter'): max;
 	$(function () {
 		sliderrange.slider({
 			range: true,
-			min: 20,
-			max: 100,
-			values: [0, 100],
+			min: 0,
+			max: max,
+			values: [minfilter, maxfilter],
 			slide: function (event, ui) {
-				amountprice.val('$' + ui.values[0] + ' - $' + ui.values[1]);
+				amountprice.val('KD ' + ui.values[0] + ' - KD ' + ui.values[1]);
+				$('#min').val(ui.values[0]);
+				$('#max').val(ui.values[1]);
 			}
 		});
-		amountprice.val('$' + sliderrange.slider('values', 0) + ' - $' + sliderrange.slider('values', 1));
+		amountprice.val('KD ' + sliderrange.slider('values', 0) + ' - KD ' + sliderrange.slider('values', 1));
 	});
 	/*----------------------------------------*/
 	/*  Hiraola's Slick Carousel
@@ -1370,11 +1386,22 @@
 	/*----------------------------------------*/
 	/*  Hiraola's Color List
  /*----------------------------------------*/
+//TODO:1
+	$('.myniceselect').on('change', function () {
+		let selected = $('.myniceselect.nice-select .list .selected').data('value');
+		$('.color-list a.'+selected).siblings().addClass('opacity');
+		$('.color-list a.'+selected).removeClass('opacity');
+		$('.color-list a').removeClass('active');
+		$('.quantity input').prop('disabled',true);
+		$('.quantity input').val(1);
+		$('.qty-cart_btn').attr('href', '/en/cart/add');
+	})
 
 	$('.color-list a').on('click', function (e) {
 		e.preventDefault();
 		var $this = $(this);
-		$this.addClass('active');
+		if (!$this.hasClass('opacity')){
+			$this.addClass('active');
 		$this.siblings().removeClass('active');
 		var $navs = document.querySelectorAll('.slick-slider-nav .single-slide');
 		var $details = document.querySelectorAll('.slick-img-slider .single-slide');
@@ -1394,7 +1421,22 @@
 				$details[i].style.opacity = 1;
 			}
 		}
+		$('.quantity input').prop('disabled',false);
+		$('.quantity div.inc').data('max',$this.find('span').data('quantity'));
+		var href = '/en/cart/add/' + $this.find('span').data('id');
+			$('.qty-cart_btn').attr('href', href);
+	}
 	});
+	$('.qty-cart_btn').on('click', function (e){
+		if($('.qty-cart_btn').attr('href') === '/en/cart/add'){
+			alert('Select Color')
+			e.preventDefault();
+		}else{
+			var href = $('.qty-cart_btn').attr('href') +'/'+ $('.quantity input').val();
+			$('.qty-cart_btn').attr('href', href);
+		}
+	})
+
 	/*----------------------------------------*/
 	/*  Single Product Image Slider Three
  /*----------------------------------------*/

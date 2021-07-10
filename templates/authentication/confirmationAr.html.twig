@@ -2,37 +2,35 @@
 
 {% block body %}
 
-    <!--================Categories Banner Area =================-->
-    <section class="solid_banner_area">
+    <div class="breadcrumb-area" style="background-image: url({{ vich_uploader_asset(banner, 'imageFile') | imagine_filter('Extra_large') }});background-repeat:no-repeat;background-position:center;">
         <div class="container">
-            <div class="solid_banner_inner">
-                <h3>تأكيد التسجيل</h3>
+            <div class="breadcrumb-content">
+                <h2>تأكيد التسجيل</h2>
                 <ul>
-                    <li><a href="{{ path('home', { locale: 'ar' }) }}">الصفحة الرئيسية</a></li>
-                    <li><a href="">تأكيد التسجيل</a></li>
+                    <li><a href="{{ path('home', {locale:'ar'}) }}">الصفحة الرئيسية</a></li>
+                    <li class="active">تأكيد التسجيل</li>
                 </ul>
             </div>
         </div>
-    </section>
-    <!--================End Categories Banner Area =================-->
-
-    <!--================login Area =================-->
-    <section class="login_area p-t-100 p-b-100">
+    </div>
+    <!-- Hiraola's Breadcrumb Area End Here -->
+    <!-- Begin Hiraola's Error 404 Page Area -->
+    <div class="error404-area">
         <div class="container">
-            <div class="login_inner">
-                <div class="row justify-content-center">
-                    <div class="col-md-4">
-                        <div class="login_title text-center"  >
-                            <h2 style="font-size: 25px;">شكرا لك!</h2>
-                            <p>يمكنك الآن تسجيل الدخول باستخدام بيانات الاعتماد الخاصة بك</p>
-                            <a href="{{ path('login', { locale: 'ar' }) }}">&larr; اذهب إلى صفحة تسجيل الدخول</a>
-                        </div>
+            <div class="row">
+                <div class="col-lg-8 ml-auto mr-auto text-center">
+                    <div class="search-error-wrapper">
+                        <h1>تأكيد التسجيل</h1>
+                        <h2>شكرا لك!</h2>
+                        <p class="short_desc">يمكنك الآن تسجيل الدخول باستخدام بيانات الاعتماد الخاصة بك</p>
+                        <div class="hiraola-btn-ps_center"></div>
+                        <a href="{{ path('login', { locale: 'ar' }) }}" class="hiraola-error_btn">اذهب إلى صفحة تسجيل الدخول</a>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <!--================End login Area =================-->
+    </div>
+    <!-- Hiraola's Error 404 Page End Here -->
 
 {% endblock %}
 

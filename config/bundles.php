@@ -22,4 +22,5 @@ return [
     SymfonyCasts\Bundle\ResetPassword\SymfonyCastsResetPasswordBundle::class => ['all' => true],
     NotFloran\MjmlBundle\MjmlBundle::class => ['all' => true],
     Cron\CronBundle\CronCronBundle::class => ['all' => true],
+    Wandi\ColorPickerBundle\WandiColorPickerBundle::class => ['all' => true],
 ];

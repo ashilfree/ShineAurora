@@ -40,6 +40,7 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/admin/assets/css/scrollspyNav.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ asset('assets/admin/plugins/select2/select2.min.css') }}">
     <link href="{{ asset('assets/admin/plugins/file-upload/file-upload-with-preview.min.css') }}" rel="stylesheet" type="text/css" />
+    <script src="{{ asset('assets/admin/plugins/file-upload/file-upload-with-preview.min.js') }}"></script>
     <!-- END PAGE LEVEL STYLES -->
 {% endblock head_javascript %}
 {% block content_title %}
@@ -81,6 +82,9 @@
             </div>
             <div class="col">
                 {{ form_row(edit_form.category, {'attr': {'class': 'basic'}}) }}
+            </div>
+            <div class="col">
+                {{ form_row(edit_form.subCategory, {'attr': {'placeholder':'basic'}}) }}
             </div>
         </div>
         <div class="row mb-4">
@@ -286,5 +290,98 @@
     <script src="{{ asset('assets/admin/assets/js/scrollspyNav.js') }}"></script>
     <script src="{{ asset('assets/admin/plugins/select2/select2.min.js') }}"></script>
     <script src="{{ asset('assets/admin/plugins/select2/custom-select2.js') }}"></script>
-    <script src="{{ asset('assets/admin/plugins/file-upload/file-upload-with-preview.min.js') }}"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function($){
+            console.log($("#Product_category").val());
+            $("#Product_category")
+                .select2({
+                    placeholder: "Select a Category",
+                    allowClear: true,
+                })
+                .on('select2:select', function (e) {
+                    console.log(e.params.data.id);
+                    $('#Product_subCategory').val(null);
+                    $('#Product_hotDegree').val(null);
+                    if(e.params.data.id == 1){
+                        console.log(e.params.data.id);
+                        $("#Product_hotDegree").select2({
+                            placeholder: "Select a Hot Degree",
+                            allowClear: true,
+                            disabled: false
+                        });
+                    }else{
+                        $("#Product_hotDegree").select2({
+                            placeholder: "Select a Hot Degree",
+                            allowClear: true,
+                            disabled: true
+                        });
+                    }
+                    $("#Product_subCategory").select2({
+                        placeholder: "Select a SubCategory",
+                        allowClear: true,
+                        initSelection: null,
+                        disabled: false,
+                        data:[],
+                        ajax: {
+                            url: 'get-sub-category/' + e.params.data.id,
+                            dataType: 'json',
+                            data: function (term) {
+                                console.log(term);
+                                return {
+                                    term: term
+                                };
+                            },
+                            processResults: function(data, page) {
+                                let dx =[];
+                                data.forEach(function(d){
+                                    dx.push(d)
+                                })
+                                return { results: dx };
+                            },
+                            // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
+                        },
+
+                    });
+                });
+
+
+
+            $("#Product_subCategory").select2({
+                placeholder: "Select a SubCategory",
+                allowClear: true,
+                ajax: {
+                    url: 'get-sub-category/' + {{ edit_form.vars.value.category.id }},
+                    dataType: 'json',
+                    data: function (term) {
+                        console.log(term);
+                        return {
+                            term: term
+                        };
+                    },
+                    processResults: function(data, page) {
+                        let dx =[];
+                        data.forEach(function(d){
+                            dx.push(d)
+                        })
+                        return { results: dx };
+                    },
+                    // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
+                }
+            });
+            if($("#Product_category").val() == 1){
+                $("#Product_hotDegree").select2({
+                    placeholder: "Select a Hot Degree",
+                    allowClear: true,
+                    disabled: false
+                });
+            }else{
+                $("#Product_hotDegree").select2({
+                    placeholder: "Select a Hot Degree",
+                    allowClear: true,
+                    disabled: true
+                });
+            }
+        });
+        // $('#Product_category').select2('destroy');
+    </script>
 {% endblock %}

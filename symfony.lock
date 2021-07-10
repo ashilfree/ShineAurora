@@ -2,6 +2,9 @@
     "beberlei/doctrineextensions": {
         "version": "v1.3.0"
     },
+    "codeplace-io/color-picker-bundle": {
+        "version": "v1.0.2"
+    },
     "composer/package-versions-deprecated": {
         "version": "1.11.99.1"
     },
@@ -208,6 +211,9 @@
         "files": [
             "config/packages/sensio_framework_extra.yaml"
         ]
+    },
+    "ssnepenthe/color-utils": {
+        "version": "0.4.2"
     },
     "swiftmailer/swiftmailer": {
         "version": "v6.2.5"

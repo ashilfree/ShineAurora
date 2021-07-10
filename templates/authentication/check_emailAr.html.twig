@@ -2,36 +2,56 @@
 {% block title %}Password Reset Email Sent{% endblock %}
 {% block body %}
 
-    <!--================Categories Banner Area =================-->
-    <section class="solid_banner_area">
+
+{#    <!--================login Area =================-->#}
+{#    <section class="login_area p-t-100 p-b-100">#}
+{#        <div class="container">#}
+{#            <div class="login_inner">#}
+{#                <div class="row justify-content-center">#}
+{#                    <div class="col-md-4">#}
+{#                        <div class="login_title">#}
+{#                            <h2>تفقد البريد الإلكتروني</h2>#}
+{#                            <p>تم إرسال بريد إلكتروني يحتوي على ارتباط يمكنك النقر فوقه لإعادة تعيين كلمة المرور الخاصة بك. ستنتهي صلاحية هذا الرابط في {{ tokenLifetime|date('g') }} ساعات.</p>#}
+{#                            <p>إذا لم تستلم بريدًا إلكترونيًا ، فيرجى التحقق من مجلد البريد العشوائي أو <a href="{{ path('app_forgot_password_request', { locale: 'ar' }) }}">حاول مرة أخرى</a>.</p>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </section>#}
+{#    <!--================End login Area =================-->#}
+
+    <!-- Begin Hiraola's Breadcrumb Area -->
+    <div class="breadcrumb-area" style="background-image: url({{ vich_uploader_asset(banner, 'imageFile') | imagine_filter('Extra_large') }});background-repeat:no-repeat;background-position:center;">
         <div class="container">
-            <div class="solid_banner_inner">
-                <h3>تفقد البريد الإلكتروني</h3>
+            <div class="breadcrumb-content">
+                <h2>تفقد البريد الإلكتروني</h2>
                 <ul>
-                    <li><a href="{{ path('home', { locale: 'ar' }) }}">الصفحة الرئيسية</a></li>
-                    <li><a href="">تفقد البريد الإلكتروني</a></li>
+                    <li><a href="{{ path('home', { locale: 'en' }) }}">الصفحة الرئيسية</a></li>
+                    <li class="active">تفقد البريد الإلكتروني</li>
                 </ul>
             </div>
         </div>
-    </section>
-    <!--================End Categories Banner Area =================-->
-
-    <!--================login Area =================-->
-    <section class="login_area p-t-100 p-b-100">
+    </div>
+    <!-- Hiraola's Breadcrumb Area End Here -->
+    <!-- Begin Hiraola's Error 404 Page Area -->
+    <div class="error404-area">
         <div class="container">
-            <div class="login_inner">
-                <div class="row justify-content-center">
-                    <div class="col-md-4">
-                        <div class="login_title">
-                            <h2>تفقد البريد الإلكتروني</h2>
-                            <p>تم إرسال بريد إلكتروني يحتوي على ارتباط يمكنك النقر فوقه لإعادة تعيين كلمة المرور الخاصة بك. ستنتهي صلاحية هذا الرابط في {{ tokenLifetime|date('g') }} ساعات.</p>
-                            <p>إذا لم تستلم بريدًا إلكترونيًا ، فيرجى التحقق من مجلد البريد العشوائي أو <a href="{{ path('app_forgot_password_request', { locale: 'ar' }) }}">حاول مرة أخرى</a>.</p>
-                        </div>
+            <div class="row">
+                <div class="col-lg-8 ml-auto mr-auto text-center">
+                    <div class="search-error-wrapper">
+                        <h1>تفقد البريد الإلكتروني</h1>
+                        <h2>شكرا لك!</h2>
+                        <p>تم إرسال بريد إلكتروني يحتوي على ارتباط يمكنك النقر فوقه لإعادة تعيين كلمة المرور الخاصة بك. ستنتهي صلاحية هذا الرابط في
+                            <br> {{ tokenLifetime|date('g') }} ساعات.</p>
+
+                        <div class="hiraola-btn-ps_center"></div>
+                        <a href="{{ path('home', { locale: 'ar' }) }}" class="hiraola-error_btn">Back To Home Page</a>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <!--================End login Area =================-->
+    </div>
+    <!-- Hiraola's Error 404 Page End Here -->
 
 {% endblock %}

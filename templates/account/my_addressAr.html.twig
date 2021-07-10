@@ -2,60 +2,42 @@
 
 {% block body %}
 
-    <!--================Categories Banner Area =================-->
-    <section class="solid_banner_area">
+    <!-- Begin Hiraola's Breadcrumb Area -->
+    <div class="breadcrumb-area"  style="background-image: url({{ vich_uploader_asset(banner, 'imageFile') | imagine_filter('Extra_large') }});background-repeat:no-repeat;background-position:center;">
         <div class="container">
-            <div class="solid_banner_inner">
-                <h3>حسابي</h3>
+            <div class="breadcrumb-content">
+                <h2>حسابي</h2>
                 <ul>
-                    <li><a href="#">الصفحة الرئيسية</a></li>
-                    <li><a>عنواني</a></li>
+                    <li><a href="{{ path('home', { locale: 'en' }) }}">الصفحة الرئيسية</a></li>
+                    <li class="active">عنواني</li>
                 </ul>
             </div>
         </div>
-    </section>
-    <!--================End Categories Banner Area =================-->
-
-    <!--================login Area =================-->
-    <div class="p-all-40">
-
-        <!--====== Section Content ======-->
-        <div class="section__content">
-            <div class="dash">
-                <div class="container">
-                    <div class="row">
-                        {% include 'account/side_barAr.html.twig' %}
-                        <div class="col-lg-9 col-md-12">
-                            <div class="dash__box dash__box--shadow dash__box--radius dash__box--bg-white u-s-m-b-30">
-                                <div class="dash__pad-2 text-right">
-                                    <h1 class="dash__h1 u-s-m-b-14">عنواني</h1>
-
-                                    <span class="dash__text u-s-m-b-30">انظر إلى جميع معلوماتك ، يمكنك تخصيص عنوانك.</span>
+    </div>
+    <!-- Hiraola's Breadcrumb Area End Here -->
+    <!-- Begin Hiraola's Page Content Area -->
+    <main class="page-content">
+        <!-- Begin Hiraola's Account Page Area -->
+        <div class="account-page-area">
+            <div class="container">
+                <div class="row">
+                    {% include 'account/side_barAr.html.twig' %}
+                    <div class="col-lg-9">
+                        <div class="tab-content myaccount-tab-content text-right" id="account-page-tab-content">
+                            <div class="tab-pane fade show active" id="account-address" role="tabpanel" aria-labelledby="account-address-tab">
+                                <div class="myaccount-address">
+                                    <p>سيتم استخدام العناوين التالية في صفحة الخروج بشكل افتراضي.</p>
                                     <div class="row">
-                                        <div class="col-lg-4 u-s-m-b-30">
-                                            <h2 class="dash__h2 u-s-m-b-8">عنوان</h2>
-
-                                            <span class="dash__text">{{ customer.address }}</span>
-                                        </div>
-                                        <div class="col-lg-4 u-s-m-b-30">
-                                            <h2 class="dash__h2 u-s-m-b-8">منطقة</h2>
-
-                                            <span class="dash__text">{{ customer.region }}</span>
-                                        </div>
-                                        <div class="col-lg-4 u-s-m-b-30">
-                                            <h2 class="dash__h2 u-s-m-b-8">محافظة</h2>
-
-                                            <span class="dash__text">{{ customer.governorate }}</span>
+                                        <div class="col">
+                                            <h4 class="small-title">عنوان وصول الفواتير</h4>
+                                            <address>
+                                                {{ customer.address ~ '-' ~ customer.region ~ '-' ~ customer.governorate }}
+                                            </address>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-lg-12">
-                                            <div class="dash__link dash__link--secondary u-s-m-b-30">
-                                            <div class="u-s-m-b-16">
-
-                                                <a class="dash__custom-link btn--e-transparent-brand-b-2" href="{{ path('edit.address', { locale: 'ar' }) }}">تعديل العنوان</a></div>
-                                            <div>
-                                        </div>
+                                        <a class="hiraola-btn hiraola-btn_dark hiraola-btn_sm" href="{{ path('edit.address', { locale: 'ar' }) }}">تعديل العنوان</a></div>
+                                    <div>
                                     </div>
                                 </div>
                             </div>
@@ -64,8 +46,7 @@
                 </div>
             </div>
         </div>
-        <!--====== End - Section Content ======-->
-    </div>
-    <!--================End login Area =================-->
-
+        <!-- Hiraola's Account Page Area End Here -->
+    </main>
+    <!-- Hiraola's Page Content Area End Here -->
 {% endblock %}

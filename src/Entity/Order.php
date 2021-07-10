@@ -93,6 +93,12 @@ class Order
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(max="8")
+     */
+    private $shippingSecondPhone;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $paymentMethod;
 
@@ -350,6 +356,18 @@ class Order
     public function setShippingPhone(string $shippingPhone): self
     {
         $this->shippingPhone = $shippingPhone;
+
+        return $this;
+    }
+
+    public function getShippingSecondPhone(): ?string
+    {
+        return $this->shippingSecondPhone;
+    }
+
+    public function setShippingSecondPhone(string $shippingSecondPhone): self
+    {
+        $this->shippingSecondPhone = $shippingSecondPhone;
 
         return $this;
     }

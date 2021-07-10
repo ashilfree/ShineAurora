@@ -6,9 +6,11 @@ use App\Entity\Catalog;
 use App\Entity\Size;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Wandi\ColorPickerBundle\Form\Type\ColorPickerType;
 
 class CatalogType extends AbstractType
 {
@@ -24,6 +26,7 @@ class CatalogType extends AbstractType
                 "multiple" => false
             ])
             ->add('quantity', IntegerType::class)
+            ->add('color', ColorType::class)
         ;
     }
 

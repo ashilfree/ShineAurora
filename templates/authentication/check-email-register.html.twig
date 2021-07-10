@@ -2,37 +2,37 @@
 
 {% block body %}
 
-    <!--================Categories Banner Area =================-->
-    <section class="solid_banner_area">
+    <!-- Begin Hiraola's Breadcrumb Area -->
+    <div class="breadcrumb-area" style="background-image: url({{ vich_uploader_asset(banner, 'imageFile') | imagine_filter('Extra_large') }});background-repeat:no-repeat;background-position:center;">
         <div class="container">
-            <div class="solid_banner_inner">
-                <h3>Confirmation</h3>
+            <div class="breadcrumb-content">
+                <h2>Check Email</h2>
                 <ul>
                     <li><a href="{{ path('home', { locale: 'en' }) }}">Home</a></li>
-                    <li><a href="">Confirmation</a></li>
+                    <li class="active">Check Email</li>
                 </ul>
             </div>
         </div>
-    </section>
-    <!--================End Categories Banner Area =================-->
-
-    <!--================login Area =================-->
-    <section class="login_area p-t-100 p-b-100">
+    </div>
+    <!-- Hiraola's Breadcrumb Area End Here -->
+    <!-- Begin Hiraola's Error 404 Page Area -->
+    <div class="error404-area">
         <div class="container">
-            <div class="login_inner">
-                <div class="row justify-content-center">
-                    <div class="col-md-4">
-                        <div class="login_title text-center"  >
-                            <h2 style="font-size: 25px;">Thank you!</h2>
-                            <p>An email has been sent that contains a link that you can click to confirm your Account</p>
-                            <a href="{{ path('home', { locale: 'en' }) }}">&larr; go to Home Page</a>
-                        </div>
+            <div class="row">
+                <div class="col-lg-8 ml-auto mr-auto text-center">
+                    <div class="search-error-wrapper">
+                        <h1>Check Email</h1>
+                        <h2>Thank you!</h2>
+                        <p class="short_desc">An email has been sent that contains a link that <br>
+                            you can click to confirm your Account.</p>
+                        <div class="hiraola-btn-ps_center"></div>
+                        <a href="{{ path('home', { locale: 'en' }) }}" class="hiraola-error_btn">Back To Home Page</a>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <!--================End login Area =================-->
+    </div>
+    <!-- Hiraola's Error 404 Page End Here -->
 
 {% endblock %}
 

@@ -26,11 +26,13 @@ class Cart
         $this->catalogRepository = $catalogRepository;
     }
 
-    public function add($id)
+    public function add($id, $quantity)
     {
         $cart = $this->session->get('cart', []);
         if (empty($cart[$id])) {
-            $cart[$id] = 1;
+            $cart[$id] = $quantity;
+        }else{
+            $cart[$id] += $quantity;
         }
         $this->session->set('cart', $cart);
     }
@@ -48,6 +50,11 @@ class Cart
     public function getDelivery()
     {
         return $this->session->get('delivery');
+    }
+
+    public function getDeliveryIndex()
+    {
+        return $this->session->get('delivery-index');
     }
 
     public function getDelivery2Order()
@@ -111,6 +118,7 @@ class Cart
         }
         $this->session->set('cart', $cart);
         $this->session->set('delivery', $all['delivery']);
+        $this->session->set('delivery-index', $all['delivery-index']);
     }
 
     public function switch()

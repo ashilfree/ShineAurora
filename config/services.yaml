@@ -6,7 +6,9 @@
 parameters:
     app.path.product.images: /media/images/product
     app.path.slide.images: /media/images/slide
+    app.path.banner.images: /media/images/banner
     app.path.about.images: /media/images/about
+    app.path.popup.images: /media/images/popup
     maintenanceFilePath: '%kernel.project_dir%/public/.maintenance'
 
 services:
@@ -59,3 +61,7 @@ services:
             - name: 'kernel.event_listener'
               event: 'Symfony\Component\Security\Http\Event\LogoutEvent'
               dispatcher: security.event_dispatcher.main
+
+    App\Listener\ExceptionListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception }

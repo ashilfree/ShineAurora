@@ -6,7 +6,10 @@ use App\Classes\Cart;
 use App\Classes\Mailer;
 use App\Classes\Transaction;
 use App\Classes\WishList;
+use App\Entity\Newsletter;
 use App\Entity\Order;
+use App\Form\NewsletterType;
+use App\Repository\BannerRepository;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -46,8 +49,12 @@ class OrderValidateController extends AbstractController
      * @var CategoryRepository
      */
     private $categoryRepository;
+    /**
+     * @var BannerRepository
+     */
+    private $bannerRepository;
 
-    public function __construct(EntityManagerInterface $entityManager, SessionInterface $session, CategoryRepository $categoryRepository, Transaction $transaction, Cart $cart, WishList $wishlist, Mailer $mailer)
+    public function __construct(EntityManagerInterface $entityManager, SessionInterface $session, CategoryRepository $categoryRepository, Transaction $transaction,BannerRepository $bannerRepository, Cart $cart, WishList $wishlist, Mailer $mailer)
 	{
 		$this->entityManager = $entityManager;
 		$this->transaction = $transaction;
@@ -56,16 +63,18 @@ class OrderValidateController extends AbstractController
         $this->wishlist = $wishlist;
         $this->session = $session;
         $this->categoryRepository = $categoryRepository;
+        $this->bannerRepository = $bannerRepository;
     }
 
-	/**
-	 * @Route("/{locale}/order/thank/{reference}", name="order.validate.thank")
-	 * @param $reference
-	 * @return Response
-	 */
-    public function success($reference): Response
+    /**
+     * @Route("/{locale}/order/thank/{reference}", name="order.validate.thank", defaults={"locale"="en"})
+     * @param $locale
+     * @param $reference
+     * @param Request $request
+     * @return Response
+     */
+    public function success($locale, $reference, Request $request): Response
     {
-        $locale = $this->session->get("locale");
         /** @var Order $order */
 	    $order = $this->entityManager->getRepository(Order::class)->findOneBy(['reference' => $reference]);
 		if(!$order || $order->getCustomer() != $this->getUser()){
@@ -80,6 +89,17 @@ class OrderValidateController extends AbstractController
 			$this->entityManager->flush();
             $this->mailer->sendSuccessOrderEmail($order);
 		}
+        $newsletter = new Newsletter();
+        $newsletterType = $this->createForm(NewsletterType::class, $newsletter);
+        $newsletterType->handleRequest($request);
+        if ($newsletterType->isSubmitted() && $newsletterType->isValid()) {
+            $this->entityManager->persist($newsletter);
+            $this->entityManager->flush();
+            unset($newsletter);
+            unset($newsletterType);
+            $newsletter = new Newsletter();
+            $newsletterType = $this->createForm(NewsletterType::class, $newsletter);
+        }
         $path = ($locale == "en") ? 'order/order-complete.html.twig' : 'order/order-completeAr.html.twig';
         return $this->render($path, [
         	'order' => $order,
@@ -87,23 +107,37 @@ class OrderValidateController extends AbstractController
             'wishlist' => $this->wishlist->getFull(),
             'page' => 'order-complete',
             'categories' => $this->categoryRepository->findAll(),
+            'banner' =>$this->bannerRepository->findOneBy(['page'=>'Order']),
+            'newsletterForm' => $newsletterType->createView(),
         ]);
     }
 
     /**
-     * @Route("/{locale}/order/error/{reference}", name="order.validate.error")
+     * @Route("/{locale}/order/error/{reference}", name="order.validate.error", defaults={"locale"="en"})
+     * @param $locale
      * @param $reference
+     * @param Request $request
      * @return Response
      */
-	public function cancel($reference): Response
+	public function cancel($locale, $reference, Request $request): Response
 	{
-        $locale = $this->session->get("locale");
 		$order = $this->entityManager->getRepository(Order::class)->findOneBy(['reference' => $reference]);
 		if(!$order || $order->getCustomer() != $this->getUser()){
 			return $this->redirectToRoute('home');
 		}
 		if ($this->transaction->check($order, 'checkout_canceled'))
 			$this->transaction->applyWorkFlow($order, 'checkout_canceled');
+        $newsletter = new Newsletter();
+        $newsletterType = $this->createForm(NewsletterType::class, $newsletter);
+        $newsletterType->handleRequest($request);
+        if ($newsletterType->isSubmitted() && $newsletterType->isValid()) {
+            $this->entityManager->persist($newsletter);
+            $this->entityManager->flush();
+            unset($newsletter);
+            unset($newsletterType);
+            $newsletter = new Newsletter();
+            $newsletterType = $this->createForm(NewsletterType::class, $newsletter);
+        }
         $this->cart->increaseStock();
         $this->session->clear();
         $order->setCancelledAt(new \DateTime());
@@ -116,6 +150,8 @@ class OrderValidateController extends AbstractController
             'wishlist' => $this->wishlist->getFull(),
             'page' => 'order-canceled',
             'categories' => $this->categoryRepository->findAll(),
+            'banner' =>$this->bannerRepository->findOneBy(['page'=>'Order']),
+            'newsletterForm' => $newsletterType->createView(),
 		]);
 	}
 }

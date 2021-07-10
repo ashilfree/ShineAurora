@@ -6,11 +6,14 @@ use App\Classes\Cart;
 use App\Classes\Transaction;
 use App\Classes\WishList;
 use App\Entity\Customer;
+use App\Entity\Newsletter;
 use App\Entity\Order;
 use App\Entity\OrderDetails;
 use App\Entity\PaymentMethods;
+use App\Form\NewsletterType;
 use App\Form\OrderType;
 use App\Form\PaymentMethodType;
+use App\Repository\BannerRepository;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -51,6 +54,10 @@ class OrderController extends AbstractController
      * @var CategoryRepository
      */
     private $categoryRepository;
+    /**
+     * @var BannerRepository
+     */
+    private $bannerRepository;
 
     public function __construct
     (
@@ -59,7 +66,8 @@ class OrderController extends AbstractController
         Cart $cart,
         CategoryRepository $categoryRepository,
         WishList $wishlist,
-        SessionInterface $session
+        SessionInterface $session,
+        BannerRepository $bannerRepository
     )
     {
         $this->entityManager = $entityManager;
@@ -68,6 +76,7 @@ class OrderController extends AbstractController
         $this->wishlist = $wishlist;
         $this->session = $session;
         $this->categoryRepository = $categoryRepository;
+        $this->bannerRepository = $bannerRepository;
     }
 
     /**
@@ -82,9 +91,22 @@ class OrderController extends AbstractController
 
         if (!empty($this->cart->get())) {
             $this->cart->switch();
-        } else {
+        }
+        else {
             if (empty($this->cart->getCart2Order()))
                 return $this->redirectToRoute('cart', ['locale' => $locale]);
+        }
+
+        $newsletter = new Newsletter();
+        $newsletterType = $this->createForm(NewsletterType::class, $newsletter);
+        $newsletterType->handleRequest($request);
+        if ($newsletterType->isSubmitted() && $newsletterType->isValid()) {
+            $this->entityManager->persist($newsletter);
+            $this->entityManager->flush();
+            unset($newsletter);
+            unset($newsletterType);
+            $newsletter = new Newsletter();
+            $newsletterType = $this->createForm(NewsletterType::class, $newsletter);
         }
 
         $order = new Order();
@@ -153,6 +175,8 @@ class OrderController extends AbstractController
                     'locale' => $locale,
                     'paymentMethods' => $this->entityManager->getRepository(PaymentMethods::class)->findAll(),
                     'categories' => $this->categoryRepository->findAll(),
+                    'banner' =>$this->bannerRepository->findOneBy(['page'=>'Order']),
+                    'newsletterForm' => $newsletterType->createView(),
                 ]
             );
 
@@ -167,6 +191,8 @@ class OrderController extends AbstractController
             'delivery2order' => $this->cart->getDelivery2Order(),
             'page' => 'checkout',
             'categories' => $this->categoryRepository->findAll(),
+            'banner' =>$this->bannerRepository->findOneBy(['page'=>'Order']),
+            'newsletterForm' => $newsletterType->createView(),
         ]);
     }
 

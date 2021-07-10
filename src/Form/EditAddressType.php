@@ -24,9 +24,6 @@ class EditAddressType extends AbstractType
             ])
             ->add('governorate', TextType::class, [
                 'label' => false
-            ])
-            ->add('submit', SubmitType::class, [
-                'label' => 'Update'
             ]);
     }
 

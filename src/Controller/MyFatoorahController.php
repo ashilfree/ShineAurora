@@ -7,7 +7,6 @@ use App\Classes\Mailer;
 use App\Classes\Transaction;
 use App\Classes\WishList;
 use App\Entity\Order;
-use App\Form\OrderType;
 use App\Form\PaymentMethodType;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -49,7 +48,7 @@ class MyFatoorahController extends AbstractController
     private $session;
     //Live
     //private $apiURL = 'https://api.myfatoorah.com';
-    //private $apiKey = ''; //Live token value to be placed here: https://myfatoorah.readme.io/docs/live-token
+    //private $apiKey = 'BjLe20XA0nuIXZFMDRuah-vE_-B6Sr632vLQ8CUE2KRttdNDUMQ7x0bvXUPoss_NXgN3KBsWt-Z2CSYQ1xamRcVbLV5nPtM5F7R9xRObWqJ2Op-HpJU5mr6aIChaNcT5rmRlWSFZcfjRydLvJNHv9qlCBCorGKXCgPDBa8jbO0kTY7XkuNHGgrNrJIL2SuGc7iMEDyEfszPLnjhDUAhEpaa0dpm-_QGlPP-R6zHZXASP5TRIgqOlYrQ3EJj5bW8vFtRInDsr7mu7ehSF7jB_WsxnlUfENXRL328WK-yLo9ac_9bWL_JD-sWvDQdzlLIuhAnPjyfr-9rP80WQHNxW2TYYSNSz-j24HHXCR3RG0T0dL35yjxTTRVfFgT2SQXKoqwN2_0roZD4HUsIhVsZLIrKNcNN4ba90NmD3FEPOlKvDzWtpmmCoIa8h405AYPCb9Br6I7ShUQCmrS7gHVfGZShuTVDWii4zFs1UvCTduWbYgRhvUUMwpFZvFJWGd2AX20HpP-aNGeh0eGEPLRR66GM-ZAtomDfm59SNAYf2j2WzLCRDUzOt-islodbIJ5UuqtYYXw4epcyR9N5m8LCwIO8iFRV7pbLQFGofDQ5wqmFBjlpax0fcxwgJD0xLFiNOyrX_IanRXIL9--c8w5pSB5QlqjSHF4VPoLTmRuAvVGMZjzpDF0bgNV1PsXViZdPG6pGjWw'; //Live token value to be placed here: https://myfatoorah.readme.io/docs/live-token
     /**
      * @var CategoryRepository
      */
@@ -83,8 +82,8 @@ class MyFatoorahController extends AbstractController
             if (!$order || !$this->transaction->check($order, 'proceed_checkout'))
                 return new JsonResponse(["error" => 'order']);
             $this->transaction->applyWorkFlow($order, 'proceed_checkout');
-        $YOUR_DOMAIN = 'https://shoppinga.genesistech-dz.com';
-//                $YOUR_DOMAIN = 'https://127.0.0.1:8000';
+            $YOUR_DOMAIN = 'https://shineaurora.com';
+         //       $YOUR_DOMAIN = 'https://127.0.0.1:8000';
                 //Fill POST fields array
                 $ipPostFields = ['InvoiceAmount' => ($order->getTotal() + $order->getDeliveryPrice()) / 100, 'CurrencyIso' => 'KWD'];
 
@@ -156,7 +155,7 @@ class MyFatoorahController extends AbstractController
                 $order->setInvoiceKey($invoiceKey);
             $this->entityManager->flush();
 //        return $this->redirect($paymentLink, 301);
-                return $this->redirect($paymentLink, 308);
+                return $this->redirect($paymentLink);
                 //Display the payment link to your customer
             }else{
             if (!$order || !$this->transaction->check($order, 'pay_en_delivery'))
@@ -168,13 +167,15 @@ class MyFatoorahController extends AbstractController
             $this->mailer->sendSuccessOrderEmail($order);
             $this->entityManager->flush();
             $path = ($locale == "en") ? 'order/order-complete.html.twig' : 'order/order-completeAr.html.twig';
-            return $this->render($path , [
-                'order' => $order,
-                'cart' => $this->cart->getFull($this->cart->get()),
-                'wishlist' => $this->wishlist->getFull(),
-                'page' => 'order-complete',
-                'categories' => $this->categoryRepository->findAll(),
-            ]);
+//            return $this->render($path , [
+//                'order' => $order,
+//                'cart' => $this->cart->getFull($this->cart->get()),
+//                'wishlist' => $this->wishlist->getFull(),
+//                'page' => 'order-complete',
+//                'categories' => $this->categoryRepository->findAll(),
+//                'banner' =>$this->bannerRepository->findOneBy(['page'=>'Order']),
+//            ]);
+            return $this->redirectToRoute('order.validate.thank', ['locale' => $locale, 'reference'=> $order->getReference()]);
         }
         }
             return $this->redirectToRoute('order');

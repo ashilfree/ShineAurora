@@ -1,25 +1,23 @@
-{% for slide in slides  %}
-<div class="item-slick1" style="background-image: url({{ vich_uploader_asset(slide, 'imageFile') | imagine_filter('Extra_large') | imagine_filter('my_flip')}});">
-    <div class="container h-full">
-        <div class="flex-col-l-m h-full p-t-100 p-b-30 respon5">
-            <div class="layer-slick1 animated visible-false" data-appear="fadeInDown" data-delay="0">
-								<span class="ltext-101 cl2 respon2">
-									{{ slide.titleAr }}
-								</span>
+<div class="hiraola-slider_area-2">
+    <div class="main-slider">
+        {% for slide in slides %}
+            <!-- Begin Single Slide Area -->
+            <div class="single-slide animation-style-0{{ loop.index }}  bg-5"
+                 style="background-image:  url({{ vich_uploader_asset(slide, 'imageFile') | imagine_filter('Extra_large') | imagine_filter('my_flip') }});">
+                <div class="container">
+                    <div class="slider-content text-right">
+                        <h5>{{ slide.titleAr }}</h5>
+                        <h2>{{ slide.contentAr }}</h2>
+                        {# <h3>Surface Studio 2019</h3> #}
+                        {# <h4>Starting at <span>£1599.00</span></h4> #}
+                        <div class="hiraola-btn-ps_center slide-btn mt-2">
+                            <a class="hiraola-btn" href="{{ slide.btnUrl }}">{{ slide.btnTitleAr }}</a>
+                        </div>
+                    </div>
+                    <div class="slider-progress"></div>
+                </div>
             </div>
-
-            <div class="layer-slick1 animated visible-false" data-appear="fadeInUp" data-delay="800">
-                <h2 class="ltext-201 cl2 p-t-19 p-b-43 respon1">
-                    {{ slide.contentAr }}
-                </h2>
-            </div>
-
-            <div class="layer-slick1 animated visible-false" data-appear="zoomIn" data-delay="1600">
-                <a href="{{ slide.btnUrl }}" class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04">
-                    {{ slide.btnTitleAr }}
-                </a>
-            </div>
-        </div>
+            <!-- Single Slide Area End Here -->
+        {% endfor %}
     </div>
 </div>
-{% endfor %}

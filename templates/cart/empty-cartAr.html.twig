@@ -2,28 +2,35 @@
 
 {% block body %}
 
-    <!--================Categories Banner Area =================-->
-    <section class="solid_banner_area">
+
+    <!-- Begin Hiraola's Breadcrumb Area -->
+    <div class="breadcrumb-area" style="background-image: url({{ vich_uploader_asset(banner, 'imageFile') | imagine_filter('Extra_large') }});background-repeat:no-repeat;background-position:center;">
         <div class="container">
-            <div class="solid_banner_inner">
-                <h3>عربة التسوق</h3>
+            <div class="breadcrumb-content">
+                <h2>عربة التسوق</h2>
                 <ul>
-                    <li><a href="{{ path('home', { locale: 'ar' }) }}">الصفحة الرئيسية</a></li>
-                    <li><a href="">عربة فارغة</a></li>
+                    <li><a href="{{ path('home', { locale: 'en' }) }}">الصفحة الرئيسية</a></li>
+                    <li class="active">عربة فارغة</li>
                 </ul>
             </div>
         </div>
-    </section>
-    <!--================End Categories Banner Area =================-->
-
-    <section class="emty_cart_area p-tb-100">
+    </div>
+    <!-- Hiraola's Breadcrumb Area End Here -->
+    <!-- Begin Hiraola's Error 404 Page Area -->
+    <div class="error404-area">
         <div class="container">
-            <div class="emty_cart_inner">
-                <i class="zmdi zmdi-shopping-basket"></i>
-                <h3>عربة التسوق فارغة</h3>
-                <h4>ارجع الى <a href="{{ path('products', { locale: 'ar' }) }}">التسوق</a></h4>
+            <div class="row">
+                <div class="col-lg-8 ml-auto mr-auto text-center">
+                    <div class="search-error-wrapper">
+                        <h1>فارغة</h1>
+                        <h2>عربة التسوق فارغة</h2>
+                        <div class="hiraola-btn-ps_center"></div>
+                        <a href="{{ path('products', { locale: 'ar' }) }}" class="hiraola-error_btn"> ارجع الى التسوق</a>
+                    </div>
+                </div>
             </div>
         </div>
-    </section>
+    </div>
+    <!-- Hiraola's Error 404 Page End Here -->
 
 {% endblock %}

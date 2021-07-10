@@ -41,7 +41,7 @@ class Mailer{
             ]
         );
         $message = (new \Swift_Message('Confirmation Email'))
-            ->setFrom('shoppinga@genesistech-dz.com')
+            ->setFrom('info@shineaurora.com')
             ->setTo($customer->getEmail())
             ->setReplyTo($customer->getEmail())
             ->setBody($body, 'text/html');
@@ -57,7 +57,7 @@ class Mailer{
             ]
         );
         $message = (new \Swift_Message('Reset Password Email'))
-            ->setFrom('shoppinga@genesistech-dz.com')
+            ->setFrom('info@shineaurora.com')
             ->setTo($customer->getEmail())
             ->setReplyTo($customer->getEmail())
             ->setBody($body, 'text/html');
@@ -72,7 +72,7 @@ class Mailer{
             ]
         );
         $message = (new \Swift_Message('Contact Us : '))
-            ->setFrom('shoppinga@genesistech-dz.com')
+            ->setFrom('info@shineaurora.com')
             ->setTo($contact->getEmail())
             ->setReplyTo($contact->getEmail())
             ->setBody($body, 'text/html');
@@ -88,7 +88,7 @@ class Mailer{
             ]
         );
         $message = (new \Swift_Message('Successful Order'))
-            ->setFrom('shoppinga@genesistech-dz.com')
+            ->setFrom('info@shineaurora.com')
             ->setTo($order->getShippingEmail())
             ->setReplyTo($order->getShippingEmail())
             ->setBody($body, 'text/html');
@@ -104,7 +104,7 @@ class Mailer{
             ]
         );
         $message = (new \Swift_Message('Unsuccessful Order'))
-            ->setFrom('shoppinga@genesistech-dz.com')
+            ->setFrom('info@shineaurora.com')
             ->setTo($order->getShippingEmail())
             ->setReplyTo($order->getShippingEmail())
             ->setBody($body, 'text/html');

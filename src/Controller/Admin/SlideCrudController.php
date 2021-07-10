@@ -39,7 +39,7 @@ class SlideCrudController extends AbstractCrudController
             TextField::new('btnTitle')->onlyOnForms(),
             TextField::new('btnTitleAr', 'عنوان الزر')->setTextAlign('right')->onlyOnForms()->addCssClass('text-right'),
             UrlField::new('btnUrl')->onlyOnForms(),
-            ImageField::new('imageFile')->setFormType(VichImageType::class)->onlyOnForms(),
+            ImageField::new('imageFile', 'Image(1920x950)')->setFormType(VichImageType::class)->onlyOnForms(),
             ImageField::new('fileName')->setCustomOption('basePath', 'media/images/slide/')->onlyOnIndex(),
         ];
     }

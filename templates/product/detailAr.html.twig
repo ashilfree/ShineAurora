@@ -2,347 +2,374 @@
 
 {% block body %}
 
-    <!-- breadcrumb -->
-    <div class="container">
-        <div class="bread-crumb flex-w p-r-25 p-r-15 p-t-30 p-lr-0-lg">
-            <a href="{{ path('home', {locale: 'ar'}) }}" class="stext-109 cl8 hov-cl1 trans-04">
-                الصفحة الرئيسية
-                <i class="fa fa-angle-left m-l-9 m-r-10" aria-hidden="true"></i>
-            </a>
-
-            <a href="{{ path('products', {locale: 'ar'}) }}" class="stext-109 cl8 hov-cl1 trans-04">
-                {{ product.category.nameAr }}
-                <i class="fa fa-angle-left m-l-9 m-r-10" aria-hidden="true"></i>
-            </a>
-
-            <span class="stext-109 cl4">
-				{{ product.nameAr|upper }}
-			</span>
+    <!-- Begin Hiraola's Breadcrumb Area -->
+    <div class="breadcrumb-area"  style="background-image: url({{ vich_uploader_asset(banner, 'imageFile') | imagine_filter('Extra_large') }});background-repeat:no-repeat;background-position:center;">
+        <div class="container">
+            <div class="breadcrumb-content">
+                <h2>{{ product.nameAr }}</h2>
+                <ul>
+                    <li><a href="{{ path('home', { locale: 'ar' }) }}">الصفحة الرئيسية</a></li>
+                    <li class="active">{{ product.nameAr }}</li>
+                </ul>
+            </div>
         </div>
     </div>
+    <!-- Hiraola's Breadcrumb Area End Here -->
 
-
-    <!-- Product Detail -->
-    <section class="sec-product-detail bg0 p-t-65 p-b-60">
+    <!-- Begin Hiraola's Single Product Variable Area -->
+    <div class="sp-area">
         <div class="container">
-            <div class="row">
-                <div class="col-md-6 col-lg-7 p-b-30">
-                    <div class="p-l-25 p-r-30 p-lr-0-lg">
-                        <div class="wrap-slick3 flex-sb flex-w">
-                            <div class="wrap-slick3-dots"></div>
-                            <div class="wrap-slick3-arrows flex-sb-m flex-w"></div>
-
-                            <div class="slick3 gallery-lb">
+            <div class="sp-nav">
+                <div class="row">
+                    <div class="col-lg-5 col-md-5">
+                        <div class="sp-img_area">
+                            <div class="sp-img_slider-2 slick-img-slider hiraola-slick-slider arrow-type-two" data-slick-options='{
+                                                        "slidesToShow": 1,
+                                                        "arrows": false,
+                                                        "fade": true,
+                                                        "draggable": false,
+                                                        "swipe": false,
+                                                        "asNavFor": ".sp-img_slider-nav"
+                                                        }'>
                                 {% for image in product.images %}
-                                    <div class="item-slick3" data-thumb="{{ vich_uploader_asset(image, 'imageFile') }}">
-                                        <a class="sold_out" style="display:none" href="https://abc.com/">نفاذ المخزون</a>
-                                        <div class="wrap-pic-w pos-relative">
-                                            <img src="{{ vich_uploader_asset(image, 'imageFile') }}" alt="IMG-PRODUCT">
-
-                                            <a class="flex-c-m size-108 how-pos1 bor0 fs-16 cl10 bg0 hov-btn3 trans-04"
-                                               href="{{ vich_uploader_asset(image, 'imageFile') }}">
-                                                <i class="fa fa-expand"></i>
-                                            </a>
-                                        </div>
+                                    <div class="single-slide red">
+                                        {#                                    <img src="{{ vich_uploader_asset(image, 'imageFile') }}" class="light-zoom" alt="Shine Aurora Product Image">#}
+                                        <img id="zoomit-target" src="{{ vich_uploader_asset(image, 'imageFile') }}" data-zoomed="{{ vich_uploader_asset(image, 'imageFile') }}" alt="Shine Aurora Product Image">
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <div class="sp-img_slider-nav slick-slider-nav hiraola-slick-slider arrow-type-two" data-slick-options='{
+                                                        "slidesToShow": 3,
+                                                        "asNavFor": ".sp-img_slider-2",
+                                                        "focusOnSelect": true
+                                                        }'>
+                                {% for image in product.images %}
+                                    <div class="single-slide red">
+                                        <img src="{{ vich_uploader_asset(image, 'imageFile') }}" alt="Shine Aurora Product Thumnail">
                                     </div>
                                 {% endfor %}
                             </div>
                         </div>
                     </div>
-                </div>
-
-                <div class="col-md-6 col-lg-5 p-b-30 js-product-detail text-right">
-                    <div class="p-r-50 p-t-5 p-lr-0-lg">
-                        <h4 class="mtext-105 cl2 js-name-detail p-b-14">
-                            {{ product.nameAr|upper }}
-                        </h4>
-
-                        {% if product.discountPrice != 0 %}
-                            <div class="style-1">
-                                <del>
-                        <span class="stext-105 cl3">
-									{{ (product.price / 100) |number_format(2, '.', ',') }} {{ currency_ar }}
-								</span>
-                                </del>
-                                <ins>
-                        <span class="stext-105 cl3">
-									{{ (product.discountPrice / 100) |number_format(2, '.', ',') }} {{ currency_ar }}
-								</span>
-                                </ins>
+                    <div class="col-lg-7 col-md-7">
+                        <div class="sp-content text-right">
+                            <div class="sp-heading">
+                                <h5><a href="#">{{ product.nameAr|upper }}</a></h5>
                             </div>
-                        {% else %}
-                            <ins>
-                        <span class="stext-105 cl3">
-									{{ (product.price / 100) |number_format(2, '.', ',') }} {{ currency_ar }}
-								</span>
-                            </ins>
-                        {% endif %}
-
-                        <p class="stext-102 cl3 p-t-23">
-                            {{ product.descriptionAr|raw }}
-                        </p>
-
-                        <!--  -->
-                        <div class="p-t-33">
-                            <div class="flex-w flex-r-m p-b-10">
-                                <div class="size-203 flex-c-m respon6">
-                                    المقاس
-                                </div>
-
-                                <div class="size-204 respon6-next">
-                                    <div class="rs1-select2 bor8 bg0">
-                                        <select onchange="check_status(this);"  class="js-select2" name="time">
-                                            <option value="-1">اختر أحد الخيارات أدناه</option>
-                                            {% for catalog in product.catalogs %}
-                                                <option data-quantity="{{ catalog.quantity }}" value="{{ loop.index }}">{{ catalog.size }}</option>
-                                            {% endfor %}
-                                        </select>
-                                        <div class="dropDownSelect2"></div>
-                                    </div>
+                            <span class="reference">مرجع: {{ product.category.nameAr }}</span>
+                            {#                            <div class="rating-box">#}
+                            {#                                <ul>#}
+                            {#                                    <li><i class="fa fa-star-of-david"></i></li>#}
+                            {#                                    <li><i class="fa fa-star-of-david"></i></li>#}
+                            {#                                    <li><i class="fa fa-star-of-david"></i></li>#}
+                            {#                                    <li><i class="fa fa-star-of-david"></i></li>#}
+                            {#                                    <li class="silver-color"><i class="fa fa-star-of-david"></i></li>#}
+                            {#                                </ul>#}
+                            {#                            </div>#}
+                            <div class="sp-essential_stuff">
+                                <ul>
+                                    <li>التوفر: <a href="javascript:void(0)">في المخزن</a></li>
+                                </ul>
+                            </div>
+                            <div class="price-list_area">
+                                <div class="price-box style-1">
+                                    {% if product.discountPrice != 0 %}
+                                        <del><span class="new-price">{{ (product.price / 100) |number_format(2, '.', ',') }} {{ currency_ar }}</span></del>
+                                        <ins><span class="new-price">{{ (product.discountPrice / 100) |number_format(2, '.', ',') }} {{ currency_ar }}</span></ins>
+                                    {% else %}
+                                        <ins><span class="new-price">{{ (product.price / 100) |number_format(2, '.', ',') }} {{ currency_ar }}</span></ins>
+                                    {% endif %}
                                 </div>
                             </div>
-
-                            <div class="flex-w flex-r-m p-b-10">
-                                <div class="size-204 flex-w flex-m respon6-next">
-                                    {# <div class="wrap-num-product flex-w m-r-20 m-tb-10"> #}
-                                    {# <div class="btn-num-product-down cl8 hov-btn3 trans-04 flex-c-m"> #}
-                                    {# <i class="fs-16 zmdi zmdi-minus"></i> #}
-                                    {# </div> #}
-
-                                    {# <input class="mtext-104 cl3 txt-center num-product" type="number" #}
-                                    {# name="num-product" value="1"> #}
-
-                                    {# <div class="btn-num-product-up cl8 hov-btn3 trans-04 flex-c-m"> #}
-                                    {# <i class="fs-16 zmdi zmdi-plus"></i> #}
-                                    {# </div> #}
-                                    {# </div> #}
-
-                                    <a id="add-to-cart" href="{{ path('add.cart', {locale: 'ar'}) }}"
-                                       class="flex-c-m stext-101 cl0 size-101 bg1 bor1 hov-btn1 p-lr-15 trans-04 js-addcart-detail">
-                                        أضف إلى السلة
-                                    </a>
+                            <div class="essential_stuff">
+                                <ul>
+                                    <li id="description">
+                                        {{ product.descriptionAr }}
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="product-size_box">
+                                <span>المقاس</span>
+                                <select class="myniceselect nice-select">
+                                    {% for key,value in sizesName %}
+                                        <option data-color="" value="{{ key }}">{{ value }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="color-list_area">
+                                <div class="color-list_heading">
+                                    <h4>الخيارات المتاحة</h4>
+                                </div>
+                                <span class="sub-title">اللون</span>
+                                <div class="color-list">
+                                    {% for catalog in product.catalogs %}
+                                        {% if catalog.quantity > 0 %}
+                                            <a href="javascript:void(0)" class="single-color {{ catalog.size.id }} {% if loop.index != 1 %} opacity {% endif %}" data-swatch-color="red">
+                                                <span  data-quantity="{{ catalog.quantity }}" data-id="{{ catalog.id }}" style="background-color: {{ catalog.color }};display: block"></span>
+                                                {#                                            <span class="color-text">Red (+£3.61)</span>#}
+                                            </a>
+                                        {% endif %}
+                                    {% endfor %}
                                 </div>
                             </div>
-                        </div>
-
-                        <!--  -->
-                        <div class="flex-w flex-m p-l-100 p-t-40 respon7">
-                            <div class="flex-m bor9 p-r-10 m-r-11">
-                                <a href="#"
-                                   class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 js-addwish-detail tooltip100"
-                                   data-tooltip="Add to Wishlist">
-                                    <i class="zmdi zmdi-favorite"></i>
-                                </a>
-                            </div>
-
-                            <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
-                               data-tooltip="Facebook">
-                                <i class="fa fa-facebook"></i>
-                            </a>
-
-                            <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
-                               data-tooltip="Twitter">
-                                <i class="fa fa-twitter"></i>
-                            </a>
-
-                            <a href="#" class="fs-14 cl3 hov-cl1 trans-04 lh-10 p-lr-5 p-tb-2 m-r-8 tooltip100"
-                               data-tooltip="Google Plus">
-                                <i class="fa fa-google-plus"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bor10 m-t-50 p-t-43 p-b-40">
-                <!-- Tab01 -->
-                <div class="tab01">
-                    <!-- Nav tabs -->
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li class="nav-item p-b-10">
-                            <a class="nav-link active" data-toggle="tab" href="#description" role="tab">الوصف</a>
-                        </li>
-
-                        <li class="nav-item p-b-10">
-                            <a class="nav-link" data-toggle="tab" href="#information" role="tab">معلومات إضافية</a>
-                        </li>
-
-                    </ul>
-
-                    <!-- Tab panes -->
-                    <div class="tab-content p-t-43">
-                        <!-- - -->
-                        <div class="tab-pane fade show active" id="description" role="tabpanel">
-                            <div class="how-pos2 p-lr-15-md">
-                                <p class="stext-102 cl6 text-right">
-                                    {{ product.longDescriptionAr|raw }}
-                                </p>
-                            </div>
-                        </div>
-
-                        <!-- - -->
-                        <div class="tab-pane fade" id="information" role="tabpanel">
-                            <div class="row">
-                                <div class="col-sm-10 col-md-8 col-lg-6 m-lr-auto">
-                                    <ul class="p-lr-28 p-lr-15-sm">
-                                        <li class="flex-w flex-t p-b-7">
-											<span class="stext-102 cl3 size-205">
-												الوزن
-											</span>
-
-                                            <span class="stext-102 cl6 size-206">
-												{{ product.weight }} كغ
-											</span>
-                                        </li>
-
-                                        <li class="flex-w flex-t p-b-7">
-											<span class="stext-102 cl3 size-205">
-												المواد
-											</span>
-
-                                            <span class="stext-102 cl6 size-206">
-												{{ product.materials }}
-											</span>
-                                        </li>
-
-                                        <li class="flex-w flex-t p-b-7">
-											<span class="stext-102 cl3 size-205">
-												المقاس
-											</span>
-
-                                            <span class="stext-102 cl6 size-206">
-												XL, L, M, S
-											</span>
-                                        </li>
-                                    </ul>
+                            <div class="quantity">
+                                <label>كمية</label>
+                                <div class="cart-plus-minus">
+                                    <input class="cart-plus-minus-box" value="1" type="number" disabled>
+                                    <div class="dec qtybutton"><i class="fa fa-angle-down"></i></div>
+                                    <div class="inc qtybutton"><i class="fa fa-angle-up"></i></div>
                                 </div>
                             </div>
+                            <div class="qty-btn_area">
+                                <ul>
+                                    <li><a class="qty-cart_btn" href="{{ path('add.cart', { locale: 'ar' }) }}">أضف إلى العربة</a></li>
+                                    <li><a class="qty-wishlist_btn" {% if wish[product.id] is defined and wish[product.id] == 1  %} href="{{ path('delete.wishlist', { locale: 'ar', id:product.id, route:page }) }}" title="Remove from Wishlist" {% else %} href="{{ path('add.wishlist', { locale: 'ar', id:product.id }) }}" title="Add To Wishlist" {% endif %} data-toggle="tooltip" data-placement="top"><i {% if wish[product.id] is defined and wish[product.id] == 1  %} class="ion-android-favorite"  {% else %} class="ion-android-favorite-outline"  {% endif %} ></i></a></li>
+                                    {#                                    <li><a class="qty-compare_btn" href="compare.html" data-toggle="tooltip" title="Compare This Product"><i class="ion-ios-shuffle-strong"></i></a></li>#}
+                                </ul>
+                            </div>
+                            <div class="hiraola-tag-line">
+                                <h6>العلامات:</h6>
+                                {% for tag in product.togs %}
+                                    <a href="javascript:void(0)">{{ tag }}</a>,
+                                {% endfor %}
+                            </div>
+                            {#                            <div class="hiraola-social_link">#}
+                            {#                                <ul>#}
+                            {#                                    <li class="facebook">#}
+                            {#                                        <a href="https://www.facebook.com" data-toggle="tooltip" target="_blank" title="Facebook">#}
+                            {#                                            <i class="fab fa-facebook"></i>#}
+                            {#                                        </a>#}
+                            {#                                    </li>#}
+                            {#                                    <li class="twitter">#}
+                            {#                                        <a href="https://twitter.com" data-toggle="tooltip" target="_blank" title="Twitter">#}
+                            {#                                            <i class="fab fa-twitter-square"></i>#}
+                            {#                                        </a>#}
+                            {#                                    </li>#}
+                            {#                                    <li class="youtube">#}
+                            {#                                        <a href="https://www.youtube.com" data-toggle="tooltip" target="_blank" title="Youtube">#}
+                            {#                                            <i class="fab fa-youtube"></i>#}
+                            {#                                        </a>#}
+                            {#                                    </li>#}
+                            {#                                    <li class="google-plus">#}
+                            {#                                        <a href="https://www.plus.google.com/discover" data-toggle="tooltip" target="_blank" title="Google Plus">#}
+                            {#                                            <i class="fab fa-google-plus"></i>#}
+                            {#                                        </a>#}
+                            {#                                    </li>#}
+                            {#                                    <li class="instagram">#}
+                            {#                                        <a href="https://rss.com" data-toggle="tooltip" target="_blank" title="Instagram">#}
+                            {#                                            <i class="fab fa-instagram"></i>#}
+                            {#                                        </a>#}
+                            {#                                    </li>#}
+                            {#                                </ul>#}
+                            {#                            </div>#}
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    <!-- Hiraola's Single Product Variable Area End Here -->
 
-        <div class="bg6 flex-c-m flex-w size-302 m-t-73 p-tb-15">
-			<span class="stext-107 cl6 p-lr-25">
-				المنتج: {{ product.nameAr }}
-			</span>
-
-            <span class="stext-107 cl6 p-lr-25">
-				النوع: {{ product.category.nameAr|upper }}
-			</span>
-        </div>
-    </section>
-
-
-    <!-- Related Products -->
-    <section class="sec-relate-product bg0 p-t-45 p-b-105">
+    <!-- Begin Hiraola's Single Product Tab Area -->
+    <div class="hiraola-product-tab_area-2 sp-product-tab_area">
         <div class="container">
-            <div class="p-b-45">
-                <h3 class="ltext-106 cl5 txt-center">
-                    منتجات ذات صله
-                </h3>
-            </div>
-            {% set prod = product %}
-            <!-- Slide2 -->
-            <div class="wrap-slick2">
-                <div class="slick2">
-                    {% for product in products %}
-                        {% if product != prod %}
-                            <div id="product-{{ product.id }}" class="item-slick2 p-l-15 p-r-15 p-t-15 p-b-15">
-                                <!-- Block2 -->
-                                <div class="block2">
-                                    <div class="block2-pic hov-img0">
-                                        <img src="{{ vich_uploader_asset(product.images.first, 'imageFile') | imagine_filter('medium') }}"
-                                             alt="{{ product.name }}">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="sp-product-tab_nav ">
+                        <div class="product-tab">
+                            <ul class="nav product-menu">
+                                <li><a class="active" data-toggle="tab" href="#descrip"><span>وصف</span></a>
+                                </li>
+                                <li><a data-toggle="tab" href="#specification"><span>تخصيص</span></a></li>
+                                <li><a data-toggle="tab" href="#size"><span>دليل المقاسات</span></a></li>
+                            </ul>
+                        </div>
+                        <div class="tab-content hiraola-tab_content">
+                            <div id="descrip" class="tab-pane active show" role="tabpanel">
+                                <div class="product-description text-right">
+                                    {{ product.longDescriptionAr|raw }}
+                                </div>
+                            </div>
+                            <div id="specification" class="tab-pane" role="tabpanel">
+                                {#                                <table class="table table-bordered specification-inner_stuff">#}
+                                {#                                    <tbody>#}
+                                {#                                    <tr>#}
+                                {#                                        <td colspan="2"><strong>Memory</strong></td>#}
+                                {#                                    </tr>#}
+                                {#                                    </tbody>#}
+                                {#                                    <tbody>#}
+                                {#                                    <tr>#}
+                                {#                                        <td>test 1</td>#}
+                                {#                                        <td>8gb</td>#}
+                                {#                                    </tr>#}
+                                {#                                    </tbody>#}
+                                {#                                    <tbody>#}
+                                {#                                    <tr>#}
+                                {#                                        <td colspan="2"><strong>Processor</strong></td>#}
+                                {#                                    </tr>#}
+                                {#                                    </tbody>#}
+                                {#                                    <tbody>#}
+                                {#                                    <tr>#}
+                                {#                                        <td>No. of Cores</td>#}
+                                {#                                        <td>1</td>#}
+                                {#                                    </tr>#}
+                                {#                                    </tbody>#}
+                                {#                                </table>#}
+                            </div>
+                            <div id="size" class="tab-pane" role="tabpanel">
+                                {#                                <a href="#img">#}
+                                {#                                    <img class="thumb" src="{{ vich_uploader_asset(product, 'imageFile') }}">#}
+                                {#                                </a>#}
+                                {#                                <!-- third image box webdevtrick.com -->#}
+                                {#                                <div class="lightbox" id="img">#}
 
-                                        <a href="#"
-                                           class="block2-btn flex-c-m stext-103 cl2 size-102 bg0 bor2 hov-btn1 p-lr-15 trans-04 js-show-modal1"
-                                           data-id="{{ product.id }}"
-                                           data-name="{{ product.nameAr|upper }}"
-                                           data-description="{{ product.descriptionAr|raw }}"
-                                           data-price="{{ (product.price / 100) |number_format(2, '.', ',') }} {{ currency_ar }}"
-                                           data-discount="{{ (product.discountPrice / 100) |number_format(2, '.', ',') }} {{ currency_ar }}"
-                                                {% for catalog in  product.catalogs %} data-catalog{{ loop.index }}="{{ catalog.id }}" {% endfor %}
-                                                {% for catalog in  product.catalogs %} data-size{{ loop.index }}="{{ catalog.size }}" {% endfor %}
-                                                {% for catalog in  product.catalogs %} data-quantity{{ loop.index }}="{{ catalog.quantity }}" {% endfor %}
-                                                {% for image in  product.images %} data-image{{ loop.index }}="{{ image }}" {% endfor %}
-                                           data-href-a="{{ path('add.cart', {locale: 'ar'}) }}"
-                                        >
-                                            نظرة سريعة
-                                        </a>
+                                {#                                    <a href="#_" class="btn-close">X</a>#}
+                                {#                                    <img src="{{ vich_uploader_asset(product, 'imageFile') }}">#}
+                                {#                                </div>#}
+                                <div class="row d-flex flex-wrap align-items-center" data-toggle="modal" data-target="#lightbox">
+                                    <div class="col-12 col-md-8 col-lg-6 offset-md-2 offset-lg-3">
+                                        <img src="{{ vich_uploader_asset(product, 'imageFile') }}" data-target="#indicators" data-slide-to="0" alt="" />
                                     </div>
+                                </div>
 
-                                    <div class="block2-txt flex-w flex-t p-t-14">
-                                        <div class="block2-txt-child1 flex-col-l ">
-                                            <a href="{{ path('product', {locale: 'ar', 'slug': product.slug }) }}"
-                                               class="stext-104 cl4 hov-cl1 trans-04 js-name-b2 p-b-6">
-                                                {{ product.nameAr|upper }}
-                                            </a>
+                                <!-- Modal -->
+                                <div class="modal fade" id="lightbox" role="dialog" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <button type="button" class="close text-right p-2" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                            <div id="indicators" class="carousel slide" data-interval="false">
+                                                <ol class="carousel-indicators">
+                                                    <li data-target="#indicators" data-slide-to="0" class="active"></li>
+                                                </ol>
+                                                <div class="carousel-inner">
 
-                                            {% if product.discountPrice != 0 %}
-                                                <div class="style-1">
-                                                    <del>
-                                                    <span class="stext-105 cl3">
-                                                            {{ (product.price / 100) |number_format(2, '.', ',') }} {{ currency_ar }}
-                                                        </span>
-                                                    </del>
-                                                    <ins>
-                                                        <span class="stext-105 cl3">
-                                                            {{ (product.discountPrice / 100) |number_format(2, '.', ',') }} {{ currency_ar }}
-                                                        </span>
-                                                    </ins>
+                                                    <div class="carousel-item active">
+                                                        <img class="d-block w-400" src="{{ vich_uploader_asset(product, 'imageFile') }}" alt="First slide">
+                                                    </div>
                                                 </div>
-                                            {% else %}
-                                                <ins>
-                                                    <span class="stext-105 cl3">
-                                                        {{ (product.price / 100) |number_format(2, '.', ',') }} {{ currency_ar }}
-                                                    </span>
-                                                </ins>
-                                            {% endif %}
-                                        </div>
+                                            </div>
 
-                                        <div class="block2-txt-child2 flex-r p-t-3">
-                                            <a href="#" class="btn-addwish-b2 dis-block pos-relative js-addwish-b2">
-                                                <img class="icon-heart1 dis-block trans-04"
-                                                     src="{{ '/media/images/icons/icon-heart-01.png' }}" alt="ICON">
-                                                <img class="icon-heart2 dis-block trans-04 ab-t-l"
-                                                     src="{{ '/media/images/icons/icon-heart-02.png' }}" alt="ICON">
-                                            </a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        {% endif %}
-                    {% endfor %}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+    <!-- Hiraola's Single Product Tab Area End Here -->
+
+    <!-- Begin Hiraola's Product Area Two -->
+    <div class="hiraola-product_area hiraola-product_area-2 section-space_add">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+
+                    <div class="hiraola-section_title text-right">
+                        <h4>منتجات ذات صله</h4>
+                    </div>
+
+                </div>
+                <div class="col-lg-12">
+                    {% set prod = product %}
+                    <div class="hiraola-product_slider-3">
+                        {% for product in products %}
+                            {% if product != prod %}
+                                <!-- Begin Hiraola's Slide Item Area -->
+                                <div class="slide-item">
+                                    <div class="single_product">
+                                        <div class="product-img">
+                                            <a href="{{ path('product', {locale: 'ar', 'slug': product.slug }) }}">
+                                                <img class="primary-img" src="{{ vich_uploader_asset(product.images.first, 'imageFile') | imagine_filter('medium') }}" alt="{{ product.name }}">
+                                                <img class="secondary-img" src="{{ vich_uploader_asset(product.images.first, 'imageFile') | imagine_filter('medium') }}" alt="{{ product.name }}">
+                                            </a>
+                                            {#                                    <span class="sticker-2">Sale</span>#}
+                                            <div class="add-actions">
+                                                <ul>
+                                                    {% set break = false %}
+                                                    <li><a class="hiraola-add_cart"
+                                                                {% for catalog in product.catalogs %}
+                                                                    {% if not break %}
+                                                                        {% if catalog.quantity > 0 %}
+                                                                            href="{{ path('add.cart', { locale: 'ar', id: catalog.id }) }}"
+                                                                            {% set break = true %}
+                                                                        {% endif %}
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                           data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="ion-bag"></i></a></li>
+                                                    <li class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter">
+                                                        <a class="js-show-modal1" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="Quick View"
+                                                           data-id="{{ product.id }}"
+                                                           data-name="{{ product.nameAr }}"
+                                                           data-slug="{{ path('product', {locale: 'ar', 'slug': product.slug }) }}"
+                                                           data-description="{{ product.descriptionAr|raw }}"
+                                                           data-price="{{ (product.price / 100) |number_format(2, '.', ',') }} {{ currency_ar }}"
+                                                           data-discount="{{ (product.discountPrice / 100) |number_format(2, '.', ',') }} {{ currency_ar }}"
+                                                                {% for catalog in  product.catalogs %} data-catalog{{ loop.index }}="{{ catalog.id }}" {% endfor %}
+                                                                {% for catalog in  product.catalogs %} data-size{{ loop.index }}="{{ catalog.size }}" {% endfor %}
+                                                                {% for catalog in  product.catalogs %} data-color{{ loop.index }}="{{ catalog.color }}" {% endfor %}
+                                                                {% for tag in  product.togs %} data-tag{{ loop.index }}="{{ tag }}" {% endfor %}
+                                                                {% for image in  product.images %} data-image{{ loop.index }}="{{ image }}" {% endfor %}
+                                                           data-href-a ="{{ path('add.cart', { locale: 'ar' }) }}"
+                                                        >
+                                                            <i class="ion-eye"></i>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="hiraola-product_content">
+                                            <div class="product-desc_info">
+                                                <h6><a class="product-name" href="{{ path('product', {locale: 'ar', 'slug': product.slug }) }}">{{ product.nameAr }}</a></h6>
+                                                <div class="price-box style-1">
+                                            <span class="new-price">
+                                                          {% if product.discountPrice != 0 %}
+                                                              <del><span class="new-price">{{ (product.price / 100) |number_format(2, '.', ',') }} {{ currency_ar }}</span></del>
+                                                              <ins><span class="new-price">{{ (product.discountPrice / 100) |number_format(2, '.', ',') }} {{ currency_ar }}</span></ins>
+                                                {% else %}
+                                                              <ins><span class="new-price">{{ (product.price / 100) |number_format(2, '.', ',') }} {{ currency_ar }}</span></ins>
+                                                          {% endif %}
+                                            </span>
+                                                </div>
+                                                <div class="additional-add_action">
+                                                    <ul>
+                                                        <li><a class="hiraola-add_compare"{% if wish[product.id] is defined and wish[product.id] == 1  %} href="{{ path('delete.wishlist', { locale: 'ar', id:product.id, route:page }) }}" title="Remove from Wishlist" {% else %} href="{{ path('add.wishlist', { locale: 'ar', id:product.id }) }}" title="Add To Wishlist" {% endif %} data-toggle="tooltip" data-placement="top" >
+                                                                <i {% if wish[product.id] is defined and wish[product.id] == 1  %} class="ion-android-favorite"  {% else %} class="ion-android-favorite-outline"  {% endif %} ></i></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                {#                                        <div class="rating-box">#}
+                                                {#                                            <ul>#}
+                                                {#                                                <li><i class="fa fa-star-of-david"></i></li>#}
+                                                {#                                                <li><i class="fa fa-star-of-david"></i></li>#}
+                                                {#                                                <li><i class="fa fa-star-of-david"></i></li>#}
+                                                {#                                                <li><i class="fa fa-star-of-david"></i></li>#}
+                                                {#                                                <li class="silver-color"><i class="fa fa-star-of-david"></i></li>#}
+                                                {#                                            </ul>#}
+                                                {#                                        </div>#}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Hiraola's Slide Item Area End Here -->
+                            {% endif %}
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Hiraola's Product Area Two End Here -->
+
+    <!-- Modal1 -->
+    {% include 'modal2.html.twig' %}
+
     <style>
-        .style-1 del {
-            color: #D97591;
-            text-decoration: none;
-            position: relative;
-            display: inline-block;
-        }
-
-        .style-1 del:before {
-            content: " ";
-            display: block;
-            width: 100%;
-            border-top: 2px solid #D97591;
-            height: 12px;
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            transform: rotate(-7deg);
-        }
-
-        .style-1 ins {
-            color: green;
-            text-decoration: none;
-        }
         .sold_out {
             top: 2em;
             left: -4em;
@@ -373,6 +400,74 @@
             transform: scale(0.7);
             -webkit-transform: scale(0.7);
             border: 2px rgba(255,255,255,0.7) dashed;
+        }
+        .thumb {
+            max-height: 171px;
+            border: solid 6px white;
+        }
+        .lightbox {
+            position: fixed;
+            z-index: 999;
+            height: 0;
+            width: 0;
+            text-align: center;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.8);
+            opacity: 0;
+        }
+        .lightbox img {
+            max-width: 90%;
+            max-height: 80%;
+            margin-top: 2%;
+            opacity: 0;
+        }
+        .lightbox:target {
+            outline: none;
+
+            width: 100%;
+            height: 100%;
+            opacity: 1 !important;
+
+        }
+        .lightbox:target img {
+            border: solid 17px white;
+            opacity: 1;
+            webkit-transition: opacity 0.6s;
+            transition: opacity 0.6s;
+        }
+        .light-btn {
+            color: #fafafa;
+            background-color: #333;
+            border: solid 3px white;
+            padding: 5px 15px;
+            border-radius: 1px;
+            text-decoration: none;
+            cursor: pointer;
+            vertical-align: middle;
+            position: absolute;
+            top: 45%;
+            z-index: 99;
+        }
+        .light-btn:hover {
+            background-color: #111;
+        }
+        .btn-close {
+            position: absolute;
+            right: 2%;
+            top: 2%;
+            color: #fafafa;
+            background-color: red;
+            border: solid 5px white;
+            padding: 10px 15px;
+            border-radius: 1px;
+            text-decoration: none;
+        }
+        .btn-close:hover {
+            background-color: #740404;
+        }
+        .modal-dialog{
+            max-width: 800px;
         }
     </style>
     <script>

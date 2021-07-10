@@ -4,10 +4,12 @@ namespace App\Form;
 
 use App\Entity\Order;
 use App\Entity\PaymentMethods;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TelephoneField;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -32,8 +34,12 @@ class OrderType extends AbstractType
             ->add('shippingEmail', EmailType::class, [
                 'label'=>false
             ])
-            ->add('shippingPhone', TextType::class, [
+            ->add('shippingPhone', TelType::class, [
                 'label'=>false
+            ])
+            ->add('shippingSecondPhone', TelType::class, [
+                'label'=> false,
+                'required' => false
             ])
         ;
     }

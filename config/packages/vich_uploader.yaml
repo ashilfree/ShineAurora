@@ -14,3 +14,11 @@ vich_uploader:
             uri_prefix: '%app.path.about.images%'
             upload_destination: '%kernel.project_dir%/public%app.path.about.images%'
             namer: Vich\UploaderBundle\Naming\UniqidNamer
+        banner_images:
+            uri_prefix: '%app.path.banner.images%'
+            upload_destination: '%kernel.project_dir%/public%app.path.banner.images%'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer
+        popup_images:
+            uri_prefix: '%app.path.popup.images%'
+            upload_destination: '%kernel.project_dir%/public%app.path.popup.images%'
+            namer: Vich\UploaderBundle\Naming\UniqidNamer

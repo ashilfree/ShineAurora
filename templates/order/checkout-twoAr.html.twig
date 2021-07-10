@@ -1,223 +1,424 @@
 {% extends 'baseAr.html.twig' %}
+
 {% block stylesheets %}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css">
 {% endblock %}
 {% block body %}
-{% set total = null %}
+    {% set total = null %}
+    {% set isTrue = false %}
     {% for orderDetail in cart2order %}
-     {% if orderDetail.catalog.product.discountPrice != 0 %}
-        {% set total = total + ((orderDetail.quantity * orderDetail.catalog.product.discountPrice)) %}
+        {% if orderDetail.catalog.product.discountPrice != 0 %}
+            {% set subTotal = ((orderDetail.quantity * orderDetail.catalog.product.discountPrice)) %}
         {% else %}
-        {% set total = total + ((orderDetail.quantity * orderDetail.catalog.product.price)) %}
+            {% set subTotal = ((orderDetail.quantity * orderDetail.catalog.product.price)) %}
         {% endif %}
+        {% if subTotal < 50 %}
+            {% set isTrue = true %}
+        {% endif %}
+        {% set total = total + subTotal %}
     {% endfor %}
-    <!--================Categories Banner Area =================-->
-    <section class="solid_banner_area">
+    <!-- Begin Hiraola's Breadcrumb Area -->
+    <div class="breadcrumb-area" style="background-image: url({{ vich_uploader_asset(banner, 'imageFile') | imagine_filter('Extra_large') }});background-repeat:no-repeat;background-position:center;">
         <div class="container">
-            <div class="solid_banner_inner">
-                <h3>عربة التسوق</h3>
+            <div class="breadcrumb-content">
+                <h2>الطلب</h2>
                 <ul>
-                 <li><a href="{{ path('home', { locale: 'ar' }) }}">الصفحة الرئيسية</a></li>
-                    <li><a>الدفع</a></li>
+                    <li><a href="{{ path('home', { locale: 'ar' }) }}">الصفحة الرئيسية</a></li>
+                    <li class="active">الدفع</li>
                 </ul>
             </div>
         </div>
-    </section>
-    <!--================End Categories Banner Area =================-->
-<div class="container">
-    <div class="row row-pb-md  justify-content-center p-t-75">
-        <div class="col-md-10">
-            <div class="process-wrap">
-                <div class="process text-center active">
-                    <p><span>01</span></p>
-                    <h3>عربة التسوق</h3>
+    </div>
+    <!-- Hiraola's Breadcrumb Area End Here -->
+    <!-- Begin Hiraola's Checkout Area -->
+    <div class="checkout-area js-checkout">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-12">
+                    <div class="your-order text-right">
+                        <div class="details_item">
+                            <h3>معلومات الطلب</h3>
+                            <table class="table">
+                                <tbody>
+                                <tr>
+                                    <td class="cart-product-name">رقم الطلب :</td>
+                                    <td class="cart-product-total">{{ order.reference }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="cart-product-name">تاريخ الطلب :</td>
+                                    <td class="cart-product-total">{{ order.createdAt|date("m/d/Y") }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="cart-product-name">مجموع :</td>
+                                    <td class="cart-product-total">{{ (total + order.deliveryPrice)/100|number_format(2, '.', ',') ~ currency_ar }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="cart-product-name">سعر تسليم :</td>
+                                    <td class="cart-product-total">{{ order.deliveryPrice/100|number_format(2, '.', ',') ~ currency_ar }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="details_item">
+                            <h3>معلومات الفاتورة</h3>
+                            <table class="table">
+                                <tbody>
+                                <tr>
+                                    <td class="cart-product-name">اسم :</td>
+                                    <td class="cart-product-total">{{ order.shippingFullName }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="cart-product-name">بريد إلكتروني :</td>
+                                    <td class="cart-product-total">{{ order.shippingEmail }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="cart-product-name">هاتف :</td>
+                                    <td class="cart-product-total">{{ order.shippingPhone }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="details_item">
+                            <h3>عنوان وصول الطلب</h3>
+                            <table class="table">
+                                <tbody>
+                                <tr>
+                                    <td class="cart-product-name">شارع :</td>
+                                    <td class="cart-product-total">{{ order.shippingAddress }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="cart-product-name">مدينة :</td>
+                                    <td class="cart-product-total">{{ order.shippingCity }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="cart-product-name">محافظة :</td>
+                                    <td class="cart-product-total">{{ order.shippingProvince }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-                <div class="process text-center active">
-                    <p><span>02</span></p>
-                    <h3>الدفع</h3>
-                </div>
-                <div class="process text-center">
-                    <p><span>03</span></p>
-                    <h3>الطلب جاهز</h3>
+                <div class="col-lg-6 col-12">
+                    <div class="your-order text-right">
+                        <h3>تفاصيل الطلب</h3>
+                        <div class="your-order-table table-responsive">
+                            {% set total = null %}
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="cart-product-name">المنتج</th>
+                                    <th class="cart-product-total">مجموع</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for productCart in cart2order %}
+                                    <tr class="cart_item">
+                                        <td class="cart-product-name"> {{ productCart.catalog.product.nameAr }}<strong class="product-quantity">
+                                                × {{ productCart.quantity }}</strong></td>
+                                        <td class="cart-product-total"><span class="amount">
+                                             {% if productCart.catalog.product.discountPrice != 0 %}
+                                                 {{ (productCart.quantity * productCart.catalog.product.discountPrice/100) |number_format(2, '.', ',')~ currency_ar }}
+                                             {% else %}
+                                                 {{ (productCart.quantity * productCart.catalog.product.price/100) |number_format(2, '.', ',')~ currency_ar }}
+                                             {% endif %}
+                                    </span></td>
+                                    </tr>
+                                    {% if productCart.catalog.product.discountPrice != 0 %}
+                                        {% set total = total + ((productCart.quantity * productCart.catalog.product.discountPrice)/100) %}
+                                    {% else %}
+                                        {% set total = total + ((productCart.quantity * productCart.catalog.product.price)/100) %}
+                                    {% endif %}
+                                {% endfor %}
+                                </tbody>
+                                <tfoot>
+                                <tr class="cart-subtotal">
+                                    <th>المجموع</th>
+                                    <td><span class="amount">{{ total |number_format(2, '.', ',')  ~currency_ar }}</span></td>
+                                </tr>
+                                <tr class="cart-delivery">
+                                    <th>التوصيل</th>
+                                    <td><span class="amount">{{ (order.deliveryPrice/100) |number_format(2, '.', ',') ~ currency_ar }}</span></td>
+                                </tr>
+                                <tr class="order-total">
+                                    <th>الإجمالي</th>
+                                    <td><strong><span class="amount">{{ (total + (order.deliveryPrice/100)) |number_format(2, '.', ',') ~ currency_ar }}</span></strong></td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                        <h3>طريقة الدفع</h3>
+                        <div class="payment-method">
+                            <div class="payment-accordion">
+                                {{ form_start(payment_method_form, {action: path('my.fatoorah.create.session', { id: order.id , locale: 'ar' }), 'attr': {'onsubmit': 'setFormSubmitting()'}}) }}
+                                <div class="p-t-15 p-all-30">
+                                    <div class="payment-type">
+
+                                        <div class="types flex justify-space-between">
+                                            <div class="type type1 selected">
+                                                <div class="logo">
+                                                    <i class="fas fa-handshake"></i>
+                                                </div>
+                                                <div class="text">
+                                                    <p>الدفع عند الاستلام</p>
+                                                </div>
+                                            </div>
+                                            <div class="type type2 {% if isTrue %} disabled {% endif %}">
+                                                <div class="logo">
+                                                    <i class="far fa-credit-card"></i>
+                                                </div>
+                                                <div class="text">
+                                                    <p>الدفع الالكتروني</p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="select-wrapper m-b-15 m-t-15" style="display: none">
+
+                                        {#                            <select class="nice-select" name="payment" required="required">#}
+                                        {#                                <option value="">Select a payment method...</option>#}
+                                        {#                                {% for paymentMethod in paymentMethods %}#}
+                                        {#                                    <option#}
+
+                                        {#                                            value="{{ paymentMethod.id }}">{{ paymentMethod.name }}</option>#}
+                                        {#                                {% endfor %}#}
+                                        {#                            </select>#}
+                                        {#                            <div class="dropDownSelect2"></div>#}
+
+                                        {{ form_widget(payment_method_form.paymentMethod, {'attr': {'class': 'nice-select wide', 'placeholder':'Choose a Credit Card *'}}) }}
+                                    </div>
+
+                                </div>
+                                {{ form_row(payment_method_form._token) }}
+                                <main>
+                                    <article class="terms-and-conditions">
+                                        <h1>الأحكام والشروط</h1>
+                                        <h2>مرحبا فى موقعنا</h2>
+                                        <p>تحدد هذه الشروط والأحكام القواعد واللوائح الخاصة باستخدام شركتنا.</p>
+                                        <p>
+                                            من خلال الوصول إلى هذا الموقع ، نفترض أنك تقبل هذه الشروط والأحكام. لا تستمر في استخدام موقعنا على شبكة الإنترنت إذا كنت لا توافق على أخذ جميع الشروط والأحكام المذكورة في هذه الصفحة.
+                                        </p>
+                                        <p>
+                                            تنطبق المصطلحات التالية على هذه الشروط والأحكام وبيان الخصوصية وإشعار إخلاء المسؤولية وجميع الاتفاقيات: يشير مصطلح "العميل" و "أنت" و "الخاص بك" إليك ، والشخص الذي يقوم بتسجيل الدخول إلى هذا الموقع الإلكتروني ومتوافق مع شروط وأحكام الشركة. تشير "الشركة" و "أنفسنا" و "نحن" و "لنا" و "نحن" إلى شركتنا.
+                                            يشير "الطرف" أو "الأطراف" أو "نحن" إلى كل من العميل وأنفسنا. تشير جميع الشروط إلى العرض والقبول والنظر في الدفع اللازم للاضطلاع بعملية مساعدتنا للعميل في أغلب الأحيان
+                                            بطريقة مناسبة للغرض الصريح المتمثل في تلبية احتياجات العميل فيما يتعلق بتوفير
+                                            الخدمات المعلنة للشركة ، وفقًا للقانون السائد في هولندا وتخضع له. أي استخدام لبرنامج
+                                            المصطلحات أعلاه أو غيرها من الكلمات في صيغة المفرد والجمع والأحرف الكبيرة و / أو هو / هي أو هم ، تؤخذ على أنها
+                                            قابلة للتبديل وبالتالي تشير إلى نفس الشيء.
+                                        </p>
+{#                                        <h3>Cookies</h3>#}
+{#                                        <p>#}
+{#                                            We employ the use of cookies. By accessing our website, you agreed to use cookies in agreement with our#}
+{#                                            company's Privacy Policy.#}
+{#                                        </p>#}
+{#                                        <p>#}
+{#                                            Most interactive websites use cookies to let us retrieve the user's details for each visit. Cookies are used#}
+{#                                            by our website to enable the functionality of certain areas to make it easier for people visiting our website.#}
+{#                                            Some of our affiliate/advertising partners may also use cookies.#}
+{#                                        </p>#}
+{#                                        <h3>License</h3>#}
+{#                                        <p>#}
+{#                                            Unless otherwise stated, LOPYI and its licensors own the intellectual property rights for all material on our#}
+{#                                            website. All intellectual property rights are reserved. You may access this from our website for your own#}
+{#                                            personal use subjected to restrictions set in these terms and conditions.#}
+{#                                        </p>#}
+{#                                        <p>You must not:</p>#}
+{#                                        <ul>#}
+{#                                            <li>Republish material from our website</li>#}
+{#                                            <li>Sell, rent or sub-license material from our website</li>#}
+{#                                            <li>Reproduce, duplicate or copy material from our website</li>#}
+{#                                            <li>Redistribute content from our website</li>#}
+{#                                        </ul>#}
+{#                                        <p>This Agreement shall begin on the date hereof.</p>#}
+{#                                        <p>#}
+{#                                            Parts of this website offer an opportunity for users to post and exchange opinions and information in certain#}
+{#                                            areas of the website. LOPYI does not filter, edit, publish or review Comments prior to their presence on the#}
+{#                                            website. Comments do not reflect the views and opinions of LOPYI,its agents and/or affiliates. Comments#}
+{#                                            reflect the views and opinions of the person who post their views and opinions. To the extent permitted by#}
+{#                                            applicable laws, LOPYI shall not be liable for the Comments or for any liability, damages or expenses caused#}
+{#                                            and/or suffered as a result of any use of and/or posting of and/or appearance of the Comments on this website.#}
+{#                                        </p>#}
+{#                                        <p>#}
+{#                                            LOPYI reserves the right to monitor all Comments and to remove any Comments which can be considered#}
+{#                                            inappropriate, offensive or causes breach of these Terms and Conditions.#}
+{#                                        </p>#}
+{#                                        <p>You warrant and represent that:</p>#}
+{#                                        <ul>#}
+{#                                            <li>#}
+{#                                                You are entitled to post the Comments on our website and have all necessary licenses and consents to do so;#}
+{#                                            </li>#}
+{#                                            <li>#}
+{#                                                The Comments do not invade any intellectual property right, including without limitation copyright, patent#}
+{#                                                or trademark of any third party;#}
+{#                                            </li>#}
+{#                                            <li>#}
+{#                                                The Comments do not contain any defamatory, libelous, offensive, indecent or otherwise unlawful material#}
+{#                                                which is an invasion of privacy#}
+{#                                            </li>#}
+{#                                            <li>#}
+{#                                                The Comments will not be used to solicit or promote business or custom or present commercial activities or#}
+{#                                                unlawful activity.#}
+{#                                            </li>#}
+{#                                        </ul>#}
+                                        {#                                        <p>#}
+                                        {#                                            You hereby grant LOPYI a non-exclusive license to use, reproduce, edit and authorize others to use, reproduce#}
+                                        {#                                            and edit any of your Comments in any and all forms, formats or media.#}
+                                        {#                                        </p>#}
+                                        {#                                        <h2>Hyperlinking to our Content</h2>#}
+                                        {#                                        <p>The following organizations may link to our website without prior written approval:</p>#}
+                                        {#                                        <ul>#}
+                                        {#                                            <li>Government agencies;</li>#}
+                                        {#                                            <li>Search engines;</li>#}
+                                        {#                                            <li>News organizations;</li>#}
+                                        {#                                            <li>#}
+                                        {#                                                Online directory distributors may link to our website in the same manner as they hyperlink to the websites#}
+                                        {#                                                of other listed businesses; and#}
+                                        {#                                            </li>#}
+                                        {#                                            <li>#}
+                                        {#                                                System wide Accredited Businesses except soliciting non-profit organizations, charity shopping malls, and#}
+                                        {#                                                charity fundraising groups which may not hyperlink to our Web site.#}
+                                        {#                                            </li>#}
+                                        {#                                        </ul>#}
+                                        {#                                        <p>#}
+                                        {#                                            These organizations may link to our home page, to publications or to other website information so long as the#}
+                                        {#                                            link: (a) is not in any way deceptive; (b) does not falsely imply sponsorship, endorsement or approval of the#}
+                                        {#                                            linking party and its products and/or services; and (c) fits within the context of the linking party's site.#}
+                                        {#                                        </p>#}
+                                        {#                                        <p>We may consider and approve other link requests from the following types of organizations:</p>#}
+                                        {#                                        <ul>#}
+                                        {#                                            <li>commonly-known consumer and/or business information sources;</li>#}
+                                        {#                                            <li>dot.com community sites;</li>#}
+                                        {#                                            <li>associations or other groups representing charities;</li>#}
+                                        {#                                            <li>online directory distributors;</li>#}
+                                        {#                                            <li>internet portals;</li>#}
+                                        {#                                            <li>accounting, law and consulting firms; and</li>#}
+                                        {#                                            <li>ducational institutions and trade associations.</li>#}
+                                        {#                                        </ul>#}
+                                        {#                                        <p>#}
+                                        {#                                            We will approve link requests from these organizations if we decide that: (a) the link would not make us look#}
+                                        {#                                            unfavorably to ourselves or to our accredited businesses; (b) the organization does not have any negative#}
+                                        {#                                            records with us; (c) the benefit to us from the visibility of the hyperlink compensates the absence of LOPYI;#}
+                                        {#                                            and (d) the link is in the context of general resource information.#}
+                                        {#                                        </p>#}
+                                        {#                                        <p>#}
+                                        {#                                            These organizations may link to our home page so long as the link: (a) is not in any way deceptive; (b) does#}
+                                        {#                                            not falsely imply sponsorship, endorsement or approval of the linking party and its products or services; and#}
+                                        {#                                            (c) fits within the context of the linking party's site.#}
+                                        {#                                        </p>#}
+                                        {#                                        <p>#}
+                                        {#                                            If you are one of the organizations listed in paragraph 2 above and are interested in linking to our website,#}
+                                        {#                                            you must inform us by sending an e-mail to our company. Please include your name, your organization name,#}
+                                        {#                                            contact information as well as the URL of your site, a list of any URLs from which you intend to link to our#}
+                                        {#                                            website, and a list of the URLs on our site to which you would like to link. Wait 2-3 weeks for a response.#}
+                                        {#                                        </p>#}
+                                        {#                                        <p>Approved organizations may hyperlink to our website as follows:</p>#}
+                                        {#                                        <ul>#}
+                                        {#                                            <li>By use of our corporate name; or</li>#}
+                                        {#                                            <li>By use of the uniform resource locator being linked to; or</li>#}
+                                        {#                                            <li>#}
+                                        {#                                                By use of any other description of our website being linked to that makes sense within the context and#}
+                                        {#                                                format of content on the linking party's site.#}
+                                        {#                                            </li>#}
+                                        {#                                            <li>#}
+                                        {#                                                No use of our company's logo or other artwork will be allowed for linking absent a trademark license#}
+                                        {#                                                agreement.#}
+                                        {#                                            </li>#}
+                                        {#                                        </ul>#}
+                                        {#                                        <h3>iFrames</h3>#}
+                                        {#                                        <p>#}
+                                        {#                                            Without prior approval and written permission, you may not create frames around our Webpages that alter in any#}
+                                        {#                                            way the visual presentation or appearance of our website.#}
+                                        {#                                        </p>#}
+                                        {#                                        <h3>Content Liability</h3>#}
+                                        {#                                        <p>#}
+                                        {#                                            We shall not be hold responsible for any content that appears on your website. You agree to protect and defend#}
+                                        {#                                            us against all claims that is rising on your website. No link(s) should appear on any website that may be#}
+                                        {#                                            interpreted as libelous, obscene or criminal, or which infringes, otherwise violates, or advocates the#}
+                                        {#                                            infringement or other violation of, any third party rights.#}
+                                        {#                                        </p>#}
+                                        {#                                        <h3>Reservation of Rights</h3>#}
+                                        {#                                        <p>#}
+                                        {#                                            We reserve the right to request that you remove all links or any particular link to our website. You approve#}
+                                        {#                                            to immediately remove all links to our website upon request. We also reserve the right to amen these terms and#}
+                                        {#                                            conditions and it's linking policy at any time. By continuously linking to our website, you agree to be bound#}
+                                        {#                                            to and follow these linking terms and conditions.#}
+                                        {#                                        </p>#}
+                                        {#                                        <h3>Removal of links from our website</h3>#}
+                                        {#                                        <p>#}
+                                        {#                                            If you find any link on our website that is offensive for any reason, you are free to contact and inform us#}
+                                        {#                                            any moment. We will consider requests to remove links but we are not obligated to or so or to respond to you#}
+                                        {#                                            directly.#}
+                                        {#                                        </p>#}
+                                        {#                                        <p>#}
+                                        {#                                            We do not ensure that the information on this website is correct, we do not warrant its completeness or#}
+                                        {#                                            accuracy; nor do we promise to ensure that the website remains available or that the material on the website#}
+                                        {#                                            is kept up to date.#}
+                                        {#                                        </p>#}
+                                        {#                                        <h3>Disclaimer</h3>#}
+                                        {#                                        <p>#}
+                                        {#                                            To the maximum extent permitted by applicable law, we exclude all representations, warranties and conditions#}
+                                        {#                                            relating to our website and the use of this website. Nothing in this disclaimer will:#}
+                                        {#                                        </p>#}
+                                        {#                                        <ul>#}
+                                        {#                                            <li>limit or exclude our or your liability for death or personal injury;</li>#}
+                                        {#                                            <li>limit or exclude our or your liability for fraud or fraudulent misrepresentation;</li>#}
+                                        {#                                            <li>limit any of our or your liabilities in any way that is not permitted under applicable law; or</li>#}
+                                        {#                                            <li>exclude any of our or your liabilities that may not be excluded under applicable law.</li>#}
+                                        {#                                        </ul>#}
+                                        {#                                        <p>#}
+                                        {#                                            The limitations and prohibitions of liability set in this Section and elsewhere in this disclaimer: (a) are#}
+                                        {#                                            subject to the preceding paragraph; and (b) govern all liabilities arising under the disclaimer, including#}
+                                        {#                                            liabilities arising in contract, in tort and for breach of statutory duty.#}
+                                        {#                                        </p>#}
+{#                                        <p id="last">#}
+{#                                            As long as the website and the information and services on the website are provided free of charge, we will#}
+{#                                            not be liable for any loss or damage of any nature.#}
+{#                                        </p>#}
+                                    </article>
+                                    <div class="term-buttons-container">
+                                        <button class="scroll-to-bottom">
+                                            <svg
+                                                    width="20"
+                                                    height="11"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    title="Go to bottom to accept terms and conditions"
+                                            >
+                                                <title>انتقل إلى أسفل لقبول الشروط والأحكام</title>
+                                                <path
+                                                        d="M20 1.39L18.594 0 9.987 8.261l-.918-.881.005.005L1.427.045 0 1.414 9.987 11 20 1.39"
+                                                        fill="#fff"
+                                                        fill-rule="evenodd"
+                                                />
+                                            </svg>
+                                        </button>
+
+                                        <button type="submit" class="accept-button" aria-hidden="true" aria-label="Accept terms and conditions"  data-id="{{ order.id }}" data-locale="{{ locale }}">
+                                            استكمال الطلب
+                                        </button>
+
+                                    </div>
+                                </main>
+                                {{ form_end(payment_method_form) }}
+                                <div class="p-t-10">
+                                    <a href="{{ path('order', { locale: 'ar' }) }}" onclick="setFormSubmitting();" class="hiraola-btn w-100">
+                                        عودة
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- Check Out -->
-    <section class="order_details p_120">
-        <div class="container">
-            <div class="row order_d_inner">
-                <div class="col-lg-4 text-right">
-                    <div class="details_item">
-                        <h4>معلومات الطلب</h4>
-                        <ul class="list">
-                            <li><a href="#"><span>رقم الطلب</span> : {{ order.reference }}</a></li>
-                            <li><a href="#"><span>  تاريخ الطلب</span> : {{ order.createdAt|date("m/d/Y") }}</a></li>
-                            <li><a href="#"><span>مجموع</span> : {{ (total + order.deliveryPrice)/100|number_format(2, '.', ',') ~ currency_ar }}</a></li>
-                            <li><a href="#"><span>سعر تسليم</span> : {{ order.deliveryPrice/100|number_format(2, '.', ',') ~ currency_ar }}</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4 text-right">
-                    <div class="details_item">
-                        <h4>معلومات الفاتورة</h4>
-                        <ul class="list">
-                            <li><a href="#"><span>اسم</span> : {{ order.shippingFullName }}</a></li>
+    <!-- Hiraola's Checkout Area End Here -->
 
-                            <li><a href="#"><span>بريد إلكتروني</span> : {{ order.shippingEmail }}</a></li>
-                            <li><a href="#"><span>هاتف </span> : {{ order.shippingPhone }}</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-lg-4 text-right">
-                    <div class="details_item">
-                        <h4>عنوان وصول الطلب</h4>
-                        <ul class="list">
-                            <li><a href="#"><span>شارع</span> : {{ order.shippingAddress }}</a></li>
-                            <li><a href="#"><span>مدينة</span> : {{ order.shippingCity }}</a></li>
-                            <li><a href="#"><span>محافظة</span> : {{ order.shippingProvince }}</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                 <div class="order_details_table col-md-8 text-right">
-                    <h2>تفاصيل الطلب</h2>
-                    <div class="table-responsive">
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th scope="col">المنتج</th>
-                                <th scope="col">المقاس</th>
-                                <th scope="col">كمية</th>
-                                <th scope="col">مجموع</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-
-                            {% for orderDetail in cart2order %}
-                                <tr>
-                                    <td>
-                                        <p>{{ orderDetail.catalog.product.nameAr }}</p>
-                                    </td>
-                                    <td>
-                                        <p>{{ orderDetail.catalog.size }}</p>
-                                    </td>
-                                    <td>
-                                        <h5> {{ orderDetail.quantity }} X </h5>
-                                    </td>
-                                    <td>
-                                        <p>
-                                        {% if orderDetail.catalog.product.discountPrice != 0 %}
-                                        {{ orderDetail.catalog.product.discountPrice * orderDetail.quantity /100|number_format(2, '.', ',') ~ currency_ar }}
-                                        {% else %}
-                                         {{ orderDetail.catalog.product.price * orderDetail.quantity /100|number_format(2, '.', ',') ~ currency_ar }}
-                                        {% endif %}
-                                        </p>
-                                    </td>
-                                </tr>
-                            {% endfor %}
-                            <tr>
-                                <td>
-                                    <h4>المجموع</h4>
-                                </td>
-                                <td>
-                                    <h5></h5>
-                                </td>
-                                <td>
-                                    <p>{{ (total)/100|number_format(2, '.', ',') ~ currency_ar }}</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h4>التوصيل</h4>
-                                </td>
-                                <td>
-                                    <h5></h5>
-                                </td>
-                                <td>
-                                    <p> {{ (order.deliveryPrice)/100|number_format(2, '.', ',') ~ currency_ar }}</p>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <h4>الإجمالي</h4>
-                                </td>
-                                <td>
-                                    <h5></h5>
-                                </td>
-                                <td>
-                                    <p>{{ (total + order.deliveryPrice)/100|number_format(2, '.', ',') ~ currency_ar }}</p>
-                                </td>
-                            </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="col-md-4 m-t-75">
-                    {{ form_start(payment_method_form, {action: path('my.fatoorah.create.session', { id: order.id , locale: 'ar' }), 'attr': {'onsubmit': 'setFormSubmitting()'}}) }}
-                     <div class="p-t-15 p-all-30 text-right" style="background: #e5ecee;">
-                        <h2 class="p-b-15">
-                            طريقة الدفع
-                        </h2>
-                         <div class="payment-type">
-
-                             <div class="types flex justify-space-between">
-                                 <div class="type type1 selected">
-                                     <div class="logo">
-                                         <i class="fas fa-handshake"></i>
-                                     </div>
-                                     <div class="text">
-                                         <p>الدفع عند الاستلام</p>
-                                     </div>
-                                 </div>
-                                 <div class="type type2">
-                                     <div class="logo">
-                                         <i class="far fa-credit-card"></i>
-                                     </div>
-                                     <div class="text">
-                                         <p>الدفع الالكتروني</p>
-                                     </div>
-                                 </div>
-
-                             </div>
-                         </div>
-                        <div class="select-wrapper m-b-15 m-t-15" style="display: none">
-
-{#                            <select class="js-select2" name="payment" required="required">#}
-{#                                <option value="">Select a payment method...</option>#}
-{#                                {% for paymentMethod in paymentMethods %}#}
-{#                                    <option#}
-
-{#                                            value="{{ paymentMethod.id }}">{{ paymentMethod.name }}</option>#}
-{#                                {% endfor %}#}
-{#                            </select>#}
-{#                            <div class="dropDownSelect2"></div>#}
-
-                            {{ form_widget(payment_method_form.paymentMethod, {'attr': {'class': 'select','placeholder':'اختر بطاقة ائتمان *'}}) }}
-
-                        </div>
-
-                    </div>
-                        <button type="submit" class="flex-c-m stext-101 cl0 size-116 bg3 bor14 hov-btn3 p-lr-15 trans-04 pointer m-t-30" data-id="{{ order.id }}" data-locale="{{ locale }}">
-                            استكمال الطلب
-                        </button>
-                    {{ form_end(payment_method_form) }}
-                        <a href="{{ path('order', { locale: 'ar' }) }}" onclick="setFormSubmitting();" class="flex-c-m stext-101 cl2 size-119 w-full bg8 bor13 hov-btn3 p-lr-15 trans-04 pointer m-tb-10">
-                            عودة
-                        </a>
-                </div>
-            </div>
-
-        </div>
-
-    </section>
-
-</div>
 {% endblock %}
 
 {% block javascripts %}
-        <script type="text/javascript">
+    <script type="text/javascript">
         // Create an instance of the Stripe object with your publishable API key
         // var stripe = Stripe("pk_test_51IU51mLg5TZnbiRrqWBt7NVQhhSsMbzK33P5nDrDkEZbMhZyO3NCThWs6mX7T5AxV8jSptmcd639iYqJYzUJBgWn00qv2gkIyj");
         var checkoutButton = document.getElementById("checkout-button");
@@ -271,23 +472,7 @@
         };
     </script>
     <script>
-        let type1 = document.querySelector('.type1');
-        let type2 = document.querySelector('.type2');
-        document.querySelector('.select').firstChild.textContent = 'اختيار طريقة الدفع';
-        type1.addEventListener('click', function(){
-            this.classList.add('selected');
-            this.nextElementSibling.classList.remove('selected');
-            document.querySelector('.select-wrapper').style.display = 'none';
-            document.querySelector('#payment_method_paymentMethod').required = false;
-            document.querySelector('#payment_method_paymentMethod').selectedIndex = null;
 
-        })
-        type2.addEventListener('click', function(){
-            this.classList.add('selected');
-            this.previousElementSibling.classList.remove('selected');
-            document.querySelector('.select-wrapper').style.display = 'block';
-            document.querySelector('#payment_method_paymentMethod').required = true;
-        })
         // let getSiblings = function (e) {
         //     // for collecting siblings
         //     let siblings = [];
@@ -320,8 +505,12 @@
             align-items: center;
         }
         .payment-type .types .type.selected {
-            border-color: #D97591;
+            border-color: #d5b473;
             background: rgba(64,179,255,0.1);
+        }
+
+        .payment-type {
+            margin-bottom: 20px;
         }
 
         .payment-type .types .type {
@@ -337,9 +526,13 @@
             transition: all 0.5s ease;
 
         }
+        .payment-type .types .type.disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
 
         .payment-type .types .type.selected .logo {
-            color: #D97591;
+            color: #d5b473;
         }
 
         .payment-type .types .type .logo {
@@ -372,45 +565,216 @@
             height: 40px;
             width: 40px;
             top: -21px;
-            left: -21px;
+            right: -21px;
             background: #fff;
-            border: 2px solid #D97591;
+            border: 2px solid #d5b473;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
         }
-        .select-wrapper {
-            position: relative;
-            width: 100%;
+        /*.select-wrapper {*/
+        /*    position: relative;*/
+        /*    width: 100%;*/
+        /*}*/
+        /*.select-wrapper::after {*/
+        /*    color: black;*/
+        /*    content: "▾";*/
+        /*    margin-right: 10px;*/
+        /*    pointer-events: none;*/
+        /*    position: absolute;*/
+        /*    right: 10px;*/
+        /*    top: 7px;*/
+        /*    font-size: 20px;*/
+        /*}*/
+
+        /*.select {*/
+        /*    -moz-appearance: none;*/
+        /*    -webkit-appearance: none;*/
+        /*    background: white;*/
+        /*    border: none;*/
+        /*    border-radius: 0;*/
+        /*    cursor: pointer;*/
+        /*    padding: 12px;*/
+        /*    width: 100%;*/
+        /*    font-size: 18px;*/
+        /*}*/
+        /*.select:focus {*/
+        /*    color: black;*/
+        /*}*/
+        /*.select::-ms-expand {*/
+        /*    display: none;*/
+        /*}*/
+    </style>
+    <style>
+        :root {
+            --clr-light: #f5f5f5;
+            --clr-white: #fff;
+            --clr-dark-blue: #293a80;
         }
-        .select-wrapper::after {
-            color: black;
-            content: "▾";
-            margin-right: 10px;
-            pointer-events: none;
-            position: absolute;
-            left: 10px;
-            top: 7px;
-            font-size: 20px;
+        main {
+            display: block;
         }
 
-        .select {
-            -moz-appearance: none;
-            -webkit-appearance: none;
-            background: white;
+        button {
+            display: inline-block;
             border: none;
-            border-radius: 0;
+            font-family: inherit;
+            margin: 0;
+            line-height: 1.15;
+            overflow: visible;
+            text-transform: none;
+            -webkit-appearance: button;
             cursor: pointer;
-            padding: 12px;
-            width: 100%;
-            font-size: 18px;
+            text-align: center;
         }
-        .select:focus {
-            color: black;
+
+        button::-moz-focus-inner {
+            border-style: none;
+            padding: 0;
         }
-        .select::-ms-expand {
+
+        button:-moz-focusring {
+            outline: 2px dotted ButtonText;
+        }
+
+        :focus {
+            --clr-orange: #f39422;
+            outline: 2px dotted var(--clr-orange);
+        }
+
+
+        main {
+            padding: 3vh 1rem 0;
+            display: grid;
+            grid-template: 0.5fr 65px/2fr minmax(200px, 800px) 2fr;
+            align-content: center;
+        }
+
+        .terms-and-conditions {
+            grid-column: 2/3;
+            grid-row: 1;
+            height: 30vh;
+            margin: 0 auto;
+            max-width: 800px;
+            padding: 2em;
+            overflow-y: scroll;
+            border-radius: 5px 5px 0px 0px;
+            background-color: var(--clr-white);
+        }
+        .terms-and-conditions::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+            background-color: var(--clr-light);
+        }
+        .terms-and-conditions::-webkit-scrollbar {
+            width: 15px;
+            background-color: var(--clr-light);
+        }
+        .terms-and-conditions::-webkit-scrollbar-thumb {
+            background-color: var(--clr-dark-blue);
+        }
+        .terms-and-conditions h1 {
+            font-size: calc(1.7rem + 0.25vw);
+            line-height: 1.1;
+        }
+        .terms-and-conditions h2 {
+            font-size: calc(1.2rem + 0.25vw);
+            font-weight: normal;
+        }
+        .terms-and-conditions h3 {
+            font-size: calc(1.1rem + 0.25vw);
+            font-weight: normal;
+        }
+        .terms-and-conditions p {
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+        .terms-and-conditions ul li {
+            margin-bottom: 0.5rem;
+            padding-left: 0.25rem;
+            line-height: 1.5;
+        }
+        .terms-and-conditions ul li::marker {
+            font-size: 1em;
+            color: #6c63ff;
+            font-family: sans-serif;
+        }
+
+        .term-buttons-container {
+            grid-row: 2;
+            grid-column: 2/3;
+            display: flex;
+            flex-direction: column;
+            margin-top: -2px;
+            padding: 0.7em;
+            z-index: 1;
+            border-top: 1px solid #f3f3f3;
+            background-color: #fdfdfd;
+            border-radius: 0 0 5px 5px;
+        }
+
+        .scroll-to-bottom {
+            justify-self: start;
+            align-self: center;
+            margin-top: -23px;
+            padding: 0.5em;
+            font-size: 1rem;
+            border-radius: 50%;
+            background-color: rgba(83, 127, 198, 0.7);
+            box-shadow: 0px 10px 15px -6px rgba(0, 0, 0, 0.2);
+        }
+        .scroll-to-bottom:hover {
+            background: #537fc6;
+        }
+        .scroll-to-bottom[aria-hidden=true] {
+            display: none;
+        }
+
+        [name=terms-and-conditions-form] {
+            justify-self: flex-end;
+            align-self: flex-end;
+        }
+
+        .accept-button {
+            background-color: #537ec5;
+            padding: 0.7em 1.5em;
+            font-size: 0.95rem;
+            color: var(--clr-white);
+            border-radius: 5px;
+            box-shadow: 0px 10px 15px -6px rgba(0, 0, 0, 0.2);
+        }
+        .accept-button:hover {
+            background: var(--clr-dark-blue);
+        }
+        .accept-button[aria-hidden=true] {
             display: none;
         }
     </style>
+    <script>
+        const terms = document.querySelector(".terms-and-conditions");
+        const termsLastElement = terms.lastElementChild;
+        const scrollToBottom = document.querySelector(".scroll-to-bottom");
+        const acceptButton = document.querySelector(".accept-button");
+
+        scrollToBottom.addEventListener("click", function(e) {
+            termsLastElement.scrollIntoView({
+                block: "start",
+                behavior: "smooth",
+                inline: "nearest"
+            });
+        });
+
+        function obCallback(payload) {
+            if (payload[0].isIntersecting) {
+                scrollToBottom.setAttribute("aria-hidden", true);
+                acceptButton.setAttribute("aria-hidden", false);
+                observer.unobserve(termsLastElement);
+            }
+        }
+
+        const observer = new IntersectionObserver(obCallback, { root: terms, threshold: 0.1 });
+
+        observer.observe(termsLastElement);
+    </script>
+
 {% endblock %}

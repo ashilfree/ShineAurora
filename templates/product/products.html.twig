@@ -12,8 +12,8 @@
                    data-id="{{ product.id }}"
                    data-name="{{ product.name }}"
                    data-description="{{ product.description|raw }}"
-                   data-price="{{ (product.price / 100) |number_format(2, '.', ',') }} KWD"
-                   data-discount="{{ (product.discountPrice / 100) |number_format(2, '.', ',') }} KWD"
+                   data-price="{{ (product.price / 100) |number_format(2, '.', ',') }} {{ currency }}"
+                   data-discount="{{ (product.discountPrice / 100) |number_format(2, '.', ',') }} {{ currency }}"
                    {% for catalog in  product.catalogs %} data-catalog{{ loop.index }}="{{ catalog.id }}" {% endfor %}
                    {% for catalog in  product.catalogs %} data-size{{ loop.index }}="{{ catalog.size }}" {% endfor %}
                    {% for catalog in  product.catalogs %} data-quantity{{ loop.index }}="{{ catalog.quantity }}" {% endfor %}
@@ -35,19 +35,19 @@
                     <div class="style-1">
                     <del>
                         <span class="stext-105 cl3">
-									{{ (product.price / 100) |number_format(2, '.', ',') }} KWD
+									{{ (product.price / 100) |number_format(2, '.', ',') }} {{ currency }}
 								</span>
                     </del>
                     <ins>
                         <span class="stext-105 cl3">
-									{{ (product.discountPrice / 100) |number_format(2, '.', ',') }} KWD
+									{{ (product.discountPrice / 100) |number_format(2, '.', ',') }} {{ currency }}
 								</span>
                     </ins>
                     </div>
                     {% else %}
                         <ins>
                         <span class="stext-105 cl3">
-									{{ (product.price / 100) |number_format(2, '.', ',') }} KWD
+									{{ (product.price / 100) |number_format(2, '.', ',') }} {{ currency }}
 								</span>
                         </ins>
                     {% endif %}

@@ -2,57 +2,277 @@
 {% block title %}Our Products{% endblock %}
 {% block body %}
 
-    <!-- Product -->
-    <div class="bg0 m-t-23 p-b-140">
-        <div class="container  js-filter">
-            <div class="flex-w flex-sb-m p-b-52 js-overlay">
-                <div class="flex-w flex-l-m filter-tope-group m-tb-10">
-                    <button class="stext-106 cl6 hov1 bor3 trans-04 m-r-32 m-tb-5 how-active1" data-filter="*">
-                        جميع المنتجات
-                    </button>
-
-                    {{ include('product/categoriesAr.html.twig') }}
-
-                </div>
-
-                <div class="flex-w flex-c-m m-tb-10">
-                    <div class="flex-c-m stext-106 cl6 size-104 bor4 pointer hov-btn3 trans-04 m-r-8 m-tb-4 js-show-filter">
-                        <i class="icon-filter cl2 m-l-6 fs-15 trans-04 zmdi zmdi-filter-list"></i>
-                        <i class="icon-close-filter cl2 m-l-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
-                        ترشح
-                    </div>
-
-                    <div class="flex-c-m stext-106 cl6 size-105 bor4 pointer hov-btn3 trans-04 m-tb-4 js-show-search">
-                        <i class="icon-search cl2 m-l-6 fs-15 trans-04 zmdi zmdi-search"></i>
-                        <i class="icon-close-search cl2 m-l-6 fs-15 trans-04 zmdi zmdi-close dis-none"></i>
-                        بحث
-                    </div>
-                </div>
-
-                <!--  Overlay -->
-                {% include 'product/_overlay.html.twig' %}
-
-                <!-- Search product -->
-                {% include 'product/_searchAr.html.twig'  with {form: search_form} only %}
-
-                <!-- Filter -->
-                {% include 'product/_filterAr.html.twig' %}
-
-                <!-- Sort -->
-                {% include 'product/_sort.html.twig' %}
+    <!-- Begin Hiraola's Breadcrumb Area -->
+    <div class="breadcrumb-area" style="background-image: url({{ vich_uploader_asset(banner, 'imageFile') | imagine_filter('Extra_large') }});background-repeat:no-repeat;background-position:center;">
+        <div class="container">
+            <div class="breadcrumb-content">
+                <h2>متجر</h2>
+                <ul>
+                    <li><a href="{{ path('home', { locale: 'ar' }) }}">الصفحة الرئيسية</a></li>
+                    <li class="active">متجر</li>
+                </ul>
             </div>
-
-            <div class="row isotope-grid js-filter-content">
-                {{ include('product/productsAr.html.twig') }}
-            </div>
-
-            <!-- Load more -->
-            {% include 'product/_more.html.twig' %}
-
         </div>
     </div>
+    <!-- Hiraola's Breadcrumb Area End Here -->
+
+    <!-- Begin Hiraola's Content Wrapper Area -->
+    <div class="hiraola-content_wrapper  js-filter">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 order-2 order-lg-1">
+                    <div class="hiraola-sidebar-catagories_area text-right">
+                        <div class="hiraola-sidebar_categories">
+                            <div class="hiraola-categories_title">
+                                <h5>السعر</h5>
+                            </div>
+                            <div class="price-filter">
+                                <div id="slider-range"></div>
+                                <form action="{{ path('products', { locale: 'ar', id: id, sub: sub}) }}" class="price-slider-amount">
+                                    <div class="label-input">
+                                        <label>السعر : </label>
+                                        <input type="text" id="amount" data-min="{{ min }}" data-max="{{ max }}" data-min-filter="{{ filter.min }}" data-max-filter="{{ filter.max }}" placeholder="Add Your Price" />
+                                        {{ form_row(form.min) }}
+                                        {{ form_row(form.max) }}
+                                        <div class="order-button-payment">
+                                            <input type="submit" data-min="" data-max="" value="تحديث"/>
+                                        </div>
+                                    </div>
+                                    <!-- <button type="button">Filter</button> -->
+                                </form>
+                            </div>
+                        </div>
+                        <div class="category-module hiraola-sidebar_categories">
+                            <div class="category-module_heading">
+                                <h5>فئات</h5>
+                            </div>
+                            <div class="module-body">
+                                <ul class="module-list_item">
+                                    {#                                    <li>#}
+                                    {#                                        <a href="javascript:void(0)">Hand Harness (18)</a>#}
+                                    {#                                        <ul class="module-sub-list_item">#}
+                                    {#                                            <li>#}
+                                    {#                                                <a href="javascript:void(0)">Maang Tika (18)</a>#}
+                                    {#                                                <a href="javascript:void(0)">Toe Rings (18)</a>#}
+                                    {#                                                <a href="javascript:void(0)">Traditional Earrings (18)</a>#}
+                                    {#                                                <a href="javascript:void(0)">Kada Cum Bracelet (18)</a>#}
+                                    {#                                            </li>#}
+                                    {#                                        </ul>#}
+                                    {#                                    </li>#}
+                                    <li><a href="{{ path('products', { locale: 'ar' }) }}">جميع المنتجات</a></li>
+                                    {% for category in categories %}
+                                        <li>
+                                            <a href="{{ path('products', { locale: 'ar', id: category.id }) }}">{{ category.nameAr }} ({{ category.products|length }})</a>
+                                            {% if category.subCategories.getValues() is not empty %}
+                                                <ul class="module-sub-list_item">
+                                                    <li>
+                                                        {% for subCategory in category.subCategories %}
+                                                            <a href="{{ path('products', { locale: 'ar', id: category.id, sub: subCategory.id }) }}">{{ subCategory.nameAr }} ({{ subCategory.products|length }})</a>
+                                                        {% endfor %}
+                                                    </li>
+                                                </ul>
+                                            {% endif %}
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="col-lg-9 order-1 order-lg-2">
+                    <div class="shop-toolbar">
+                        <div class="product-view-mode">
+                            <a class="active grid-3" data-target="gridview-3" data-toggle="tooltip" data-placement="top" title="Grid View"><i class="fa fa-th"></i></a>
+                            <a class="list" data-target="listview" data-toggle="tooltip" data-placement="top" title="List View"><i class="fa fa-th-list"></i></a>
+                        </div>
+                        <div class="product-item-selection_area">
+                            <div class="product-short">
+                                <label class="select-label">اختصار بواسطة:</label>
+                                <div class="row">
+                                    <div class="col">{{ knp_pagination_sortable(products, 'الاسم ', 'p.nameAr') }}</div>
+                                    <div class="col">{{ knp_pagination_sortable(products, 'السعر(اقل الى اعلى)', 'p.price') }}</div>
+                                    <div class="col">{{ knp_pagination_sortable(products, 'من القديم إلى الجديد', 'p.createdAt') }}</div>
+                                </div>
+
+
+
+                                {#                                <select >#}
+                                {#                                    <option value="1">{{ knp_pagination_sortable(products, 'Newness', 'p.created_at') }}</option>#}
+                                {#                                    <option value="2">Name, A to Z</option>#}
+                                {#                                    <option value="3">Name, Z to A</option>#}
+                                {#                                    <option value="4">Price, low to high<</option>#}
+                                {#                                    <option value="5">Price, high to low</option>#}
+                                {#                                </select>#}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="shop-product-wrap grid gridview-3 row">
+                        {% for product in products %}
+                            <div class="col-lg-4">
+                                <div class="slide-item">
+                                    <div class="single_product">
+                                        <div class="product-img">
+                                            <a href="{{ path('product', {locale: 'ar', 'slug': product.slug }) }}">
+                                                <img class="primary-img" src="{{ vich_uploader_asset(product.images.first, 'imageFile') | imagine_filter('medium') }}" alt="Hiraola's Product Image">
+                                                <img class="secondary-img" src="{{ vich_uploader_asset(product.images.last, 'imageFile') | imagine_filter('medium') }}" alt="Hiraola's Product Image">
+                                            </a>
+                                            <div class="add-actions">
+                                                <ul>
+                                                    {% set break = false %}
+                                                    <li><a class="hiraola-add_cart"
+                                                                {% for catalog in product.catalogs %}
+                                                                    {% if not break %}
+                                                                        {% if catalog.quantity > 0 %}
+                                                                            href="{{ path('add.cart', { locale: 'ar', id: catalog.id }) }}"
+                                                                            {% set break = true %}
+                                                                        {% endif %}
+                                                                    {% endif %}
+                                                                {% endfor %}
+                                                           data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="ion-bag"></i></a>
+                                                    </li>
+                                                    {#                                                <li><a class="hiraola-add_compare" href="compare.html" data-toggle="tooltip" data-placement="top" title="Compare This Product"><i#}
+                                                    {#                                                                class="ion-ios-shuffle-strong"></i></a>#}
+                                                    {#                                                </li>#}
+                                                    <li class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter">
+                                                        <a class="js-show-modal1" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="Quick View"
+                                                           data-id="{{ product.id }}"
+                                                           data-name="{{ product.nameAr }}"
+                                                           data-slug="{{ path('product', {locale: 'ar', 'slug': product.slug }) }}"
+                                                           data-description="{{ product.descriptionAr|raw }}"
+                                                           data-price="{{ (product.price / 100) |number_format(2, '.', ',') }} {{ currency_ar }}"
+                                                           data-discount="{{ (product.discountPrice / 100) |number_format(2, '.', ',') }} {{ currency_ar }}"
+                                                                {% for catalog in  product.catalogs %} data-catalog{{ loop.index }}="{{ catalog.id }}" {% endfor %}
+                                                                {% for catalog in  product.catalogs %} data-size{{ loop.index }}="{{ catalog.size }}" {% endfor %}
+                                                                {% for catalog in  product.catalogs %} data-color{{ loop.index }}="{{ catalog.color }}" {% endfor %}
+                                                                {% for tag in  product.togs %} data-tag{{ loop.index }}="{{ tag }}" {% endfor %}
+                                                                {% for image in  product.images %} data-image{{ loop.index }}="{{ image }}" {% endfor %}
+                                                           data-href-a ="{{ path('add.cart', { locale: 'ar' }) }}"
+                                                        >
+                                                            <i class="ion-eye"></i>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        <div class="hiraola-product_content">
+                                            <div class="product-desc_info">
+                                                <h6><a class="product-name" href="{{ path('product', {locale: 'ar', 'slug': product.slug }) }}">{{ product.nameAr }}</a></h6>
+                                                <div class="price-box style-1">
+                                                    {% if product.discountPrice != 0 %}
+                                                        <del><span class="new-price">{{ (product.price / 100) |number_format(2, '.', ',') }} {{ currency_ar }}</span></del>
+                                                        <ins><span class="new-price">{{ (product.discountPrice / 100) |number_format(2, '.', ',') }} {{ currency_ar }}</span></ins>
+                                                    {% else %}
+                                                        <ins><span class="new-price">{{ (product.price / 100) |number_format(2, '.', ',') }} {{ currency_ar }}</span></ins>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="additional-add_action">
+                                                    <ul>
+                                                        <li><a class="hiraola-add_compare"{% if wish[product.id] is defined and wish[product.id] == 1  %} href="{{ path('delete.wishlist', { locale: 'ar', id:product.id, route:page }) }}" title="Remove from Wishlist" {% else %} href="{{ path('add.wishlist', { locale: 'ar', id:product.id }) }}" title="Add To Wishlist" {% endif %} data-toggle="tooltip" data-placement="top" >
+                                                                <i {% if wish[product.id] is defined and wish[product.id] == 1  %} class="ion-android-favorite"  {% else %} class="ion-android-favorite-outline"  {% endif %} ></i></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                {#                                            <div class="rating-box">#}
+                                                {#                                                <ul>#}
+                                                {#                                                    <li><i class="fa fa-star-of-david"></i></li>#}
+                                                {#                                                    <li><i class="fa fa-star-of-david"></i></li>#}
+                                                {#                                                    <li><i class="fa fa-star-of-david"></i></li>#}
+                                                {#                                                    <li><i class="fa fa-star-of-david"></i></li>#}
+                                                {#                                                    <li class="silver-color"><i class="fa fa-star-of-david"></i></li>#}
+                                                {#                                                </ul>#}
+                                                {#                                            </div>#}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="list-slide_item">
+                                    <div class="single_product">
+                                        <div class="product-img">
+                                            <a href="{{ path('product', {locale: 'ar', 'slug': product.slug }) }}">
+                                                <img class="primary-img" src="{{ vich_uploader_asset(product.images.first, 'imageFile') | imagine_filter('medium') }}" alt="Hiraola's Product Image">
+                                                <img class="secondary-img" src="{{ vich_uploader_asset(product.images.last, 'imageFile') | imagine_filter('medium') }}" alt="Hiraola's Product Image">
+                                            </a>
+                                        </div>
+                                        <div class="hiraola-product_content text-right">
+                                            <div class="product-desc_info">
+                                                <h6><a class="product-name" href="{{ path('product', {locale: 'ar', 'slug': product.slug }) }}">{{ product.nameAr }}</a></h6>
+                                                {#                                            <div class="rating-box">#}
+                                                {#                                                <ul>#}
+                                                {#                                                    <li><i class="fa fa-star-of-david"></i></li>#}
+                                                {#                                                    <li><i class="fa fa-star-of-david"></i></li>#}
+                                                {#                                                    <li><i class="fa fa-star-of-david"></i></li>#}
+                                                {#                                                    <li><i class="fa fa-star-of-david"></i></li>#}
+                                                {#                                                    <li class="silver-color"><i class="fa fa-star-of-david"></i></li>#}
+                                                {#                                                </ul>#}
+                                                {#                                            </div>#}
+                                                <div class="price-box style-1">
+                                                    {% if product.discountPrice != 0 %}
+                                                        <del><span class="new-price">{{ (product.price / 100) |number_format(2, '.', ',') }} {{ currency_ar }}</span></del>
+                                                        <ins><span class="new-price">{{ (product.discountPrice / 100) |number_format(2, '.', ',') }} {{ currency_ar }}</span></ins>
+                                                    {% else %}
+                                                        <ins><span class="new-price">{{ (product.price / 100) |number_format(2, '.', ',') }} {{ currency_ar }}</span></ins>
+                                                    {% endif %}
+                                                </div>
+                                                <div class="product-short_desc">
+                                                    <p>{{ product.descriptionAr|raw }}</p>
+                                                </div>
+                                            </div>
+                                            <div class="add-actions">
+                                                <ul>
+                                                    <li><a class="hiraola-add_cart" href="cart.html" data-toggle="tooltip" data-placement="top" title="Add To Cart">أضف إلى العربة</a></li>
+                                                    {#                                                <li><a class="hiraola-add_compare" href="compare.html" data-toggle="tooltip" data-placement="top" title="Compare This Product"><i#}
+                                                    {#                                                                class="ion-ios-shuffle-strong"></i></a></li>#}
+                                                    <li class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><a href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="Quick View"><i
+                                                                    class="ion-eye"></i></a></li>
+                                                    <li><a class="hiraola-add_compare" href="wishlist.html" data-toggle="tooltip" data-placement="top" title="Add To Wishlist"><i
+                                                                    class="ion-android-favorite-outline"></i></a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="hiraola-paginatoin-area">
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-6 col-sm-6">
+                                        {#                                        <ul class="hiraola-pagination-box">#}
+                                        {#                                            <li class="active"><a href="javascript:void(0)">1</a></li>#}
+                                        {#                                            <li><a href="javascript:void(0)">2</a></li>#}
+                                        {#                                            <li><a href="javascript:void(0)">3</a></li>#}
+                                        {#                                            <li><a class="Next" href="javascript:void(0)"><i#}
+                                        {#                                                            class="ion-ios-arrow-right"></i></a></li>#}
+                                        {#                                            <li><a class="Next" href="javascript:void(0)">>|</a></li>#}
+                                        {#                                        </ul>#}
+                                        {{ knp_pagination_render(products) }}
+                                    </div>
+                                    {% if products|length > 0 %}
+                                        <div class="col-lg-6 col-md-6 col-sm-6">
+                                            <div class="product-select-box">
+                                                <div class="product-short">
+                                                    <p>عرض {% if pages == 1 %} 1 {% else %} {{ (pages-1) * 6 }} {% endif %} ل {{ pages * 6 }} ({{ pages }} الصفحات)</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Hiraola's Content Wrapper Area End Here -->
 
     <!-- Modal1 -->
     {% include 'modal2.html.twig' %}
 
+{% endblock %}
+{% block javascripts %}
 {% endblock %}

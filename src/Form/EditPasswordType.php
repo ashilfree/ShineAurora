@@ -39,9 +39,6 @@ class EditPasswordType extends AbstractType
                 'required' => true,
                 'first_options' => ['label' => false],
                 'second_options' => ['label' => false],
-            ])
-            ->add('submit', SubmitType::class, [
-                'label' => 'Update'
             ]);
     }
 

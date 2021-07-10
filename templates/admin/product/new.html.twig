@@ -77,6 +77,9 @@
         <div class="col">
             {{ form_row(new_form.category, {'attr': {'class': 'basic'}}) }}
         </div>
+        <div class="col">
+            {{ form_row(new_form.subCategory, {'attr': {'class': 'basic'}}) }}
+        </div>
     </div>
     <div class="row mb-4">
         <div class="col">
@@ -276,4 +279,81 @@
     <script src="{{ asset('assets/admin/assets/js/scrollspyNav.js') }}"></script>
     <script src="{{ asset('assets/admin/plugins/select2/select2.min.js') }}"></script>
     <script src="{{ asset('assets/admin/plugins/select2/custom-select2.js') }}"></script>
+    <script src="{{ asset('assets/admin/plugins/jqColorPicker.min.js') }}"></script>
+    <script type="text/javascript">
+        // $('#Product_category').on('select2:select', function (e) {
+        //     console.log('select event');
+        // });
+        jQuery(document).ready(function($){
+            $("#Product_category")
+                .select2({
+                    placeholder: "Select a Category",
+                    allowClear: true,
+                })
+                .on('select2:select', function (e) {
+                    console.log(e.params.data.id);
+                    $('#Product_subCategory').val(null);
+                    $('#Product_hotDegree').val(null);
+                    if(e.params.data.id == 1){
+                        console.log(e.params.data.id);
+                        $("#Product_hotDegree").select2({
+                            placeholder: "Select a Hot Degree",
+                            allowClear: true,
+                            disabled: false
+                        });
+                    }else{
+                        $("#Product_hotDegree").select2({
+                            placeholder: "Select a Hot Degree",
+                            allowClear: true,
+                            disabled: true
+                        });
+                    }
+                    $("#Product_subCategory").select2({
+                        placeholder: "Select a SubCategory",
+                        allowClear: true,
+                        initSelection: null,
+                        disabled: false,
+                        data:[],
+                        ajax: {
+                            url: 'get-sub-category/' + e.params.data.id,
+                            dataType: 'json',
+                            data: function (term) {
+                                console.log(term);
+                                return {
+                                    term: term
+                                };
+                            },
+                            processResults: function(data, page) {
+                                let dx =[];
+                                data.forEach(function(d){
+                                    dx.push(d)
+                                })
+                                return { results: dx };
+                            },
+                            // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
+                        },
+
+                    });
+                });
+
+
+
+            $("#Product_subCategory").select2({
+                placeholder: "Select a SubCategory",
+                allowClear: true,
+                disabled: true
+                // ajax: {
+                //     url: '/en/cart/update',
+                //     dataType: 'json'
+                //     // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
+                // }
+            });
+            $("#Product_hotDegree").select2({
+                placeholder: "Select a Hot Degree",
+                allowClear: true,
+                disabled: true
+            });
+        });
+        // $('#Product_category').select2('destroy');
+    </script>
 {% endblock %}

@@ -7,229 +7,167 @@
 
 // any CSS you import will output into a single css file (app.css in this case)
 import './styles/app-ar.css';
-import $ from 'jquery';
-import jQueryBridget from 'jquery-bridget';
-import 'popper.js';
-import 'bootstrap';
-import 'bootstrap-select/dist/js/bootstrap-select';
-import Filter from './controllers/modules/Filter'
-import Global from './controllers/modules/Global'
+// import $ from './controllers/js/vendor/jquery-1.12.4.min.js';
+// import './controllers/js/vendor/modernizr-2.8.3.min.js';
+import './controllers/js/vendor/popper.min.js';
+import './controllers/js/vendor/bootstrap.min.js';
+import './controllers/js/plugins/slick.min.js';
+import './controllers/js/plugins/countdown.js';
+import './controllers/js/plugins/jquery.barrating.min.js';
+import './controllers/js/plugins/jquery.counterup.js';
+import './controllers/js/plugins/jquery.nice-select.js';
+import './controllers/js/plugins/jquery.sticky-sidebar.js';
+import './controllers/js/plugins/jquery-ui.min.js';
+import './controllers/js/plugins/jquery.ui.touch-punch.min.js';
+import './controllers/js/plugins/lightgallery.min.js';
+import './controllers/js/plugins/scroll-top.js';
+import './controllers/js/plugins/theia-sticky-sidebar.min.js';
+// import './controllers/js/plugins/lightzoom.js';
+import './controllers/js/plugins/jquery.zoomit.js';
+// import './controllers/js/plugins/waypoints.min.js';
+import './controllers/js/plugins/instafeed.min.js';
+import './controllers/js/plugins/jquery.elevateZoom-3.0.8.min.js';
+import './controllers/js/plugins/timecircles.js';
+import './controllers/js/main-ar.js';
 import Cart from './controllers/modules/Cart'
-import './controllers/comments/Comment.jsx'
-
-
-new Filter(document.querySelector('.js-filter'));
-new Global(document.querySelector('.js-body'));
+import Filter from './controllers/modules/Filter'
 new Cart(document.querySelector('.js-cart-form'));
+new Filter(document.querySelector('.js-filter'));
 
-import 'animsition';
-import 'select2';
 
-$(".js-select2").each(function () {
-    $(this).select2({
-        minimumResultsForSearch: 20,
-        dropdownParent: $(this).next('.dropDownSelect2')
-    });
-});
-import 'moment'
-import 'daterangepicker/daterangepicker'
-import './controllers/js/slick.min';
-import './controllers/js/slick-custom-ar';
-import './controllers/js/parallax100';
+let checkout = document.querySelector('.js-checkout');
+if(checkout){
+    let type1 = document.querySelector('.type1');
+    let type2 = document.querySelector('.type2');
+    document.querySelector('#payment_method_paymentMethod').firstChild.textContent = 'Choose a payment method';
+    type1.addEventListener('click', function(){
+        this.classList.add('selected');
+        this.nextElementSibling.classList.remove('selected');
+        $('#payment_method_paymentMethod').val('');
+        $('.nice-select').niceSelect('update');
+        document.querySelector('.select-wrapper').style.display = 'none';
+        document.querySelector('#payment_method_paymentMethod').required = false;
 
-$('.parallax100').parallax100();
-
-import 'magnific-popup/dist/jquery.magnific-popup.min';
-
-$('.gallery-lb').each(function () { // the containers for all your galleries
-    $(this).magnificPopup({
-        delegate: 'a', // the selector for gallery item
-        type: 'image',
-        gallery: {
-            enabled: true
-        },
-        mainClass: 'mfp-fade'
-    });
-});
-
-import Isotope from './controllers/js/isotope.pkgd.min';
-
-jQueryBridget('isotope', Isotope, $);
-import './controllers/js/sweetalert.min';
-
-// $('.js-addwish-b2').on('click', function (e) {
-//     e.preventDefault();
-// });
-
-// $('.header-cart-item-img').on('click', function (e) {
-//     e.preventDefault();
-// });
-
-// $('.js-addwish-b2').each(function () {
-//     var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
-//     $(this).on('click', function () {
-//         swal(nameProduct, "is added to wishlist !", "success");
-//
-//         $(this).addClass('js-addedwish-b2');
-//         $(this).addClass('disabled');
-//         $(this).off('click');
-//     });
-// });
-
-$('.js-addwish-detail').each(function () {
-    var nameProduct = $(this).parent().parent().parent().find('.js-name-detail').html();
-
-    $(this).on('click', function () {
-        swal(nameProduct, "is added to wishlist !", "success");
-        $(this).addClass('js-addedwish-detail').addClass('disabled');
-        $('#product-'+$(this).attr('id') + ' .js-addwish-b2').addClass('js-addedwish-b2').addClass('disabled');
-        $(this).off('click');
-    });
-});
-
-/*---------------------------------------------*/
-
-// $('.js-addcart-detail').each(function () {
-//
-// });
-
-import PerfectScrollbar from './controllers/js/perfect-scrollbar.min';
-
-$('.js-pscroll').each(function () {
-    $(this).css('position', 'relative');
-    $(this).css('overflow', 'hidden');
-    var ps = new PerfectScrollbar(this, {
-        wheelSpeed: 1,
-        scrollingThreshold: 1000,
-        wheelPropagation: false,
-    });
-
-    $(window).on('resize', function () {
-        ps.update();
     })
-});
-
-import './controllers/js/main-ar';
-// Need jQuery? Install it with "yarn add jquery", then uncomment to import it.
-// import $ from 'jquery';
-import wNumb from 'wnumb'
-import noUiSlider from 'nouislider'
-
-var slider = document.getElementById('slider');
-if (slider) {
-    const min = document.getElementById('min')
-    const max = document.getElementById('max')
-    const minValue = Math.floor(parseInt(slider.dataset.min, 10) / 10) * 10
-    const maxValue = Math.ceil(parseInt(slider.dataset.max, 10) / 10) * 10
-    console.log(minValue);
-    console.log(maxValue);
-    const range = noUiSlider.create(slider, {
-        start: [min.value || minValue, max.value || maxValue],
-        connect: true,
-     //   tooltips: [wNumb({decimals: 0}), wNumb({decimals: 0})],
-        step: 10,
-        range: {
-            'min': minValue,
-            'max': maxValue
+    type2.addEventListener('click', function(){
+        if(!this.classList.contains('disabled')) {
+            this.classList.add('selected');
+            this.previousElementSibling.classList.remove('selected');
+            document.querySelector('.select-wrapper').style.display = 'block';
+            document.querySelector('#payment_method_paymentMethod').required = true;
         }
-    });
-    range.on('slide', function (values, handle) {
-        if (handle === 0) {
-            min.value = Math.round(values[0])
-        }
-        if (handle === 1) {
-            max.value = Math.round(values[1])
-        }
-    })
-    range.on('end', function (values, handle) {
-        min.dispatchEvent(new Event('change'))
     })
 }
 
-// const slider = document.getElementById('sliderPrice');
-// const rangeMin = parseInt(slider.dataset.min);
-// const rangeMax = parseInt(slider.dataset.max);
-// const step = parseInt(slider.dataset.step);
-// const filterInputs = document.querySelectorAll('input.filter__input');
-//
-// noUiSlider.create(slider, {
-//     start: [rangeMin, rangeMax],
-//     connect: true,
-//     step: step,
-//     range: {
-//         'min': rangeMin,
-//         'max': rangeMax
-//     },
-//
-//     // make numbers whole
-//     format: {
-//         to: value => value,
-//         from: value => value
-//     }
-// });
-//
-// // bind inputs with noUiSlider
-// slider.noUiSlider.on('update', (values, handle) => {
-//     filterInputs[handle].value = values[handle];
-// });
-//
-// filterInputs.forEach((input, indexInput) => {
-//     input.addEventListener('change', () => {
-//         slider.noUiSlider.setHandle(indexInput, input.value);
-//     })
-// });
 
-$('.sort-option').on('click', function () {
-    if ($(this).hasClass('active')) {
-        $(this).addClass($(this).children('a').attr('class'));
-    } else {
-        $('.sort-option').removeClass('active');
-        $(this).addClass('active');
-        $(this).addClass($(this).children('a').attr('class'));
+$('.js-show-modal1').on('click',function(e){
+    console.log('CLICK')
+    e.preventDefault();
+
+    let discount = $(this).data('discount');
+    if(discount === '0.00 KD' || discount === '0.00 د.ك'){
+        $('#price-block1').css('display','none')
+        $('#price-block2').css('display','block')
+    }else{
+        $('#price-block2').css('display','none')
+        $('#price-block1').css('display','block')
     }
-});
+    $('#name').text($(this).data('name'));
+    $('#price').text($(this).data('price'));
+    $('#price2').text($(this).data('price'));
+    $('#discount').text($(this).data('discount'));
+    $('.add-to_cart').attr("href", $(this).data('slug'))
+    $('#description').text($(this).data('description'));
+    // $('#cart-add-button').attr('href', $(this).data('href-a'));
+    var i = 1;
+    var access = true;
 
-$(document).ready(function () {
-    $('#togs').addClass('text-right');
-    $('#togs label').addClass('dis-inline-block stext-107 cl6 size-301 bor7 p-lr-15 hov-tag1 trans-04 m-r-5 m-b-5');
-});
+    var $spimgslider2 =  $('.sp-img_area .sp-img_slider-2');
+    var $spimgslidernav =  $('.sp-img_area .sp-img_slider-nav');
 
-$('#togs label').on('click', function () {
-    if ($(this).hasClass('tog-filter-active')) {
-        $(this).removeClass('tog-filter-active');
-    } else {
-        $(this).addClass('tog-filter-active');
+    $spimgslider2.empty()
+    $spimgslidernav.empty()
+    $('.hiraola-slick-slider').slick('removeSlide', null, null, true);
+    while (access){
+
+        var picture = $(this).data('image' + i);
+        console.log(picture)
+        if(!picture)
+            break;
+        var picturePath = "/media/images/product/"+picture;
+        console.log(picturePath)
+        $spimgslider2.append('<div class="single-slide '+i+'"><img src="'+ picturePath +'" alt="Shine Aurora Product Image"></div>');
+        $spimgslidernav.append('<div class="single-slide '+i+'"><img src="'+ picturePath +'" alt="Shine Aurora Product Image"></div>');
+        // $('div.img'+i).data('thumb', picturePath);
+        // $('img.img'+i).attr('src', picturePath);
+        // $('a.img'+i).attr('href', picturePath);
+        i++;
     }
+
+    var $colorList = $('.color-list');
+    $colorList.empty();
+    i = 1;
+    while (access){
+
+        var color = $(this).data('color' + i);
+        if(!color)
+            break;
+
+        $colorList.append('<div class="single-color"><span style="display:block;background-color: '+color+'"></span></div>');
+        i++;
+    }
+    var $sizeList = $('.size-list');
+    $sizeList.empty();
+    i = 1;
+    while (access){
+
+        var size = $(this).data('size' + i);
+        if(!size)
+            break;
+
+        $sizeList.append('<div class="single-size"><span style="display:block;">'+size+'</span></div>');
+        i++;
+    }
+    var $tagList = $('.hiraola-tag-line');
+    $tagList.empty();
+    $tagList.append('<h6>Tags:</h6>')
+    i = 1;
+    while (access){
+
+        var tag = $(this).data('tag' + i);
+        if(!tag)
+            break;
+
+        $tagList.append(' <a href="javascript:void(0)">'+tag+'</a>,');
+        i++;
+    }
+    (function ($) {
+        /*----------------------------------------*/
+
+        var $elementCarousel = $('.hiraola-slick-slider');
+        // Check if element exists
+        $elementCarousel.slick("refresh");
+        /*----------------------------------------*/
+    })(jQuery);
+    $('#wich-icon a').attr('href', $(this).data('href')).attr('id', $(this).data('id')).addClass($(this).data('disabled'));
+    $('#cart-add-button').attr('href', $(this).data('href-a'));
+
+    i = 1;
+
+    $('#product_cart_size').empty();
+    $('#product_cart_size').append("<option value selected>Choose an option</option>");
+
+    $('#product_cart_color').append("<option value='1'>Red</option>");
+
 });
 
-import places from './controllers/js/places'
+$('#exampleModalCenter').on('hidden', function(e){
+    console.log('HIDE')
+})
 
-let shopAddress = document.querySelector('#address');
+// $('img.light-zoom').lightzoom({
+//     zoomPower   : 1.5,    //Default
+//     glassSize   : 200,  //Default
+// });
 
-if (shopAddress !== null) {
-    let place = places({
-        container: shopAddress
-    });
-
-    place.on('change', e => {
-        document.querySelector('#lat').value = e.suggestion.latlng.lat;
-        document.querySelector('#lng').value = e.suggestion.latlng.lng;
-        document.querySelector('#city').value = e.suggestion.name;
-        document.querySelector('#province').value = e.suggestion.administrative;
-        document.querySelector('#postalCode').value = (e.suggestion.postcode != null)? e.suggestion.postcode : '' ;
-    })
-}
-
-$('#updateTotals').on('click', function () {
-    // let shippingValue = parseInt($('.js-select2').val() );
-    // $('#total').text(parseInt($('#subtotal').text()) + shippingValue);
-    // if(shippingValue !== 0){
-    //     $('#proceed-to-checkout').removeAttr('disabled').removeAttr('data-original-title').attr('href', "/shopping-cart/checkout");
-    // }else{
-    //     $('#proceed-to-checkout').attr('disabled', true).attr('data-original-title', 'Calculate Shipping').attr('href', "javascript:void(0)");
-    // }
-});
-
-$(function () {
-    $('[data-toggle="tooltip"]').tooltip()
-});
+$('#zoomit-target').zoomIt();

@@ -28,9 +28,6 @@ class EditProfileType extends AbstractType
             ])
             ->add('phone', TelType::class, [
                 'label' => false
-            ])
-            ->add('submit', SubmitType::class, [
-                'label' => 'Update'
             ]);
     }
 

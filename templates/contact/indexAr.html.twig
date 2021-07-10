@@ -2,119 +2,106 @@
 
 {% block body %}
 
-    <!--================Categories Banner Area =================-->
-    <section class="solid_banner_area">
+    <!-- Begin Hiraola's Breadcrumb Area -->
+    <div class="breadcrumb-area" style="background-image: url({{ vich_uploader_asset(banner, 'imageFile') | imagine_filter('Extra_large') }});background-repeat:no-repeat;background-position:center;">
         <div class="container">
-            <div class="solid_banner_inner">
-                <h3>اتصل بنا</h3>
+            <div class="breadcrumb-content">
+                <h2>اتصل بنا</h2>
                 <ul>
-                    <li><a href="{{ path('home', {locale: 'ar'}) }}">الصفحة الرئيسية</a></li>
-                    <li>اتصل بنا</li>
+                    <li><a href="{{ path('home', { locale: 'en' }) }}">الصفحة الرئيسية</a></li>
+                    <li class="active">اتصل بنا</li>
                 </ul>
             </div>
         </div>
-    </section>
-    <!--================End Categories Banner Area =================-->
-
-    <!-- Content page -->
-    <section class="bg0 p-t-104 p-b-116">
+    </div>
+    <!-- Hiraola's Breadcrumb Area End Here -->
+    <!-- Begin Contact Main Page Area -->
+    <div class="contact-main-page">
         <div class="container">
-            <div class="flex-w flex-tr">
-                <div class="size-210 bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md">
-                    {{ form_start(form) }}
-                    <h4 class="mtext-105 cl2 txt-center p-b-30">
-                        أرسل لنا رسالة
-                    </h4>
-
-                    {% for message in app.flashes('success')  %}
-                        <div class="alert alert-success text-right">
-                            {{ message }}
+            <div class="map-responsive">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11694.217954194917!2d47.99204620230539!3d29.37872667581416!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3fcf849850d401e9%3A0x767eb1122316959c!2sAl%20Hamra%20Tower%2C%20Al-Shuhada%20St%2C%20Al%20Kuwayt%2C%20Kuwait!5e0!3m2!1sen!2sdz!4v1620149276134!5m2!1sen!2sdz" width="1110" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5 offset-lg-1 col-md-12 order-1 order-lg-2">
+                    <div class="contact-page-side-content text-right">
+                        <h3 class="contact-page-title">اتصل بنا</h3>
+                        <p class="contact-page-message">سطوع Dynamicus هو أيضًا العملية التالية
+                            أسرة تغيير كونسوتوديوم. من المدهش أن نلاحظ أنه مكتوب باللغة القوطية أعتقد أنه من الواضح الآن أحرف anteposuerit للشكل البشري.</p>
+                        <div class="single-contact-block">
+                            <h4><i class="fa fa-fax"></i> العنوان</h4>
+                            <p>مدينة جابر الأحمد ، الكويت</p>
                         </div>
-                    {% endfor %}
-
-                    <div class="bor8 m-b-20 how-pos4-parent">
-                        {{ form_row(form.name, {'attr': {'class': 'stext-111 cl2 plh3 size-116 p-l-30 p-r-62', 'placeholder':'اسمك'}}) }}
-                        <img class="how-pos4 pointer-none" src="{{ '/media/images/icons/icon-email.png' }}" alt="ICON">
+                        <div class="single-contact-block">
+                            <h4><i class="fa fa-phone"></i> هاتف</h4>
+                            <p>محمول: (08) 123 456 789</p>
+                            <p>الخط: 1009 678 456</p>
+                        </div>
+                        <div class="single-contact-block last-child">
+                            <h4><i class="fa fa-envelope-o"></i> بريد إلكتروني</h4>
+                            <p>yourmail@domain.com</p>
+                            <p>support@hastech.company</p>
+                        </div>
                     </div>
-
-                    <div class="bor8 m-b-20 how-pos4-parent">
-                        {{ form_row(form.email, {'attr': {'class': 'stext-111 cl2 plh3 size-116 p-l-30 p-r-62', 'placeholder':'عنوان بريدك الإلكتروني'}}) }}
-                        <img class="how-pos4 pointer-none" src="{{ '/media/images/icons/icon-email.png' }}" alt="ICON">
-                    </div>
-
-                    <div class="bor8 m-b-20 how-pos4-parent">
-                        {{ form_row(form.subject, {'attr': {'class': 'stext-111 cl2 plh3 size-116 p-l-30 p-r-62', 'placeholder':'موضوعك'}}) }}
-                        <img class="how-pos4 pointer-none" src="{{ '/media/images/icons/icon-email.png' }}" alt="ICON">
-                    </div>
-
-                    <div class="bor8 m-b-30">
-                        {{ form_row(form.message, {'attr': {'class': 'stext-111 cl2 plh3 size-120 p-lr-25 p-tb-28', 'placeholder':'كيف يمكن أن نساعد؟'}}) }}
-                    </div>
-
-                    <button type="submit" name="submit" class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer">
-                        ارسل
-                    </button>
-                    {{ form_end(form) }}
                 </div>
-
-                <div class="size-210 bor10 flex-w flex-col-m p-lr-93 p-tb-30 p-lr-15-lg w-full-md">
-                    <div class="flex-w w-full p-b-42">
-						<span class="fs-18 cl5 txt-center size-211">
-							<span class="lnr lnr-map-marker"></span>
-						</span>
-
-                        <div class="size-212 p-t-2 text-right">
-							<span class="mtext-110 cl2">
-								العنوان
-							</span>
-
-                            <p class="stext-115 cl6 size-213 p-t-18">
-                                برج النصار دور 10 <br> مدينة الكويت - الكويت
-                            </p>
+                <div class="col-lg-6 col-md-12 order-2 order-lg-1">
+                    <div class="contact-form-content text-right">
+                        <h3 class="contact-page-title">أخبرنا رسالتك</h3>
+                        <div class="contact-form">
+                            {{ form_start(form) }}
+                            {% for message in app.flashes('success')  %}
+                                <div class="alert alert-success">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                            <div class="form-group">
+                                <label>اسمك <span class="required">*</span></label>
+                                {{ form_row(form.name) }}
+                            </div>
+                            <div class="form-group">
+                                <label>بريدك الالكتروني <span class="required">*</span></label>
+                                {{ form_row(form.email) }}
+                            </div>
+                            <div class="form-group">
+                                <label>موضوع</label>
+                                {{ form_row(form.subject) }}
+                            </div>
+                            <div class="form-group form-group-2">
+                                <label>رسالتك</label>
+                                {{ form_row(form.message) }}
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" value="submit" id="submit" class="alsita-contact-form_btn" name="submit">إرسال</button>
+                            </div>
+                            {{ form_end(form) }}
                         </div>
-                    </div>
-
-                    <div class="flex-w w-full p-b-42">
-						<span class="fs-18 cl5 txt-center size-211">
-							<span class="lnr lnr-phone-handset"></span>
-						</span>
-
-                        <div class="size-212 p-t-2 text-right">
-							<span class="mtext-110 cl2">
-								اتصل الان
-							</span>
-
-                            <p class="stext-115 cl1 size-213 p-t-18">
-                                0xxx xx xx xx
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="flex-w w-full">
-						<span class="fs-18 cl5 txt-center size-211">
-							<span class="lnr lnr-envelope"></span>
-						</span>
-
-                        <div class="size-212 p-t-2 text-right">
-							<span class="mtext-110 cl2">
-								الدعم الفني
-							</span>
-
-                            <p class="stext-115 cl1 size-213 p-t-18">
-                                info@shoppinga.com
-                            </p>
-                        </div>
+                        <p class="form-messege"></p>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-
-
-    <!-- Map -->
-    <div class="map">
-        <div class="size-303" id="google_map" data-map-x="40.691446" data-map-y="-73.886787" data-pin="images/icons/pin.png" data-scrollwhell="0" data-draggable="1" data-zoom="11"></div>
     </div>
+    <!-- Contact Main Page Area End Here -->
+    <style>
+        .map-responsive{
+
+            overflow:hidden;
+
+            padding-bottom:56.25%;
+
+            /*position:relative;*/
+
+            height:0;
+
+        }
+
+        /*.map-responsive iframe{*/
+        /*    height:100%;*/
+
+        /*    width:100%;*/
+        /*}*/
+    </style>
 
 {% endblock %}
 

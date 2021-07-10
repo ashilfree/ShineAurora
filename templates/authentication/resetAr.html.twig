@@ -2,20 +2,6 @@
 
 {% block body %}
 
-    <!--================Categories Banner Area =================-->
-    <section class="solid_banner_area">
-        <div class="container">
-            <div class="solid_banner_inner">
-                <h3>إعادة تعيين كلمة المرور</h3>
-                <ul>
-                    <li><a href="{{ path('home', { locale: 'en' }) }}">الصفحة الرئيسية</a></li>
-                    <li><a href="">إعادة تعيين كلمة المرور</a></li>
-                </ul>
-            </div>
-        </div>
-    </section>
-    <!--================End Categories Banner Area =================-->
-
     <!--================login Area =================-->
     <section class="login_area p-t-100 p-b-100">
         <div class="container">
@@ -48,6 +34,49 @@
         </div>
     </section>
     <!--================End login Area =================-->
+
+    <!-- Begin Shine AuroraBreadcrumb Area -->
+    <div class="breadcrumb-area" style="background-image: url({{ vich_uploader_asset(banner, 'imageFile') | imagine_filter('Extra_large') }});background-repeat:no-repeat;background-position:center;">
+        <div class="container">
+            <div class="breadcrumb-content">
+                <h2>إعادة تعيين كلمة المرور</h2>
+                <ul>
+                    <li><a href="{{ path('home', { locale: 'en' }) }}">الصفحة الرئيسية</a></li>
+                    <li class="active">إعادة تعيين كلمة المرور</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Shine AuroraBreadcrumb Area End Here -->
+    <!-- Begin Shine AuroraLogin Register Area -->
+    <div class="hiraola-login-register_area">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-xs-12 col-lg-8 offset-2">
+                    <!-- Login Form s-->
+                    {{ form_start(resetForm) }}
+                    <div class="login-form">
+                        <h4 class="login-title">إعادة تعيين كلمة المرور لحسابك</h4>
+                        <div class="row">
+                            <div class="col-md-12 col-12">
+                                <label>كلمة مرور جديدة</label>
+                                {{ form_row(resetForm.plainPassword.first, {'attr': {'class': 'form-control', 'placeholder':'كلمة مرور جديدة'}}) }}
+                            </div>
+                            <div class="col-12 mb--20">
+                                <label>تأكيد كلمة المرور الجديدة</label>
+                                {{ form_row(resetForm.plainPassword.second, {'attr': {'class': 'form-control', 'placeholder':'تأكيد كلمة المرور الجديدة'}}) }}
+                            </div>
+                            <div class="col-md-12">
+                                <button type="submit" class="hiraola-login_btn">إعادة ضبط</button>
+                            </div>
+                        </div>
+                    </div>
+                    {{ form_end(resetForm) }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Shine AuroraLogin Register Area  End Here -->
 
 {% endblock %}
 

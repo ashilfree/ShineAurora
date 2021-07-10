@@ -38,11 +38,16 @@ class Category
      * @ORM\ManyToMany(targetEntity=Size::class, mappedBy="categories", cascade={"persist"})
      */
     private $sizes;
+    /**
+     * @ORM\OneToMany(targetEntity=SubCategory::class, mappedBy="category", cascade={"persist"}, orphanRemoval=true)
+     */
+    private $subCategories;
 
     public function __construct()
     {
         $this->products = new ArrayCollection();
         $this->sizes = new ArrayCollection();
+        $this->subCategories = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -131,6 +136,37 @@ class Category
     {
         if ($this->sizes->removeElement($size)) {
             $size->removeCategory($this);
+        }
+
+        return $this;
+    }
+    /**
+     * @return Collection|SubCategory[]
+     */
+    public function getSubCategories(): Collection
+    {
+        return $this->subCategories;
+    }
+
+    public function addSubCategory(SubCategory $subCategory): self
+    {
+        if (!$this->subCategories->contains($subCategory)) {
+            $this->subCategories[] = $subCategory;
+            $subCategory->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSubCategory(SubCategory $subCategory): self
+    {
+        if ($this->subCategories->removeElement($subCategory)) {
+            // set the owning side to null (unless already changed)
+            if(!$subCategory->getProducts()){
+                if ($subCategory->getCategory() === $this) {
+                    $subCategory->setCategory(null);
+                }
+            }
         }
 
         return $this;

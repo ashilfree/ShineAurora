@@ -6,8 +6,12 @@ use App\Classes\Cart;
 use App\Classes\Contact;
 use App\Classes\Mailer;
 use App\Classes\WishList;
+use App\Entity\Newsletter;
 use App\Form\ContactType;
+use App\Form\NewsletterType;
+use App\Repository\BannerRepository;
 use App\Repository\CategoryRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,25 +36,39 @@ class ContactController extends AbstractController
      * @var CategoryRepository
      */
     private $categoryRepository;
+    /**
+     * @var BannerRepository
+     */
+    private $bannerRepository;
+    /**
+     * @var EntityManagerInterface
+     */
+    private $entityManager;
 
     /**
      * ContactController constructor.
      * @param Mailer $mailer
      * @param Cart $cart
      * @param CategoryRepository $categoryRepository
+     * @param BannerRepository $bannerRepository
      * @param WishList $wishlist
+     * @param EntityManagerInterface $entityManager
      */
     public function __construct(
         Mailer $mailer,
          Cart $cart,
         CategoryRepository $categoryRepository,
-        WishList $wishlist
+        BannerRepository $bannerRepository,
+        WishList $wishlist,
+        EntityManagerInterface $entityManager
     )
     {
         $this->mailer = $mailer;
         $this->cart = $cart;
         $this->wishlist = $wishlist;
         $this->categoryRepository = $categoryRepository;
+        $this->bannerRepository = $bannerRepository;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -71,6 +89,18 @@ class ContactController extends AbstractController
             $this->addFlash('success', $message);
             return $this->redirectToRoute('contact.us', ['locale' => $locale]);
         }
+        $newsletter = new Newsletter();
+        $newsletterType = $this->createForm(NewsletterType::class, $newsletter);
+        $newsletterType->handleRequest($request);
+        if ($newsletterType->isSubmitted() && $newsletterType->isValid()) {
+            $this->entityManager->persist($newsletter);
+            $this->entityManager->flush();
+
+            unset($newsletter);
+            unset($newsletterType);
+            $newsletter = new Newsletter();
+            $newsletterType = $this->createForm(NewsletterType::class, $newsletter);
+        }
         $path = ($locale == "en") ? 'contact/index.html.twig' : 'contact/indexAr.html.twig';
         return $this->render($path, [
             'form' => $form->createView(),
@@ -78,6 +108,8 @@ class ContactController extends AbstractController
             'cart' => $this->cart->getFull($this->cart->get()),
             'wishlist' => $this->wishlist->getFull(),
             'categories' => $this->categoryRepository->findAll(),
+            'banner' =>$this->bannerRepository->findOneBy(['page'=>'Contact']),
+            'newsletterForm' => $newsletterType->createView(),
         ]);
     }
 }

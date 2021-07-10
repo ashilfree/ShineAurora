@@ -254,9 +254,9 @@
                                 </a>
                                 <span class="header-cart-item-info">
                                     {% if cartItem.catalog.product.discountPrice != 0 %}
-								        {{ cartItem.quantity }} x {{ (cartItem.catalog.product.discountPrice / 100) |number_format(2, '.', ',') }} KWD
+								        {{ cartItem.quantity }} x {{ (cartItem.catalog.product.discountPrice / 100) |number_format(2, '.', ',') }} {{ currency }}
                                     {% else %}
-                                        {{ cartItem.quantity }} x {{ (cartItem.catalog.product.price / 100) |number_format(2, '.', ',') }} KWD
+                                        {{ cartItem.quantity }} x {{ (cartItem.catalog.product.price / 100) |number_format(2, '.', ',') }} {{ currency }}
                                     {% endif %}
 							</span>
                                 <span class="header-cart-item-info">

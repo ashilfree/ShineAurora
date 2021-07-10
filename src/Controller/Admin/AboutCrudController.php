@@ -3,6 +3,8 @@
 namespace App\Controller\Admin;
 
 use App\Entity\About;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
@@ -27,6 +29,15 @@ class AboutCrudController extends AbstractCrudController
             ->overrideTemplate('crud/edit', 'admin/about/edit.html.twig')
 //            ->overrideTemplate('crud/field/image', 'admin/slide/field/image.html.twig')
             ->setFormThemes(['@EasyAdmin/crud/form_theme.html.twig','admin/about/form.html.twig'])
+            ;
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        return $actions
+            // ...
+            ->remove(Crud::PAGE_INDEX, Action::NEW)
+            ->remove(Crud::PAGE_INDEX, Action::DELETE)
             ;
     }
 

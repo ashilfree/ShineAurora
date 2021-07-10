@@ -13,12 +13,14 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class ProductCrudController extends AbstractCrudController
 {
@@ -35,6 +37,7 @@ class ProductCrudController extends AbstractCrudController
             ->overrideTemplate('crud/edit', 'admin/product/edit.html.twig')
 //            ->setFormThemes(['@EasyAdmin/crud/form_theme.html.twig','admin/product/form.html.twig'])
             ->setFormThemes(['@EasyAdmin/crud/form_theme.html.twig','admin/product/form_theme.html.twig'])
+            ->setPaginatorPageSize(1000)
 //            ->overrideTemplates([
 //                'crud/field/collection' => 'admin/product/collection.html.twig'
 //            ])
@@ -56,8 +59,9 @@ class ProductCrudController extends AbstractCrudController
             TagField::new('tags', TagType::class)->onlyOnForms(),
             TagField::new('togs', TogType::class)->onlyOnForms(),
             AssociationField::new('category'),
+            AssociationField::new('subCategory'),
             CollectionField::new('images')
-                ->setEntryType(ImageFileType::class)->onlyOnForms(),
+                ->setEntryType(ImageFileType::class)->onlyOnForms()->allowDelete(true)->allowAdd(true),
             CollectionField::new('catalogs')
                 ->setEntryType(CatalogType::class)
                 ->onlyOnForms(),
@@ -66,6 +70,8 @@ class ProductCrudController extends AbstractCrudController
             NumberField::new('weight')->onlyOnForms(),
             TextField::new('materials')->onlyOnForms(),
             TextField::new('materialsAr', 'المواد المطلوبة')->onlyOnForms()->addCssClass('text-right'),
+            ImageField::new('imageFile', 'SIZE GUIDE')->setFormType(VichImageType::class)->onlyOnForms(),
+            ImageField::new('fileName', 'SIZE GUIDE')->setCustomOption('basePath', 'media/images/popup/')->onlyOnIndex(),
         ];
     }
 

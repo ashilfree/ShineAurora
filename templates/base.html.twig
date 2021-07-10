@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <title>{% block title %}{% endblock %}</title>
-    <meta name="robots" content="noindex, follow" />
+    <meta name="robots" content="noindex, follow"/>
     <meta name="description" content="">
     <!--===============================================================================================-->
     <link rel="icon" type="image/png" href="{{ '/media/images/icons/favicon.png' }}"/>
@@ -33,25 +33,53 @@
         </div>
     </div>
     <!-- Loading Area End Here -->
-
+    {% if page is defined and page == 'home' %}
+    <!-- Begin Hiraola's Newsletter Popup Area -->
+        {% if popup.isShow %}
+            {% if newsletter is defined and not newsletter %}
+                <div class="popup_wrapper">
+                    <div class="test" style="background-image: url({{ vich_uploader_asset(popup, 'imageFile') }});">
+                        <span class="popup_off"><i class="ion-android-close"></i></span>
+                        <div class="subscribe_area">
+                            <h2>Sign Up Newsletter</h2>
+                            <p>Subscribe to the our store mailing list to receive updates on new arrivals, special offers and other discount information.</p>
+                            <div class="subscribe-form-group">
+                                {{ form_start(newsletterForm, {'attr': {'class': 'subscribe-form'}}) }}
+                                    {{ form_widget(newsletterForm.email, {'attr': {'placeholder':'Enter your email address', 'autocomplete':'off'}}) }}
+                                    <button type="submit">subscribe</button>
+                                {{ form_end(newsletterForm) }}
+                            </div>
+{#                            <div class="subscribe-bottom">#}
+{#                                <input type="checkbox" id="newsletter-permission">#}
+{#                                <label for="newsletter-permission">Don't show this popup again</label>#}
+{#                            </div>#}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% endif %}
+    <!-- Hiraola's Newsletter Popup Area Here -->
+    {% endif %}
     <!-- Begin Shine Aurora Header Main Area Two -->
-    <header class="header-main_area {% if page is defined and page != 'home' %} header-main_area-2 {% endif %}">
-        {% if page is defined and page == 'home' %}
-            <div class="header-bottom_area header-bottom_area-2 header-sticky stick">
+    <header class="header-main_area {% if page is defined and page == 'home' %} header-main_area-2 {% endif %}">
+{#        {% if page is defined and page == 'home' %}#}
+            <div class="header-bottom_area header-bottom_area-2 {% if page is defined and page != 'home' %} header-bottom_area-3 {% endif %} header-sticky stick">
                 <div class="container-fliud">
                     <div class="row">
-                        <div class="col-lg-2 col-md-4 col-sm-4">
+                        <div class="col-lg-2 col-md-4 col-sm-3">
                             <div class="header-logo">
                                 <a href="{{ path('home', { locale: 'en' }) }}">
-                                    <img src="{{ '/media/images/icons/logo-01.png' }}" width="60" alt="Shine Aurora Header Logo">
+                                    <img src="{{ '/media/images/icons/logo-01.png' }}" width="180"
+                                         alt="Shine Aurora Header Logo">
                                 </a>
                             </div>
                         </div>
-                        <div class="col-lg-7 d-none d-lg-block position-static">
+                        <div class="col-lg-6 d-none d-lg-block position-static">
                             <div class="main-menu_area">
                                 <nav>
                                     <ul>
-                                        <li class="dropdown-holder"><a href="{{ path('home', { locale: 'en' }) }}">Home</a>
+                                        <li class="dropdown-holder"><a
+                                                    href="{{ path('home', { locale: 'en' }) }}">Home</a>
                                         </li>
                                         <li class="megamenu-holder"><a href="{{ path('products', { locale: 'en' }) }}">Shop</a>
                                         </li>
@@ -61,27 +89,42 @@
                                 </nav>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-8 col-sm-8">
-                            <div class="header-right_area">
+                        <div class="col-lg-4 col-md-8 col-sm-9">
+                            <div class="header-right_area ht-menu">
                                 <ul>
                                     <li>
                                         <a href="wishlist.html" class="wishlist-btn">
                                             <i class="ion-android-favorite-outline"></i>
                                         </a>
                                     </li>
+
                                     <li>
-                                        <a href="#searchBar" class="search-btn toolbar-btn">
-                                            <i class="ion-ios-search-strong"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#mobileMenu" class="mobile-menu_btn toolbar-btn color--white d-lg-none d-block">
+                                        <a href="#mobileMenu"
+                                           class="mobile-menu_btn toolbar-btn color--white d-lg-none d-block">
                                             <i class="ion-navicon"></i>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="#miniCart" class="minicart-btn toolbar-btn">
-                                            <i class="ion-bag"></i>
+                                            <i class="ion-bag">
+                                                <span class="total">{{ cart|length }}</span>
+                                            </i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a
+                                                {% if app.user %}
+                                                    href="{{ path('account', { locale: 'en' }) }}"
+                                                {% else %}
+                                                    href="{{ path('login', { locale: 'en' }) }}"
+                                                {% endif %}
+                                        >
+                                            <i class="ion-android-person"></i>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="{{ path('home' , { locale: 'ar' }) }}">
+                                            <i class="ion-android-globe"></i>
                                         </a>
                                     </li>
                                 </ul>
@@ -91,263 +134,214 @@
                 </div>
             </div>
             <div class="offcanvas-search_wrapper" id="searchBar">
-            <div class="offcanvas-menu-inner">
-                <div class="container">
-                    <a href="#" class="btn-close"><i class="ion-android-close"></i></a>
-                    <!-- Begin Offcanvas Search Area -->
-                    <div class="offcanvas-search">
-                        <form action="#" class="hm-searchbox">
-                            <input type="text" placeholder="Search for item...">
-                            <button class="search_btn" type="submit"><i class="ion-ios-search-strong"></i></button>
-                        </form>
-                    </div>
-                    <!-- Offcanvas Search Area End Here -->
-                </div>
-            </div>
-        </div>
-        {% else %}
-            <div class="header-top_area">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-5">
-                            <div class="ht-left_area">
-                                <div class="header-shipping_area">
-                                    <ul>
-                                        <li>
-                                            <span>Telephone Enquiry:</span>
-                                            <a href="callto://+123123321345">(+123) 123 321 345</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
+                <div class="offcanvas-menu-inner">
+                    <div class="container">
+                        <a href="#" class="btn-close"><i class="ion-android-close"></i></a>
+                        <!-- Begin Offcanvas Search Area -->
+                        <div class="offcanvas-search">
+                            <form action="#" class="hm-searchbox">
+                                <input type="text" placeholder="Search for item...">
+                                <button class="search_btn" type="submit"><i class="ion-ios-search-strong"></i></button>
+                            </form>
                         </div>
-                        <div class="col-lg-7">
-                            <div class="ht-right_area">
-                                <div class="ht-menu">
-                                    <ul>
-                                        <li><a href="javascript:void(0)">Currency<i class="fa fa-chevron-down"></i></a>
-                                            <ul class="ht-dropdown ht-currency">
-                                                <li><a href="javascript:void(0)">€ EUR</a></li>
-                                                <li class="active"><a href="javascript:void(0)">£ Pound Sterling</a></li>
-                                                <li><a href="javascript:void(0)">$ Us Dollar</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="javascript:void(0)">Language <i class="fa fa-chevron-down"></i></a>
-                                            <ul class="ht-dropdown">
-                                                <li class="active"><a href="javascript:void(0)"><img src="assets/images/menu/icon/1.jpg" alt="JB's Language Icon">English</a></li>
-                                                <li><a href="javascript:void(0)"><img src="assets/images/menu/icon/2.jpg" alt="JB's Language Icon">Français</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="{% if app.user %}{{ path('account', { locale: 'en' }) }}{% else %} javascript:void(0) {% endif %}">My Account<i class="fa fa-chevron-down"></i></a>
-                                            <ul class="ht-dropdown ht-my_account">
-                                                {% if app.user %}
-                                                    <li>{{ 'Hello ' ~ app.user.username }}</li>
-                                                    <li class="active"><a href="{{ path('logout', { locale: 'en' }) }}">Logout</a></li>
-                                                {% else %}
-                                                    <li><a href="{{ path('register', { locale: 'en' }) }}">Register</a></li>
-                                                    <li class="active"><a href="{{ path('login', { locale: 'en' }) }}">Login</a></li>
-                                                {% endif %}
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                        <!-- Offcanvas Search Area End Here -->
                     </div>
                 </div>
             </div>
-            <div class="header-middle_area d-none d-lg-block">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-lg-3">
-                            <div class="header-logo">
-                                <a href="index.html">
-                                    <img src="{{ '/media/images/icons/logo-01.png' }}"  width="60" alt="Shine Aurora Header Logo">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-lg-9">
-                            <div class="hm-form_area">
-                                <form action="#" class="hm-searchbox">
-                                    <select class="nice-select select-search-category">
-                                        <option value="0">All</option>
-                                        <option value="10">Laptops</option>
-                                        <option value="17">- - Prime Video</option>
-                                        <option value="20">- - - - All Videos</option>
-                                        <option value="21">- - - - Blouses</option>
-                                        <option value="22">- - - - Evening Dresses</option>
-                                        <option value="23">- - - - Summer Dresses</option>
-                                        <option value="24">- - - - T-shirts</option>
-                                        <option value="25">- - - - Rent or Buy</option>
-                                        <option value="26">- - - - Your Watchlist</option>
-                                        <option value="27">- - - - Watch Anywhere</option>
-                                        <option value="28">- - - - Getting Started</option>
-                                        <option value="18">- - - - Computers</option>
-                                        <option value="29">- - - - More to Explore</option>
-                                        <option value="30">- - - - TV &amp; Video</option>
-                                        <option value="31">- - - - Audio &amp; Theater</option>
-                                        <option value="32">- - - - Camera, Photo </option>
-                                        <option value="33">- - - - Cell Phones</option>
-                                        <option value="34">- - - - Headphones</option>
-                                        <option value="35">- - - - Video Games</option>
-                                        <option value="36">- - - - Wireless Speakers</option>
-                                        <option value="19">- - - - Electronics</option>
-                                        <option value="37">- - - - Amazon Home</option>
-                                        <option value="38">- - - - Kitchen &amp; Dining</option>
-                                        <option value="39">- - - - Furniture</option>
-                                        <option value="40">- - - - Bed &amp; Bath</option>
-                                        <option value="41">- - - - Appliances</option>
-                                        <option value="11">TV &amp; Audio</option>
-                                        <option value="42">- - Chamcham</option>
-                                        <option value="45">- - - - Office</option>
-                                        <option value="47">- - - - Gaming</option>
-                                        <option value="48">- - - - Chromebook</option>
-                                        <option value="49">- - - - Refurbished</option>
-                                        <option value="50">- - - - Touchscreen</option>
-                                        <option value="51">- - - - Ultrabooks</option>
-                                        <option value="52">- - - - Blouses</option>
-                                        <option value="43">- - Sanai</option>
-                                        <option value="53">- - - - Hard Drives</option>
-                                        <option value="54">- - - - Graphic Cards</option>
-                                        <option value="55">- - - - Processors (CPU)</option>
-                                        <option value="56">- - - - Memory</option>
-                                        <option value="57">- - - - Motherboards</option>
-                                        <option value="58">- - - - Fans &amp; Cooling</option>
-                                        <option value="59">- - - - CD/DVD Drives</option>
-                                        <option value="44">- - Meito</option>
-                                        <option value="60">- - - - Sound Cards</option>
-                                        <option value="61">- - - - Cases &amp; Towers</option>
-                                        <option value="62">- - - - Casual Dresses</option>
-                                        <option value="63">- - - - Evening Dresses</option>
-                                        <option value="64">- - - - T-shirts</option>
-                                        <option value="65">- - - - Tops</option>
-                                        <option value="12">Smartphone</option>
-                                        <option value="66">- - Camera Accessories</option>
-                                        <option value="68">- - - - Octa Core</option>
-                                        <option value="69">- - - - Quad Core</option>
-                                        <option value="70">- - - - Dual Core</option>
-                                        <option value="71">- - - - 7.0 Screen</option>
-                                        <option value="72">- - - - 9.0 Screen</option>
-                                        <option value="73">- - - - Bags &amp; Cases</option>
-                                        <option value="67">- - XailStation</option>
-                                        <option value="74">- - - - Batteries</option>
-                                        <option value="75">- - - - Microphones</option>
-                                        <option value="76">- - - - Stabilizers</option>
-                                        <option value="77">- - - - Video Tapes</option>
-                                        <option value="78">- - - - Memory Card Readers</option>
-                                        <option value="79">- - - - Tripods</option>
-                                        <option value="13">Cameras</option>
-                                        <option value="14">headphone</option>
-                                        <option value="15">Smartwatch</option>
-                                        <option value="16">Accessories</option>
-                                    </select>
-                                    <input type="text" placeholder="Enter your search key ...">
-                                    <button class="li-btn" type="submit"><i class="fa fa-search"></i></button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="header-bottom_area header-sticky stick">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-4 col-sm-4 d-lg-none d-block">
-                            <div class="header-logo">
-                                <a href="{{ path('home', { locale: 'en' }) }}">
-                                    <img src="{{ '/media/images/icons/logo-01.png' }}" alt="Shine Aurora Header Logo">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-lg-9 d-none d-lg-block position-static">
-                            <div class="main-menu_area">
-                                <nav>
-                                    <ul>
-                                        <li class="dropdown-holder"><a href="{{ path('home', { locale: 'en' }) }}">Home</a>
-                                        </li>
-                                        <li class="megamenu-holder"><a href="{{ path('products', { locale: 'en' }) }}">Shop</a>
-                                        </li>
-                                        <li><a href="{{ path('about.us', { locale: 'en' }) }}">About Us</a></li>
-                                        <li><a href="{{ path('contact.us', { locale: 'en' }) }}">Contact</a></li>
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-8 col-sm-8">
-                            <div class="header-right_area">
-                                <ul>
-                                    <li>
-                                        <a href="wishlist.html" class="wishlist-btn">
-                                            <i class="ion-android-favorite-outline"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#mobileMenu" class="mobile-menu_btn toolbar-btn color--white d-lg-none d-block">
-                                            <i class="ion-navicon"></i>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#miniCart" class="minicart-btn toolbar-btn">
-                                            <i class="ion-bag"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        {% endif %}
+{#        {% else %}#}
+{#            <div class="header-top_area">#}
+{#                <div class="container">#}
+{#                    <div class="row">#}
+{#                        <div class="col-lg-5">#}
+{#                            <div class="ht-left_area">#}
+{#                                <div class="header-shipping_area">#}
+{#                                    <ul>#}
+{#                                        <li>#}
+{#                                            <span>Telephone Enquiry:</span>#}
+{#                                            <a href="callto://+123123321345">(+123) 123 321 345</a>#}
+{#                                        </li>#}
+{#                                    </ul>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="col-lg-7">#}
+{#                            <div class="ht-right_area">#}
+{#                                <div class="ht-menu">#}
+{#                                    <ul>#}
+{#                                        <li><a href="javascript:void(0)">Language <i class="fa fa-chevron-down"></i></a>#}
+{#                                            <ul class="ht-dropdown">#}
+{#                                                <li class="active"><a href="javascript:void(0)"><img#}
+{#                                                                src="{{ '/media/images/menu/icon/1.jpg' }}"#}
+{#                                                                alt="JB's Language Icon">English</a></li>#}
+{#                                                <li><a href="javascript:void(0)"><img#}
+{#                                                                src="{{ '/media/images/menu/icon/2.jpg' }}"#}
+{#                                                                alt="JB's Language Icon">Arabic</a>#}
+{#                                                </li>#}
+{#                                            </ul>#}
+{#                                        </li>#}
+{#                                        <li>#}
+{#                                            <a href="{% if app.user %}{{ path('account', { locale: 'en' }) }}{% else %} javascript:void(0) {% endif %}">My#}
+{#                                                Account<i class="fa fa-chevron-down"></i></a>#}
+{#                                            <ul class="ht-dropdown ht-my_account">#}
+{#                                                {% if app.user %}#}
+{#                                                    <li>{{ 'Hello ' ~ app.user.username }}</li>#}
+{#                                                    <li class="active"><a href="{{ path('logout', { locale: 'en' }) }}">Logout</a>#}
+{#                                                    </li>#}
+{#                                                {% else %}#}
+{#                                                    <li><a href="{{ path('register', { locale: 'en' }) }}">Register</a>#}
+{#                                                    </li>#}
+{#                                                    <li class="active"><a href="{{ path('login', { locale: 'en' }) }}">Login</a>#}
+{#                                                    </li>#}
+{#                                                {% endif %}#}
+{#                                            </ul>#}
+{#                                        </li>#}
+{#                                    </ul>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="header-middle_area d-none d-lg-block">#}
+{#                <div class="container">#}
+{#                    <div class="row">#}
+{#                        <div class="col-lg-3">#}
+{#                            <div class="header-logo">#}
+{#                                <a href="index.html">#}
+{#                                    <img src="{{ '/media/images/icons/logo-01.png' }}" width="180"#}
+{#                                         alt="Shine Aurora Header Logo">#}
+{#                                </a>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="col-lg-9">#}
+{#                            <div class="hm-form_area">#}
+{#                                <form action="#" class="hm-searchbox">#}
+{#                                    <input type="text" placeholder="Enter your search key ...">#}
+{#                                    <button class="li-btn" type="submit"><i class="fa fa-search"></i></button>#}
+{#                                </form>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="header-bottom_area header-sticky stick">#}
+{#                <div class="container">#}
+{#                    <div class="row">#}
+{#                        <div class="col-md-4 col-sm-4 d-lg-none d-block">#}
+{#                            <div class="header-logo">#}
+{#                                <a href="{{ path('home', { locale: 'en' }) }}">#}
+{#                                    <img src="{{ '/media/images/icons/logo-01.png' }}" alt="Shine Aurora Header Logo">#}
+{#                                </a>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="col-lg-9 d-none d-lg-block position-static">#}
+{#                            <div class="main-menu_area">#}
+{#                                <nav>#}
+{#                                    <ul>#}
+{#                                        <li class="dropdown-holder"><a#}
+{#                                                    href="{{ path('home', { locale: 'en' }) }}">Home</a>#}
+{#                                        </li>#}
+{#                                        <li class="megamenu-holder"><a href="{{ path('products', { locale: 'en' }) }}">Shop</a>#}
+{#                                        </li>#}
+{#                                        <li><a href="{{ path('about.us', { locale: 'en' }) }}">About Us</a></li>#}
+{#                                        <li><a href="{{ path('contact.us', { locale: 'en' }) }}">Contact</a></li>#}
+{#                                    </ul>#}
+{#                                </nav>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="col-lg-3 col-md-8 col-sm-8">#}
+{#                            <div class="header-right_area">#}
+{#                                <ul>#}
+{#                                    <li>#}
+{#                                        <a href="wishlist.html" class="wishlist-btn">#}
+{#                                            <i class="ion-android-favorite-outline"></i>#}
+{#                                        </a>#}
+{#                                    </li>#}
+{#                                    <li>#}
+{#                                        <a href="#mobileMenu"#}
+{#                                           class="mobile-menu_btn toolbar-btn color--white d-lg-none d-block">#}
+{#                                            <i class="ion-navicon"></i>#}
+{#                                        </a>#}
+{#                                    </li>#}
+{#                                    <li>#}
+{#                                        <a href="#miniCart" class="minicart-btn toolbar-btn">#}
+{#                                            <i class="ion-bag"></i>#}
+{#                                        </a>#}
+{#                                    </li>#}
+{#                                </ul>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        {% endif %}#}
         <div class="offcanvas-minicart_wrapper" id="miniCart">
+            {% set total = null %}
             <div class="offcanvas-menu-inner">
                 <a href="#" class="btn-close"><i class="ion-android-close"></i></a>
                 <div class="minicart-content">
                     <div class="minicart-heading">
                         <h4>Shopping Cart</h4>
                     </div>
-                    <ul class="minicart-list">
-                        <li class="minicart-product">
-                            <a class="product-item_remove" href="javascript:void(0)"><i class="ion-android-close"></i></a>
-                            <div class="product-item_img">
-                                <img src="{{ '/media/images/product/small-size/2-1.jpg' }}" alt="Shine Aurora Product Image">
-                            </div>
-                            <div class="product-item_content">
-                                <a class="product-item_title" href="shop-left-sidebar.html">Pendant, Made of White Pl...</a>
-                                <span class="product-item_quantity">1 x $120.80</span>
-                            </div>
-                        </li>
-                        <li class="minicart-product">
-                            <a class="product-item_remove" href="javascript:void(0)"><i class="ion-android-close"></i></a>
-                            <div class="product-item_img">
-                                <img src="{{ '/media/images/product/small-size/2-2.jpg' }}" alt="Shine Aurora Product Image">
-                            </div>
-                            <div class="product-item_content">
-                                <a class="product-item_title" href="shop-left-sidebar.html">Pendant, Made of White Pl...</a>
-                                <span class="product-item_quantity">1 x $120.80</span>
-                            </div>
-                        </li>
-                        <li class="minicart-product">
-                            <a class="product-item_remove" href="javascript:void(0)"><i class="ion-android-close"></i></a>
-                            <div class="product-item_img">
-                                <img src="{{ '/media/images/product/small-size/2-3.jpg' }}" alt="Shine Aurora Product Image">
-                            </div>
-                            <div class="product-item_content">
-                                <a class="product-item_title" href="shop-left-sidebar.html">Pendant, Made of White Pl...</a>
-                                <span class="product-item_quantity">1 x $120.80</span>
-                            </div>
-                        </li>
-                    </ul>
+                    {% if cart %}
+                        <ul class="minicart-list">
+                            {% for cartItem in cart %}
+                                <li class="minicart-product">
+                                    <a class="product-item_remove"
+                                       href="{{ path('delete.cart', {id: cartItem.catalog.id, route:page}) }}"><i
+                                                class="ion-android-close"></i></a>
+                                    <div class="product-item_img">
+                                        <img src="{{ vich_uploader_asset(cartItem.catalog.product.images.first, 'imageFile') | imagine_filter('small') }}"
+                                             alt="{{ cartItem.catalog.product.name }}">
+                                    </div>
+                                    <div class="product-item_content">
+                                        <a class="product-item_title"
+                                           href="{{ path('product', {'slug': cartItem.catalog.product.slug }) }}">{{ cartItem.catalog.product.name|upper }}</a>
+                                        <span class="product-item_quantity" style="display: flex;justify-content:space-between; ">
+                                                <a href="javascript:void(0)"  class="cart-single-color" data-swatch-color="red">
+                                                    <span style="background-color: {{ cartItem.catalog.color }};display: block; width:100%;height: 100%"></span>
+                                                </a>
+                                                Size: {{ cartItem.catalog.size }}
+                                        </span>
+                                        <span class="product-item_quantity">
+                                    {% if cartItem.catalog.product.discountPrice != 0 %}
+                                        {{ cartItem.quantity }} x {{ (cartItem.catalog.product.discountPrice / 100) |number_format(2, '.', ',') }} {{ currency }}
+                                    {% else %}
+                                        {{ cartItem.quantity }} x {{ (cartItem.catalog.product.price / 100) |number_format(2, '.', ',') }} {{ currency }}
+                                    {% endif %}
+                                </span>
+                                    </div>
+                                </li>
+                                {% if cartItem.catalog.product.discountPrice != 0 %}
+                                    {% set total = total + (cartItem.quantity * cartItem.catalog.product.discountPrice) %}
+                                {% else %}
+                                    {% set total = total + (cartItem.quantity * cartItem.catalog.product.price) %}
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <img class="img-responsive" src="{{ '/media/images/waiting.png' }}" width=240 alt="ICON-PAY">
+
+                    {% endif %}
                 </div>
                 <div class="minicart-item_total">
                     <span>Subtotal</span>
-                    <span class="ammount">$360.00</span>
+                    <span class="ammount">
+                        {% if cart %}
+                            {{ (total / 100)|number_format(2) }} {{ currency }}
+                        {% else %}
+                            00.0 {{ currency }}
+                        {% endif %}
+                    </span>
                 </div>
                 <div class="minicart-btn_area">
-                    <a href="cart.html" class="hiraola-btn hiraola-btn_dark hiraola-btn_fullwidth">Minicart</a>
+                    <a href="{{ path('cart') }}" class="hiraola-btn hiraola-btn_dark hiraola-btn_fullwidth">View
+                        Cart</a>
                 </div>
                 <div class="minicart-btn_area">
-                    <a href="checkout.html" class="hiraola-btn hiraola-btn_dark hiraola-btn_fullwidth">Checkout</a>
+                    <a {% if cart|length != 0 %} href="{{ path('remove.cart', {route: page}) }}" {% endif %}
+                            class="hiraola-btn hiraola-btn_dark hiraola-btn_fullwidth"
+                            {% if cart|length == 0 %} disabled="true" {% endif %}>Clear List</a>
                 </div>
             </div>
         </div>
@@ -393,16 +387,16 @@
                                 </a>
                                 <ul class="sub-menu">
                                     {% if app.user %}
-                                    <li>
-                                        <a href="{{ path('account', { locale: 'en' }) }}">
-                                            <span class="mm-text">My Account</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ path('logout', { locale: 'en' }) }}">
-                                            <span class="mm-text">Logout</span>
-                                        </a>
-                                    </li>
+                                        <li>
+                                            <a href="{{ path('account', { locale: 'en' }) }}">
+                                                <span class="mm-text">My Account</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ path('logout', { locale: 'en' }) }}">
+                                                <span class="mm-text">Logout</span>
+                                            </a>
+                                        </li>
                                     {% else %}
                                         <li>
                                             <a href="{{ path('login', { locale: 'en' }) }}">
@@ -451,33 +445,38 @@
 
                             <div class="footer-widgets_logo">
                                 <a href="#">
-                                    <img src="{{ '/media/images/footer/logo/1.png' }}" alt="Shine Aurora Footer Logo">
+                                    <img src="{{ '/media/images/icons/logo-01.png' }}" width="180" alt="Shine Aurora Footer Logo">
                                 </a>
                             </div>
 
                             <div class="widget-short_desc">
-                                <p>We are a team of designers and developers that create high quality HTML Template & Woocommerce, Shopify Theme.
+                                <p>
+                                    xxxxxxxxxxxxx
                                 </p>
                             </div>
                             <div class="hiraola-social_link">
                                 <ul>
                                     <li class="facebook">
-                                        <a href="https://www.facebook.com" data-toggle="tooltip" target="_blank" title="Facebook">
+                                        <a href="https://www.facebook.com" data-toggle="tooltip" target="_blank"
+                                           title="Facebook">
                                             <i class="fab fa-facebook"></i>
                                         </a>
                                     </li>
                                     <li class="twitter">
-                                        <a href="https://twitter.com" data-toggle="tooltip" target="_blank" title="Twitter">
+                                        <a href="https://twitter.com" data-toggle="tooltip" target="_blank"
+                                           title="Twitter">
                                             <i class="fab fa-twitter-square"></i>
                                         </a>
                                     </li>
                                     <li class="google-plus">
-                                        <a href="https://www.plus.google.com/discover" data-toggle="tooltip" target="_blank" title="Google Plus">
+                                        <a href="https://www.plus.google.com/discover" data-toggle="tooltip"
+                                           target="_blank" title="Google Plus">
                                             <i class="fab fa-google-plus"></i>
                                         </a>
                                     </li>
                                     <li class="instagram">
-                                        <a href="https://rss.com" data-toggle="tooltip" target="_blank" title="Instagram">
+                                        <a href="https://rss.com" data-toggle="tooltip" target="_blank"
+                                           title="Instagram">
                                             <i class="fab fa-instagram"></i>
                                         </a>
                                     </li>
@@ -490,44 +489,61 @@
                             <div class="row">
                                 <div class="col-lg-3">
                                     <div class="footer-widgets_title">
-                                        <h6>Product</h6>
+                                        <h6>Shop</h6>
                                     </div>
                                     <div class="footer-widgets">
                                         <ul>
-                                            <li><a href="#">Prices drop</a></li>
-                                            <li><a href="#">New products</a></li>
-                                            <li><a href="#">Best sales</a></li>
-                                            <li><a href="#">Contact us</a></li>
+                                            {% for category in categories %}
+                                                <li><a href="#">{{ category.name }}</a></li>
+                                            {% endfor %}
                                         </ul>
                                     </div>
                                 </div>
                                 <div class="col-lg-5">
                                     <div class="footer-widgets_info">
                                         <div class="footer-widgets_title">
-                                            <h6>About Us</h6>
+                                            <h6>Contact Us</h6>
                                         </div>
                                         <div class="widgets-essential_stuff">
                                             <ul>
-                                                <li class="hiraola-address"><i class="ion-ios-location"></i><span>Address:</span> The Barn, Ullenhall, Henley
-                                                    in
-                                                    Arden B578 5CC, England</li>
-                                                <li class="hiraola-phone"><i class="ion-ios-telephone"></i><span>Call Us:</span> <a href="tel://+123123321345">+123 321 345</a>
+                                                <li class="hiraola-address"><i class="ion-ios-location"></i><span>Address:</span>
+                                                    Jaber Al-Ahmad City, Kuwait
                                                 </li>
-                                                <li class="hiraola-email"><i class="ion-android-mail"></i><span>Email:</span> <a href="mailto://info@yourdomain.com">info@yourdomain.com</a></li>
+                                                <li class="hiraola-phone"><i class="ion-ios-telephone"></i><span>Call Us:</span>
+                                                    <a href="tel://+123123321345">+xx xxx xxx</a>
+                                                </li>
+                                                <li class="hiraola-email"><i
+                                                            class="ion-android-mail"></i><span>Email:</span> <a
+                                                            href="mailto://info@yourdomain.com">info@shineaurora.com</a>
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="col-lg-4">
                                     <div class="instagram-container footer-widgets_area">
                                         <div class="footer-widgets_title">
                                             <h6>Sign Up For Newslatter</h6>
                                         </div>
                                         <div class="widget-short_desc">
-                                            <p>Subscribe to our newsletters now and stay up-to-date with new collections</p>
+                                            <p>Subscribe to our newsletters now and stay up-to-date with new
+                                                collections</p>
                                         </div>
                                         <div class="newsletter-form_wrap">
-                                            <form action="http://devitems.us11.list-manage.com/subscribe/post?u=6bbb9b6f5827bd842d9640c82&amp;id=05d85f18ef" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="newsletters-form validate" target="_blank" novalidate>
+                                            {% if page is defined and page != 'home' %}
+                                                {{ form_start(newsletterForm) }}
+                                                    <div id="mc_embed_signup_scroll">
+                                                        <div id="mc-form" class="mc-form subscribe-form">
+                                                    {{ form_widget(newsletterForm.email, {'attr': {'class':'newsletter-input','placeholder':'Enter your email', 'autocomplete':'off'}}) }}
+                                                            <button class="newsletter-btn" type="submit">
+                                                                <i class="ion-android-mail" aria-hidden="true"></i>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                {{ form_end(newsletterForm) }}
+                                            {% else %}
+                                            <form action="{{ path('home', { locale: 'en' }) }}" method="post"  class="newsletters-form validate" novalidate>
                                                 <div id="mc_embed_signup_scroll">
                                                     <div id="mc-form" class="mc-form subscribe-form">
                                                         <input id="mc-email" class="newsletter-input" type="email" autocomplete="off" placeholder="Enter your email" />
@@ -537,6 +553,7 @@
                                                     </div>
                                                 </div>
                                             </form>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
@@ -551,40 +568,8 @@
                 <div class="footer-bottom_nav">
                     <div class="row">
                         <div class="col-lg-12">
-                            <div class="footer-links">
-                                <ul>
-                                    <li><a href="#">Online Shopping</a></li>
-                                    <li><a href="#">Promotions</a></li>
-                                    <li><a href="#">My Orders</a></li>
-                                    <li><a href="#">Help</a></li>
-                                    <li><a href="#">Customer Service</a></li>
-                                    <li><a href="#">Support</a></li>
-                                    <li><a href="#">Most Populars</a></li>
-                                    <li><a href="#">New Arrivals</a></li>
-                                    <li><a href="#">Special Products</a></li>
-                                    <li><a href="#">Manufacturers</a></li>
-                                    <li><a href="#">Our Stores</a></li>
-                                    <li><a href="#">Shipping</a></li>
-                                    <li><a href="#">Payments</a></li>
-                                    <li><a href="#">Warantee</a></li>
-                                    <li><a href="#">Refunds</a></li>
-                                    <li><a href="#">Checkout</a></li>
-                                    <li><a href="#">Discount</a></li>
-                                    <li><a href="#">Refunds</a></li>
-                                    <li><a href="#">Policy Shipping</a></li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
-                            <div class="payment">
-                                <a href="#">
-                                    <img src="{{ '/media/images/footer/payment/1.png' }}" alt="Shine Aurora Payment Method">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="col-lg-12">
                             <div class="copyright">
-                                <span>Copyright &copy; 2019 <a href="#">Hiraola.</a> All rights reserved.</span>
+                                <span>Copyright &copy; 2021 <a href="{{ path('home') }}">Shine Aurora.</a> All rights reserved.</span>
                             </div>
                         </div>
                     </div>
