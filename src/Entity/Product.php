@@ -140,6 +140,18 @@ class Product
      */
     private $imageFile;
 
+//    /**
+//     * @ORM\Column(type="string", length=255, nullable=true)
+//     * @var string|null
+//     */
+//    private $video;
+//
+//    /**
+//     * @Vich\UploadableField(mapping="video_file", fileNameProperty="video")
+//     * @var File|null
+//     */
+//    private $videoFile;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
@@ -515,4 +527,31 @@ class Product
             $this->updatedAt = new \DateTimeImmutable();
         }
     }
+
+//    public function getVideo(): ?string
+//    {
+//        return $this->video;
+//    }
+//
+//    public function setVideo(?string $video): self
+//    {
+//        $this->video = $video;
+//        return $this;
+//    }
+//
+//    /**
+//     * @return File|null
+//     */
+//    public function getVideoFile(): ?File
+//    {
+//        return $this->videoFile;
+//    }
+//
+//
+//    public function setVideoFile(?File $videoFile): self
+//    {
+//        $this->videoFile = $videoFile;
+//
+//        return $this;
+//    }
 }

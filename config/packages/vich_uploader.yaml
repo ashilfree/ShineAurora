@@ -22,3 +22,6 @@ vich_uploader:
             uri_prefix: '%app.path.popup.images%'
             upload_destination: '%kernel.project_dir%/public%app.path.popup.images%'
             namer: Vich\UploaderBundle\Naming\UniqidNamer
+#        video_file:
+#            uri_prefix: '%app.path.video.file%'
+#            upload_destination: '%kernel.project_dir%/public%app.path.video.file%'

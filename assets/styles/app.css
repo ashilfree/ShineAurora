@@ -30,7 +30,7 @@
     transform: rotate(-7deg);
 }
 .style-1 ins {
-    color: #aaa9ad;
+    color: #bcbdc2;
     text-decoration: none;
 }
 
@@ -80,10 +80,10 @@ a[disabled] {
     margin-left: 10px;
 }
 .page-link{
-    color: #aaa9ad;
+    color: #bcbdc2;
 }
 .page-item.active .page-link {
-    background-color: #aaa9ad;
+    background-color: #bcbdc2;
 }
 
 .single-slide iframe {

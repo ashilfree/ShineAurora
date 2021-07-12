@@ -72,6 +72,8 @@ class ProductCrudController extends AbstractCrudController
             TextField::new('materialsAr', 'المواد المطلوبة')->onlyOnForms()->addCssClass('text-right'),
             ImageField::new('imageFile', 'SIZE GUIDE')->setFormType(VichImageType::class)->onlyOnForms(),
             ImageField::new('fileName', 'SIZE GUIDE')->setCustomOption('basePath', 'media/images/popup/')->onlyOnIndex(),
+//            ImageField::new('videoFile', 'Video')->setFormType(VichImageType::class)->onlyOnForms(),
+//            ImageField::new('video', 'Video')->setCustomOption('basePath', 'media/video/')->onlyOnIndex(),
         ];
     }
 

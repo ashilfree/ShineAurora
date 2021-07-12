@@ -5,17 +5,25 @@
     <!-- Begin Hiraola's Breadcrumb Area -->
     <div class="breadcrumb-area"  style="background-image: url({{ vich_uploader_asset(banner, 'imageFile') | imagine_filter('Extra_large') }});background-repeat:no-repeat;background-position:center;">
         <div class="container">
-            <div class="breadcrumb-content">
-                <h2>{{ product.name }}</h2>
+{#            <div class="breadcrumb-content">#}
+{#                <h2>{{ product.name }}</h2>#}
+{#                <ul>#}
+{#                    <li><a href="{{ path('home', { locale: 'en' }) }}">Home</a></li>#}
+{#                    <li class="active">{{ product.name }}</li>#}
+{#                </ul>#}
+{#            </div>#}
+        </div>
+    </div>
+    <div style="padding-top: 60px">
+        <div class="container">
+            <div>
                 <ul>
-                    <li><a href="{{ path('home', { locale: 'en' }) }}">Home</a></li>
-                    <li class="active">{{ product.name }}</li>
+                    <li class="text-center" style="color: #595959;font-size: 25px;"><a href="{{ path('home', { locale: 'en' }) }}">Home</a> / {{ product.name }}</li>
                 </ul>
             </div>
         </div>
     </div>
     <!-- Hiraola's Breadcrumb Area End Here -->
-
     <!-- Begin Hiraola's Single Product Variable Area -->
     <div class="sp-area">
         <div class="container">
@@ -37,9 +45,10 @@
                                     <img class="zoomit-target"  id="zoomit-target{{ loop.index }}" src="{{ vich_uploader_asset(image, 'imageFile') }}" data-zoomed="{{ vich_uploader_asset(image, 'imageFile') }}" alt="Shine Aurora Product Image">
                                 </div>
                                 {% endfor %}
+
                                 <div>
                                     <div class="single-slide red">
-                                        <iframe src="https://www.youtube.com/embed/lqj-QNYsZFk?controls=1">
+                                        <iframe src="">
                                         </iframe>
 
                                     </div>

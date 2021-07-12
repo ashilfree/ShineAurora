@@ -5,17 +5,25 @@
     <!-- Begin Hiraola's Breadcrumb Area -->
     <div class="breadcrumb-area" style="background-image: url({{ vich_uploader_asset(banner, 'imageFile') | imagine_filter('Extra_large') }});background-repeat:no-repeat;background-position:center;">
         <div class="container">
-            <div class="breadcrumb-content">
-                <h2>Shop</h2>
+{#            <div class="breadcrumb-content">#}
+{#                <h2>Shop</h2>#}
+{#                <ul>#}
+{#                    <li><a href="{{ path('home', { locale: 'en' }) }}">Home</a></li>#}
+{#                    <li class="active">Shop</li>#}
+{#                </ul>#}
+{#            </div>#}
+        </div>
+    </div>
+    <!-- Hiraola's Breadcrumb Area End Here -->
+    <div style="padding-top: 60px">
+        <div class="container">
+            <div>
                 <ul>
-                    <li><a href="{{ path('home', { locale: 'en' }) }}">Home</a></li>
-                    <li class="active">Shop</li>
+                    <li class="text-center" style="color: #595959;font-size: 25px;"><a href="{{ path('home', { locale: 'en' }) }}">Home</a> / Shop</li>
                 </ul>
             </div>
         </div>
     </div>
-    <!-- Hiraola's Breadcrumb Area End Here -->
-
     <!-- Begin Hiraola's Content Wrapper Area -->
     <div class="hiraola-content_wrapper  js-filter">
         <div class="container">

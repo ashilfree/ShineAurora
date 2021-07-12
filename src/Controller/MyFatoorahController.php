@@ -142,7 +142,7 @@ class MyFatoorahController extends AbstractController
                     'ExpiryDate' => '', //The Invoice expires after 3 days by default. Use 'Y-m-d\TH:i:s' format in the 'Asia/Kuwait' time zone.
                     'SourceInfo' => 'Pure PHP', //For example: (Laravel/Yii API Ver2.0 integration)
                     'CustomerAddress' => $customerAddress,
-                    'InvoiceItems' => $invoiceItems,
+//                    'InvoiceItems' => $invoiceItems,
                 ];
 
                 //Call endpoint
