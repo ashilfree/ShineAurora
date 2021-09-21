@@ -118,21 +118,28 @@
                                                     </div>
                                                 </div>
                                                 <div class="hiraola-product_content">
-                                                    <div class="product-desc_info">
-                                                        <h6><a class="product-name" href="{{ path('product', {locale: 'en', 'slug': product.slug }) }}">{{ product.name }}</a></h6>
-                                                        <div class="price-box style-1">
-                                                            {% if product.discountPrice != 0 %}
-                                                                <del><span class="new-price">{{ (product.price / 100) |number_format(2, '.', ',') }} {{ currency }}</span></del>
-                                                                <ins><span class="new-price">{{ (product.discountPrice / 100) |number_format(2, '.', ',') }} {{ currency }}</span></ins>
-                                                            {% else %}
-                                                                <ins><span class="new-price">{{ (product.price / 100) |number_format(2, '.', ',') }} {{ currency }}</span></ins>
-                                                            {% endif %}
+                                                    <div class="product-desc_info row">
+                                                        <div class="col-10">
+                                                            <h6><a class="product-name" href="{{ path('product', {locale: 'en', 'slug': product.slug }) }}">{{ product.name }}</a></h6>
+                                                            <div class="price-box style-1">
+                                                                {% if product.discountPrice != 0 %}
+                                                                    <del><span class="new-price">{{ (product.price / 100) |number_format(2, '.', ',') }} {{ currency }}</span></del>
+                                                                    <ins><span class="new-price">{{ (product.discountPrice / 100) |number_format(2, '.', ',') }} {{ currency }}</span></ins>
+                                                                {% else %}
+                                                                    <ins><span class="new-price">{{ (product.price / 100) |number_format(2, '.', ',') }} {{ currency }}</span></ins>
+                                                                {% endif %}
+                                                            </div>
                                                         </div>
-                                                        <div class="additional-add_action">
+                                                        <div class="col-2 additional-add_action">
                                                             <ul>
                                                                 <li><a class="hiraola-add_compare"{% if wish[product.id] is defined and wish[product.id] == 1  %} href="{{ path('delete.wishlist', { locale: 'en', id:product.id, route:page }) }}" title="Remove from Wishlist" {% else %} href="{{ path('add.wishlist', { locale: 'en', id:product.id }) }}" title="Add To Wishlist" {% endif %} data-toggle="tooltip" data-placement="top" >
                                                                         <i {% if wish[product.id] is defined and wish[product.id] == 1  %} class="ion-android-favorite"  {% else %} class="ion-android-favorite-outline"  {% endif %} ></i></a>
                                                                 </li>
+                                                                {% if product.video %}
+                                                                    <li>
+                                                                        <i class="ion-ios-videocam"></i>
+                                                                    </li>
+                                                                {% endif %}
                                                             </ul>
                                                         </div>
     {#                                                    <div class="rating-box">#}
@@ -171,7 +178,7 @@
                         <p class="schedule">
                             Starting at <span>{{ banner.startingAt|date("F jS") }}</span>
                         </p>
-                        <div class="hiraola-btn-ps_left">
+                        <div class="hiraola-btn-ps_center">
                             <a href="{{ banner.btnUrl }}" class="hiraola-btn">{{ banner.btnTitle }}</a>
                         </div>
                     </div>
@@ -202,8 +209,9 @@
                         {% for category in categories %}
                             {% if category.products.getValues() is not empty %}
                                 <div id="{{ category.name }}" class="tab-pane {% if loop.index == 1%} active show {% endif %}" role="tabpanel">
-                                <div class="hiraola-product-tab_slider-3">
+                                <div class="hiraola-product-tab_slider-3 hiraola-product-tab_second-slider-3">
                                     {% for product in category.products %}
+                                        {% if product.isShow %}
                                         <!-- Begin Shine Aurora Slide Item Area -->
                                         <div class="slide-item">
                                             <div class="single_product">
@@ -249,7 +257,8 @@
                                                     </div>
                                                 </div>
                                                 <div class="hiraola-product_content">
-                                                    <div class="product-desc_info">
+                                                    <div class="product-desc_info row">
+                                                        <div class="col-10">
                                                         <h6><a class="product-name" href="{{ path('product', {locale: 'en', 'slug': product.slug }) }}">{{ product.name }}</a></h6>
                                                         <div class="price-box">
                                                             <span class="new-price style-1 style-2">
@@ -261,11 +270,17 @@
                                                                                        {% endif %}
                                                             </span>
                                                         </div>
-                                                        <div class="additional-add_action">
+                                                        </div>
+                                                        <div class="col-2 additional-add_action">
                                                             <ul>
                                                                 <li><a class="hiraola-add_compare"{% if wish[product.id] is defined and wish[product.id] == 1  %} href="{{ path('delete.wishlist', { locale: 'en', id:product.id, route:page }) }}" title="Remove from Wishlist" {% else %} href="{{ path('add.wishlist', { locale: 'en', id:product.id }) }}" title="Add To Wishlist" {% endif %} data-toggle="tooltip" data-placement="top" >
                                                                         <i {% if wish[product.id] is defined and wish[product.id] == 1  %} class="ion-android-favorite"  {% else %} class="ion-android-favorite-outline"  {% endif %} ></i></a>
                                                                 </li>
+                                                                {% if product.video %}
+                                                                    <li>
+                                                                        <i class="ion-ios-videocam"></i>
+                                                                    </li>
+                                                                {% endif %}
                                                             </ul>
                                                         </div>
 {#                                                        <div class="rating-box">#}
@@ -282,6 +297,7 @@
                                             </div>
                                         </div>
                                         <!-- Shine Aurora Slide Item Area End Here -->
+                                        {% endif %}
                                     {% endfor %}
                                 </div>
                             </div>

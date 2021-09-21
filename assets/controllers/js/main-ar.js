@@ -284,6 +284,7 @@
 		arrows: true,
 		dots: false,
 		speed: 2000,
+		rtl:true,
 		slidesToShow: 4,
 		slidesToScroll: 1,
 		prevArrow: '<button class="slick-prev"><i class="ion-ios-arrow-back"></i></button>',
@@ -1103,12 +1104,12 @@
 			max: max,
 			values: [minfilter, maxfilter],
 			slide: function (event, ui) {
-				amountprice.val('KD ' + ui.values[0] + ' - KD ' + ui.values[1]);
+				amountprice.val(ui.values[0] + 'د.ك ' + ' - ' + ui.values[1] + 'د.ك ' );
 				$('#min').val(ui.values[0]);
 				$('#max').val(ui.values[1]);
 			}
 		});
-		amountprice.val('KD ' + sliderrange.slider('values', 0) + ' - KD ' + sliderrange.slider('values', 1));
+		amountprice.val(sliderrange.slider('values', 0) + 'د.ك ' + ' - ' + sliderrange.slider('values', 1)+ 'د.ك ' );
 	});
 	/*----------------------------------------*/
 	/*  Hiraola's Slick Carousel
@@ -1396,7 +1397,7 @@
 		$('.color-list a').removeClass('active');
 		$('.quantity input').prop('disabled',true);
 		$('.quantity input').val(1);
-		$('.qty-cart_btn').attr('href', '/en/cart/add');
+		$('.qty-cart_btn').attr('href', '/ar/cart/add');
 	})
 
 	$('.color-list a').on('click', function (e) {
@@ -1425,13 +1426,13 @@
 		}
 		$('.quantity input').prop('disabled',false);
 		$('.quantity div.inc').data('max',$this.find('span').data('quantity'));
-		var href = '/en/cart/add/' + $this.find('span').data('id');
+		var href = '/ar/cart/add/' + $this.find('span').data('id');
 			$('.qty-cart_btn').attr('href', href);
 	}
 	});
 	$('.qty-cart_btn').on('click', function (e){
-		if($('.qty-cart_btn').attr('href') === '/en/cart/add'){
-			alert('Select Color')
+		if($('.qty-cart_btn').attr('href') === '/ar/cart/add'){
+			alert('إختر لون')
 			e.preventDefault();
 		}else{
 			var href = $('.qty-cart_btn').attr('href') +'/'+ $('.quantity input').val();

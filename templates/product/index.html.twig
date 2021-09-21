@@ -55,7 +55,7 @@
                                 <h5>Categories</h5>
                             </div>
                             <div class="module-body">
-                                <ul class="module-list_item">
+                                <ul class="module-list_item navbar-nav">
 {#                                    <li>#}
 {#                                        <a href="javascript:void(0)">Hand Harness (18)</a>#}
 {#                                        <ul class="module-sub-list_item">#}
@@ -67,20 +67,24 @@
 {#                                            </li>#}
 {#                                        </ul>#}
 {#                                    </li>#}
-                                    <li><a href="{{ path('products', { locale: 'en' }) }}">All Products</a></li>
+                                    <li class="nav-item"><a href="{{ path('products', { locale: 'en' }) }}">All Products</a></li>
                                     {% for category in categories %}
-                                        <li>
-                                                 <a href="{{ path('products', { locale: 'en', id: category.id }) }}">{{ category.name }} ({{ category.products|length }})</a>
+                                        {% if category.products|length > 0 %}
+                                        <li class="nav-item dropdown">
+                                                 <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">{{ category.name }} ({{ category.products|length }})</a>
                                             {% if category.subCategories.getValues() is not empty %}
-                                            <ul class="module-sub-list_item">
+                                            <ul class="module-sub-list_item dropdown-menu" aria-labelledby="navbarDropdown">
                                                 <li>
                                                     {% for subCategory in category.subCategories %}
-                                                        <a href="{{ path('products', { locale: 'en', id: category.id, sub: subCategory.id }) }}">{{ subCategory.name }} ({{ subCategory.products|length }})</a>
+                                                        {% if subCategory.products|length > 0 %}
+                                                            <a href="{{ path('products', { locale: 'en', id: category.id, sub: subCategory.id }) }}">{{ subCategory.name }} ({{ subCategory.products|length }})</a>
+                                                        {% endif %}
                                                     {% endfor %}
                                                 </li>
                                             </ul>
                                             {% endif %}
                                         </li>
+                                        {% endif %}
                                     {% endfor %}
                                 </ul>
                             </div>
@@ -164,21 +168,29 @@
                                         </div>
                                     </div>
                                     <div class="hiraola-product_content">
-                                        <div class="product-desc_info">
-                                            <h6><a class="product-name" href="{{ path('product', {locale: 'en', 'slug': product.slug }) }}">{{ product.name }}</a></h6>
-                                            <div class="price-box style-1">
-                                                {% if product.discountPrice != 0 %}
-                                                    <del><span class="new-price">{{ (product.price / 100) |number_format(2, '.', ',') }} {{ currency }}</span></del>
-                                                    <ins><span class="new-price">{{ (product.discountPrice / 100) |number_format(2, '.', ',') }} {{ currency }}</span></ins>
-                                                {% else %}
-                                                    <ins><span class="new-price">{{ (product.price / 100) |number_format(2, '.', ',') }} {{ currency }}</span></ins>
-                                                {% endif %}
+                                        <div class="product-desc_info row">
+                                            <div class="col-10">
+                                                <h6><a class="product-name" href="{{ path('product', {locale: 'en', 'slug': product.slug }) }}">{{ product.name }}</a></h6>
+                                                <div class="price-box style-1">
+                                                    {% if product.discountPrice != 0 %}
+                                                        <del><span class="new-price">{{ (product.price / 100) |number_format(2, '.', ',') }} {{ currency }}</span></del>
+                                                        <ins><span class="new-price">{{ (product.discountPrice / 100) |number_format(2, '.', ',') }} {{ currency }}</span></ins>
+                                                    {% else %}
+                                                        <ins><span class="new-price">{{ (product.price / 100) |number_format(2, '.', ',') }} {{ currency }}</span></ins>
+                                                    {% endif %}
+                                                </div>
                                             </div>
-                                            <div class="additional-add_action">
+
+                                            <div class="col-2 additional-add_action">
                                                 <ul>
                                                     <li><a class="hiraola-add_compare"{% if wish[product.id] is defined and wish[product.id] == 1  %} href="{{ path('delete.wishlist', { locale: 'en', id:product.id, route:page }) }}" title="Remove from Wishlist" {% else %} href="{{ path('add.wishlist', { locale: 'en', id:product.id }) }}" title="Add To Wishlist" {% endif %} data-toggle="tooltip" data-placement="top" >
                                                             <i {% if wish[product.id] is defined and wish[product.id] == 1  %} class="ion-android-favorite"  {% else %} class="ion-android-favorite-outline"  {% endif %} ></i></a>
                                                     </li>
+                                                    {% if product.video %}
+                                                    <li>
+                                                        <i class="ion-ios-videocam"></i>
+                                                    </li>
+                                                    {% endif %}
                                                 </ul>
                                             </div>
 {#                                            <div class="rating-box">#}
@@ -228,14 +240,14 @@
                                         </div>
                                         <div class="add-actions">
                                             <ul>
-                                                <li><a class="hiraola-add_cart" href="cart.html" data-toggle="tooltip" data-placement="top" title="Add To Cart">Add To Cart</a></li>
-{#                                                <li><a class="hiraola-add_compare" href="compare.html" data-toggle="tooltip" data-placement="top" title="Compare This Product"><i#}
-{#                                                                class="ion-ios-shuffle-strong"></i></a></li>#}
-                                                <li class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><a href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="Quick View"><i
-                                                                class="ion-eye"></i></a></li>
-                                                <li><a class="hiraola-add_compare" href="wishlist.html" data-toggle="tooltip" data-placement="top" title="Add To Wishlist"><i
-                                                                class="ion-android-favorite-outline"></i></a>
+                                                <li><a class="hiraola-add_compare"{% if wish[product.id] is defined and wish[product.id] == 1  %} href="{{ path('delete.wishlist', { locale: 'en', id:product.id, route:page }) }}" title="Remove from Wishlist" {% else %} href="{{ path('add.wishlist', { locale: 'en', id:product.id }) }}" title="Add To Wishlist" {% endif %} data-toggle="tooltip" data-placement="top" >
+                                                        <i {% if wish[product.id] is defined and wish[product.id] == 1  %} class="ion-android-favorite"  {% else %} class="ion-android-favorite-outline"  {% endif %} ></i></a>
                                                 </li>
+                                                {% if product.video %}
+                                                    <li>
+                                                        <i class="ion-ios-videocam"></i>
+                                                    </li>
+                                                {% endif %}
                                             </ul>
                                         </div>
                                     </div>
@@ -259,15 +271,15 @@
 {#                                        </ul>#}
                                         {{ knp_pagination_render(products) }}
                                     </div>
-                                    {% if products|length > 0 %}
-                                        <div class="col-lg-6 col-md-6 col-sm-6">
-                                        <div class="product-select-box">
-                                            <div class="product-short">
-                                                <p>Showing {% if pages == 1 %} 1 {% else %} {{ (pages-1) * 6 }} {% endif %} to {{ pages * 6 }} ({{ pages }} Pages)</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {% endif %}
+{#                                    {% if products|length > 0 %}#}
+{#                                        <div class="col-lg-6 col-md-6 col-sm-6">#}
+{#                                        <div class="product-select-box">#}
+{#                                            <div class="product-short">#}
+{#                                                <p>Showing {% if pages == 1 %} 1 {% else %} {{ (pages-1) * 6 }} {% endif %} to {{ pages * 6 }} ({{ pages }} Pages)</p>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                    {% endif %}#}
                                 </div>
                             </div>
                         </div>
@@ -280,7 +292,6 @@
 
     <!-- Modal1 -->
     {% include 'modal1.html.twig' %}
-
 {% endblock %}
 {% block javascripts %}
 {% endblock %}

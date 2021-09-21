@@ -431,7 +431,7 @@ class Order
     public function canPrint(): string
     {
         $status = '';
-        if($this->marking == 'in_delivering' || $this->marking == 'delivered')
+        if($this->marking == 'in_delivering' || $this->marking == 'delivered' || $this->marking == 'paid')
             $status = 'Delivery Invoice';
         return $status;
     }

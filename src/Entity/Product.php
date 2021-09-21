@@ -114,21 +114,6 @@ class Product
     private $longDescriptionAr;
 
     /**
-     * @ORM\Column(type="float", nullable=true)
-     */
-    private $weight;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $materials;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $materialsAr;
-
-    /**
      * @var string|null
      * @ORM\Column(type="string", length=255, nullable=true)
      */
@@ -140,17 +125,28 @@ class Product
      */
     private $imageFile;
 
-//    /**
-//     * @ORM\Column(type="string", length=255, nullable=true)
-//     * @var string|null
-//     */
-//    private $video;
-//
-//    /**
-//     * @Vich\UploadableField(mapping="video_file", fileNameProperty="video")
-//     * @var File|null
-//     */
-//    private $videoFile;
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var string|null
+     */
+    private $video;
+
+    /**
+     * @Vich\UploadableField(mapping="video_file", fileNameProperty="video")
+     * @var File|null
+     */
+    private $videoFile;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=FabricType::class, inversedBy="products")
+     * @ORM\JoinColumn(nullable=true)
+     */
+    private $fabricType;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isShow;
 
     public function __construct()
     {
@@ -461,42 +457,6 @@ class Product
         return $this;
     }
 
-    public function getWeight(): ?float
-    {
-        return $this->weight;
-    }
-
-    public function setWeight(?float $weight): self
-    {
-        $this->weight = $weight;
-
-        return $this;
-    }
-
-    public function getMaterials(): ?string
-    {
-        return $this->materials;
-    }
-
-    public function setMaterials(?string $materials): self
-    {
-        $this->materials = $materials;
-
-        return $this;
-    }
-
-    public function getMaterialsAr(): ?string
-    {
-        return $this->materials;
-    }
-
-    public function setMaterialsAr(?string $materials): self
-    {
-        $this->materials = $materials;
-
-        return $this;
-    }
-
     public function getFileName(): ?string
     {
         return $this->fileName;
@@ -528,30 +488,90 @@ class Product
         }
     }
 
-//    public function getVideo(): ?string
-//    {
-//        return $this->video;
-//    }
-//
-//    public function setVideo(?string $video): self
-//    {
-//        $this->video = $video;
-//        return $this;
-//    }
-//
-//    /**
-//     * @return File|null
-//     */
-//    public function getVideoFile(): ?File
-//    {
-//        return $this->videoFile;
-//    }
-//
-//
-//    public function setVideoFile(?File $videoFile): self
-//    {
-//        $this->videoFile = $videoFile;
-//
-//        return $this;
-//    }
+    public function getVideo(): ?string
+    {
+        return $this->video;
+    }
+
+    public function setVideo(?string $video): self
+    {
+        $this->video = $video;
+        return $this;
+    }
+
+    /**
+     * @return File|null
+     */
+    public function getVideoFile(): ?File
+    {
+        return $this->videoFile;
+    }
+
+
+    public function setVideoFile(?File $videoFile): self
+    {
+        $this->videoFile = $videoFile;
+        if (null !== $videoFile) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->updatedAt = new \DateTimeImmutable();
+        }
+        return $this;
+    }
+
+    public function getFabricType(): ?FabricType
+    {
+        return $this->fabricType;
+    }
+
+    public function setFabricType(?FabricType $fabricType): self
+    {
+        $this->fabricType = $fabricType;
+
+        return $this;
+    }
+
+    public function getIsShow(): ?bool
+    {
+        return $this->isShow;
+    }
+
+    public function setIsShow(bool $isShow): self
+    {
+        $this->isShow = $isShow;
+
+        return $this;
+    }
+
+    public function getInStock()
+    {
+        $quantity = 0;
+        /**
+         * @var Catalog $catalog
+         */
+        foreach ($this->catalogs as $catalog){
+            $quantity += $catalog->getQuantity();
+        }
+        if($quantity = 0){
+            return 'Out of Stock';
+        }else{
+            return 'In Stock';
+        }
+    }
+
+    public function getInStockAr()
+    {
+        $quantity = 0;
+        /**
+         * @var Catalog $catalog
+         */
+        foreach ($this->catalogs as $catalog){
+            $quantity += $catalog->getQuantity();
+        }
+        if($quantity = 0){
+            return 'غير متوفر';
+        }else{
+            return 'متوفر';
+        }
+    }
 }

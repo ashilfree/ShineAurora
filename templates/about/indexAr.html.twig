@@ -2,19 +2,43 @@
 
 {% block body %}
 
+{#    <!-- Begin Hiraola's Breadcrumb Area -->#}
+{#    <div class="breadcrumb-area"  style="background-image: url({{ vich_uploader_asset(banner, 'imageFile') | imagine_filter('Extra_large') }});background-repeat:no-repeat;background-position:center;">#}
+{#        <div class="container">#}
+{#            <div class="breadcrumb-content">#}
+{#                <h2>معلومات عنا</h2>#}
+{#                <ul>#}
+{#                    <li><a href="{{ path('home', { locale: 'en' }) }}">الصفحة الرئيسية</a></li>#}
+{#                    <li class="active">معلومات عنا</li>#}
+{#                </ul>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#    <!-- Hiraola's Breadcrumb Area End Here -->#}
+
     <!-- Begin Hiraola's Breadcrumb Area -->
     <div class="breadcrumb-area"  style="background-image: url({{ vich_uploader_asset(banner, 'imageFile') | imagine_filter('Extra_large') }});background-repeat:no-repeat;background-position:center;">
         <div class="container">
-            <div class="breadcrumb-content">
-                <h2>معلومات عنا</h2>
+            {#            <div class="breadcrumb-content">#}
+            {#                <h2>About Us</h2>#}
+            {#                <ul>#}
+            {#                    <li><a href="{{ path('home', { locale: 'en' }) }}">Home</a></li>#}
+            {#                    <li class="active">About Us</li>#}
+            {#                </ul>#}
+            {#            </div>#}
+        </div>
+    </div>
+    <!-- Hiraola's Breadcrumb Area End Here -->
+    <div style="padding-top: 60px">
+        <div class="container">
+            <div>
                 <ul>
-                    <li><a href="{{ path('home', { locale: 'en' }) }}">الصفحة الرئيسية</a></li>
-                    <li class="active">معلومات عنا</li>
+                    <li class="text-center" style="color: #595959;font-size: 25px;"><a href="{{ path('home', { locale: 'en' }) }}">الصفحة الرئيسية</a> / معلومات عنا</li>
                 </ul>
             </div>
         </div>
     </div>
-    <!-- Hiraola's Breadcrumb Area End Here -->
+    <!-- Begin Hiraola's About Us Area -->
 
     <!-- Begin Hiraola's About Us Area -->
     <div class="about-us-area">
@@ -33,7 +57,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 col-md-5">
+                <div class="col-lg-6 col-md-5 mb-5">
                     <div class="overview-img text-center img-hover_effect">
                         <a href="#">
                             <img class="img-full" src="{{ vich_uploader_asset(about, 'imageFile') }}" alt="Shine Aurora About Us Image">

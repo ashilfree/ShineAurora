@@ -35,7 +35,7 @@ class BannerCrudController extends AbstractCrudController
     {
         return $actions
             // ...
-            ->remove(Crud::PAGE_INDEX, Action::NEW)
+//            ->remove(Crud::PAGE_INDEX, Action::NEW)
             ->remove(Crud::PAGE_INDEX, Action::DELETE)
             ;
     }

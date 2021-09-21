@@ -4,12 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>{% block title %}{% endblock %}</title>
+    <title>Shine Aurora</title>
     <meta name="robots" content="noindex, follow"/>
     <meta name="description" content="">
     <!--===============================================================================================-->
-    <link rel="icon" type="image/png" href="{{ '/media/images/icons/favicon.png' }}"/>
-
+{#    <link rel="icon" type="image/png" href="{{ '/media/images/icons/favicon.png' }}"/>#}
+    <link rel="icon" type="image/png" href="{{ '/media/images/icons/logo-03.png' }}"/>
     {{ encore_entry_link_tags('app-ar') }}
 
     {% block stylesheets %}{% endblock %}
@@ -93,8 +93,10 @@
                         <div class="header-right_area ht-menu">
                             <ul>
                                 <li>
-                                    <a href="wishlist.html" class="wishlist-btn">
-                                        <i class="ion-android-favorite-outline"></i>
+                                    <a href="{{ path('wishlist', { locale: 'ar' }) }}" class="wishlist-btn">
+                                        <i class="ion-android-favorite-outline">
+                                            <span class="total">{{ wishlist|length }}</span>
+                                        </i>
                                     </a>
                                 </li>
 
@@ -354,7 +356,7 @@
                             <button class="search_btn" type="submit"><i class="ion-ios-search-strong"></i></button>
                         </form>
                     </div>
-                    <nav class="offcanvas-navigation">
+                    <nav class="offcanvas-navigation text-right">
                         <ul class="mobile-menu">
                             <li><a href="{{ path('home', { locale: 'ar' }) }}"><span class="mm-text">الرئيسية</span></a>
 
@@ -376,52 +378,32 @@
                             </li>
                         </ul>
                     </nav>
-                    <nav class="offcanvas-navigation user-setting_area">
+                    <nav class="offcanvas-navigation user-setting_area text-right">
                         <ul class="mobile-menu">
-                            <li class="menu-item-has-children active">
-                                <a href="javascript:void(0)">
-                                        <span class="mm-text">إعدادات المستخدم
-                                    </span>
-                                </a>
-                                <ul class="sub-menu">
-                                    {% if app.user %}
-                                        <li>
-                                            <a href="{{ path('account', { locale: 'ar' }) }}">
-                                                <span class="mm-text">حسابي</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="{{ path('logout', { locale: 'ar' }) }}">
-                                                <span class="mm-text">تسجيل خروج</span>
-                                            </a>
-                                        </li>
-                                    {% else %}
-                                        <li>
-                                            <a href="{{ path('login', { locale: 'ar' }) }}">
-                                                <span class="mm-text">تسجيل الدخول</span>
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a href="{{ path('register', { locale: 'ar' }) }}">
-                                                <span class="mm-text">تسجيل</span>
-                                            </a>
-                                        </li>
-                                    {% endif %}
-                                </ul>
-                            </li>
-                            <li class="menu-item-has-children"><a href="javascript:void(0)"><span class="mm-text">لغة</span></a>
-                                <ul class="sub-menu">
-                                    <li>
-                                        <a href="{{ path('home', { locale: 'en' }) }}">
-                                            <span class="mm-text">الإنجليزية</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ path('home', { locale: 'ar' }) }}">
-                                            <span class="mm-text">العربية</span>
-                                        </a>
-                                    </li>
-                                </ul>
+                            {% if app.user %}
+                                <li>
+                                    <a href="{{ path('account', { locale: 'ar' }) }}">
+                                        <span class="mm-text">حسابي</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('logout', { locale: 'ar' }) }}">
+                                        <span class="mm-text">تسجيل خروج</span>
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a href="{{ path('login', { locale: 'ar' }) }}">
+                                        <span class="mm-text">تسجيل الدخول</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ path('register', { locale: 'ar' }) }}">
+                                        <span class="mm-text">الاشتراك</span>
+                                    </a>
+                                </li>
+                            {% endif %}
+                            <li><a href="{{ path('home', { locale: 'en' }) }}"><span class="mm-text">الإنجليزية</span></a>
                             </li>
                         </ul>
                     </nav>
@@ -434,146 +416,280 @@
     {% block body %}{% endblock %}
 
     <!-- Begin Shine Aurora Footer Area -->
-    <div class="hiraola-footer_area">
-        <div class="footer-top_area">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-4 text-right">
-                        <div class="footer-widgets_info">
+{#    <div class="hiraola-footer_area">#}
+{#        <div class="footer-top_area">#}
+{#            <div class="container">#}
+{#                <div class="row">#}
+{#                    <div class="col-lg-4 text-right">#}
+{#                        <div class="footer-widgets_info">#}
 
-                            <div class="footer-widgets_logo">
-                                <a href="#">
-                                    <img src="{{ '/media/images/icons/logo-01.png' }}" width="180" alt="Shine Aurora Footer Logo">
-                                </a>
-                            </div>
+{#                            <div class="footer-widgets_logo">#}
+{#                                <a href="#">#}
+{#                                    <img src="{{ '/media/images/icons/logo-01.png' }}" width="180" alt="Shine Aurora Footer Logo">#}
+{#                                </a>#}
+{#                            </div>#}
 
-                            <div class="widget-short_desc">
-                                <p>
-                                    xxxxxxxxxxxxx
-                                </p>
-                            </div>
-                            <div class="hiraola-social_link">
-                                <ul>
-                                    <li class="facebook">
-                                        <a href="https://www.facebook.com" data-toggle="tooltip" target="_blank"
-                                           title="Facebook">
-                                            <i class="fab fa-facebook"></i>
-                                        </a>
-                                    </li>
-                                    <li class="twitter">
-                                        <a href="https://twitter.com" data-toggle="tooltip" target="_blank"
-                                           title="Twitter">
-                                            <i class="fab fa-twitter-square"></i>
-                                        </a>
-                                    </li>
-                                    <li class="google-plus">
-                                        <a href="https://www.plus.google.com/discover" data-toggle="tooltip"
-                                           target="_blank" title="Google Plus">
-                                            <i class="fab fa-google-plus"></i>
-                                        </a>
-                                    </li>
-                                    <li class="instagram">
-                                        <a href="https://rss.com" data-toggle="tooltip" target="_blank"
-                                           title="Instagram">
-                                            <i class="fab fa-instagram"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-8 text-right">
-                        <div class="footer-widgets_area">
-                            <div class="row">
-                                <div class="col-lg-3">
-                                    <div class="footer-widgets_title">
-                                        <h6>متجر</h6>
-                                    </div>
-                                    <div class="footer-widgets">
-                                        <ul>
-                                            {% for category in categories %}
-                                                <li><a href="#">{{ category.nameAr }}</a></li>
-                                            {% endfor %}
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-lg-5">
-                                    <div class="footer-widgets_info">
-                                        <div class="footer-widgets_title">
-                                            <h6>اتصل بنا</h6>
-                                        </div>
-                                        <div class="widgets-essential_stuff">
-                                            <ul>
-                                                <li class="hiraola-address"><i class="ion-ios-location"></i><span>عنوان:</span>
-                                                    مدينة جابر الأحمد ، الكويت
-                                                </li>
-                                                <li class="hiraola-phone"><i class="ion-ios-telephone"></i><span>هاتف:</span>
-                                                    <a href="tel://+123123321345">+xx xxx xxx</a>
-                                                </li>
-                                                <li class="hiraola-email"><i
-                                                            class="ion-android-mail"></i><span>بريد إلكتروني:</span> <a
-                                                            href="mailto://info@yourdomain.com">info@shineaurora.com</a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="instagram-container footer-widgets_area">
-                                        <div class="footer-widgets_title">
-                                            <h6>الاشتراك في النشرة الإخبارية</h6>
-                                        </div>
-                                        <div class="widget-short_desc">
-                                            <p>اشترك في نشراتنا الإخبارية الآن وكن على اطلاع دائم بالمجموعات الجديدة</p>
-                                        </div>
-                                        <div class="newsletter-form_wrap">
-                                            {% if page is defined and page != 'home' %}
-                                                {{ form_start(newsletterForm) }}
-                                                <div id="mc_embed_signup_scroll">
-                                                    <div id="mc-form" class="mc-form subscribe-form">
-                                                        {{ form_widget(newsletterForm.email, {'attr': {'class':'newsletter-input','placeholder':'أدخل بريدك الإلكتروني', 'autocomplete':'off'}}) }}
-                                                        <button class="newsletter-btn" type="submit">
-                                                            <i class="ion-android-mail" aria-hidden="true"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                {{ form_end(newsletterForm) }}
-                                            {% else %}
-                                                <form action="{{ path('home', { locale: 'ar' }) }}" method="post"  class="newsletters-form validate" novalidate>
-                                                    <div id="mc_embed_signup_scroll">
-                                                        <div id="mc-form" class="mc-form subscribe-form">
-                                                            <input id="mc-email" class="newsletter-input" type="email" autocomplete="off" placeholder="أدخل بريدك الإلكتروني" />
-                                                            <button class="newsletter-btn" id="mc-submit">
-                                                                <i class="ion-android-mail" aria-hidden="true"></i>
-                                                            </button>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="footer-bottom_area">
-            <div class="container">
-                <div class="footer-bottom_nav">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="copyright">
-                                <span>حقوق النشر &copy; 2021 <a href="{{ path('home') }}">تألق أورورا.</a> جميع الحقوق محفوظة.</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+{#                            <div class="widget-short_desc">#}
+{#                                <p>#}
+{#                                    xxxxxxxxxxxxx#}
+{#                                </p>#}
+{#                            </div>#}
+{#                            <div class="hiraola-social_link">#}
+{#                                <ul>#}
+{#                                    <li class="facebook">#}
+{#                                        <a href="https://www.facebook.com" data-toggle="tooltip" target="_blank"#}
+{#                                           title="Facebook">#}
+{#                                            <i class="fab fa-facebook"></i>#}
+{#                                        </a>#}
+{#                                    </li>#}
+{#                                    <li class="twitter">#}
+{#                                        <a href="https://twitter.com" data-toggle="tooltip" target="_blank"#}
+{#                                           title="Twitter">#}
+{#                                            <i class="fab fa-twitter-square"></i>#}
+{#                                        </a>#}
+{#                                    </li>#}
+{#                                    <li class="google-plus">#}
+{#                                        <a href="https://www.plus.google.com/discover" data-toggle="tooltip"#}
+{#                                           target="_blank" title="Google Plus">#}
+{#                                            <i class="fab fa-google-plus"></i>#}
+{#                                        </a>#}
+{#                                    </li>#}
+{#                                    <li class="instagram">#}
+{#                                        <a href="https://rss.com" data-toggle="tooltip" target="_blank"#}
+{#                                           title="Instagram">#}
+{#                                            <i class="fab fa-instagram"></i>#}
+{#                                        </a>#}
+{#                                    </li>#}
+{#                                </ul>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                    <div class="col-lg-8 text-right">#}
+{#                        <div class="footer-widgets_area">#}
+{#                            <div class="row">#}
+{#                                <div class="col-lg-3">#}
+{#                                    <div class="footer-widgets_title">#}
+{#                                        <h6>متجر</h6>#}
+{#                                    </div>#}
+{#                                    <div class="footer-widgets">#}
+{#                                        <ul>#}
+{#                                            {% set break = false %}#}
+{#                                            {% for category in categories  %}#}
+{#                                                {% if not break %}#}
+{#                                                    {% if loop.index <= 4 %}#}
+{#                                                        <li><a href="#">{{ category.nameAr }}</a></li>#}
+{#                                                    {% else %}#}
+{#                                                        <li><a href="{{ path('products', { locale: 'ar' }) }}">المزيد</a></li>#}
+{#                                                        {% set break = true %}#}
+{#                                                    {% endif %}#}
+{#                                                {% endif %}#}
+{#                                            {% endfor %}#}
+{#                                        </ul>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="col-lg-5">#}
+{#                                    <div class="footer-widgets_info">#}
+{#                                        <div class="footer-widgets_title">#}
+{#                                            <h6>اتصل بنا</h6>#}
+{#                                        </div>#}
+{#                                        <div class="widgets-essential_stuff">#}
+{#                                            <ul>#}
+{#                                                <li class="hiraola-address"><i class="ion-ios-location"></i><span>عنوان:</span>#}
+{#                                                    مدينة جابر الأحمد ، الكويت#}
+{#                                                </li>#}
+{#                                                <li class="hiraola-phone"><i class="ion-ios-telephone"></i><span>هاتف:</span>#}
+{#                                                    <a href="tel://+123123321345">+965 50266444</a>#}
+{#                                                </li>#}
+{#                                                <li class="hiraola-email"><i#}
+{#                                                            class="ion-android-mail"></i><span>بريد إلكتروني:</span> <a#}
+{#                                                            href="mailto://info@yourdomain.com">info@shineaurora.com</a>#}
+{#                                                </li>#}
+{#                                            </ul>#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                                <div class="col-lg-4">#}
+{#                                    <div class="instagram-container footer-widgets_area">#}
+{#                                        <div class="footer-widgets_title">#}
+{#                                            <h6>الاشتراك في النشرة الإخبارية</h6>#}
+{#                                        </div>#}
+{#                                        <div class="widget-short_desc">#}
+{#                                            <p>اشترك في نشراتنا الإخبارية الآن وكن على اطلاع دائم بالمجموعات الجديدة</p>#}
+{#                                        </div>#}
+{#                                        <div class="newsletter-form_wrap">#}
+{#                                            {% if page is defined and page != 'home' %}#}
+{#                                                {{ form_start(newsletterForm) }}#}
+{#                                                <div id="mc_embed_signup_scroll">#}
+{#                                                    <div id="mc-form" class="mc-form subscribe-form">#}
+{#                                                        {{ form_widget(newsletterForm.email, {'attr': {'class':'newsletter-input','placeholder':'أدخل بريدك الإلكتروني', 'autocomplete':'off'}}) }}#}
+{#                                                        <button class="newsletter-btn" type="submit">#}
+{#                                                            <i class="ion-android-mail" aria-hidden="true"></i>#}
+{#                                                        </button>#}
+{#                                                    </div>#}
+{#                                                </div>#}
+{#                                                {{ form_end(newsletterForm) }}#}
+{#                                            {% else %}#}
+{#                                                <form action="{{ path('home', { locale: 'ar' }) }}" method="post"  class="newsletters-form validate" novalidate>#}
+{#                                                    <div id="mc_embed_signup_scroll">#}
+{#                                                        <div id="mc-form" class="mc-form subscribe-form">#}
+{#                                                            <input id="mc-email" class="newsletter-input" type="email" autocomplete="off" placeholder="أدخل بريدك الإلكتروني" />#}
+{#                                                            <button class="newsletter-btn" id="mc-submit">#}
+{#                                                                <i class="ion-android-mail" aria-hidden="true"></i>#}
+{#                                                            </button>#}
+{#                                                        </div>#}
+{#                                                    </div>#}
+{#                                                </form>#}
+{#                                            {% endif %}#}
+{#                                        </div>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#        <div class="footer-bottom_area">#}
+{#            <div class="container">#}
+{#                <div class="footer-bottom_nav">#}
+{#                    <div class="row">#}
+{#                        <div class="col-lg-12">#}
+{#                            <div class="copyright">#}
+{#                                <span>حقوق النشر &copy; 2021 <a href="{{ path('home') }}">تألق أورورا.</a> جميع الحقوق محفوظة.</span>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
     <!-- Shine Aurora Footer Area End Here -->
+
+    <!-- Begin Shine Aurora Footer Area 2 -->
+
+    <div id="shopify-section-1489285367207" class="shopify-section newsletter-section">
+
+        <div class="newsletter_section
+            newsletter-both-names--false
+            newsletter-bgr-true
+            text-align--center
+                        blur-up lazyloaded"
+             style="background-image: url(https://cdn.shopify.com/s/files/1/2710/6368/files/Descarga_gratis_Fondo_Textura_Papel_Marron_1600x.jpeg?v=1595406612)">
+            <div class="container">
+                <div class="offset-by-three ten columns section_form"><h2 class="title">تريد بعض الجمال في البريد الوارد؟</h2>
+                    <div class="newsletter-text"><p>تلقي الأخبار عن آخر الصفقات والأحداث</p></div>
+                    <div class="newsletter"><span class="message"></span>
+                        {% if page is defined and page != 'home' %}
+                            {{ form_start(newsletterForm) }}
+                            {{ form_widget(newsletterForm.email, {'attr': {'class':'contact_email', 'placeholder':'أدخل عنوان بريدك الالكتروني...', 'autocomplete':'off'}}) }}
+                            <input type="submit" value="اشتراك" class="action_button sign_up" name="subscribe">
+                            {{ form_end(newsletterForm) }}
+                        {% else %}
+                            <form action=""
+                                  method="post" name="mc-embedded-subscribe-form" id="contact_form"><input
+                                        type="email" value="" name="email" class="contact_email"
+                                        placeholder="أدخل عنوان بريدك الالكتروني..."> <input type="submit" value="اشتراك"
+                                                                                          class="action_button sign_up"
+                                                                                          name="subscribe">
+                            </form>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <div id="shopify-section-footer" class="shopify-section footer-section">
+
+        <footer class="footer">
+            <div class="container footer-menu-wrap">
+                <div class="four columns">
+                    <div class="text-right"><img
+                                src="{{ '/media/images/icons/logo-01.png' }}"
+                                alt="" class="footer-logo blur-up lazyloaded" data-sizes="25vw" style="max-width:1191px">
+                    </div>
+                </div>
+                <div class="four columns text-right">
+                    <div class="footer_menu"><h6>الدعم<span class="right icon-down-arrow"></span></h6>
+                        <div class="toggle_content">
+                            <ul>
+                                <li><a href="{{ path('help', { locale: 'ar' }) }}">المساعدة</a></li>
+                                <li><a href="{{ path('shipping.delivery', { locale: 'ar' }) }}"> التوصيل و التسلبم</a></li>
+                                <li><a href="{{ path('return.policy', { locale: 'ar' }) }}">سياسة الاسترجاع</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="four columns text-right">
+                    <div class="footer_menu"><h6>معلومات<span class="right icon-down-arrow"></span></h6>
+                        <div class="toggle_content">
+                            <ul>
+                                <li><a href="{{ path('contact.us', { locale: 'ar' }) }}">اتصل بنا</a></li>
+                                <li><a href="{{ path('privacy.policy', { locale: 'ar' }) }}">سياسة الموقع</a></li>
+                                <li><a href="{{ path('terms.conditions', { locale: 'ar' }) }}">الشروط و الاحكام</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="four columns text-right">
+                    <div class="footer_content"></div>
+                    <div class="hiraola-social_link">
+                        <ul>
+                            <li class="facebook">
+                                <a href="https://www.facebook.com/shineauroraboutique" data-toggle="tooltip" target="_blank"
+                                   title="Facebook">
+                                    <i class="fab fa-facebook"></i>
+                                </a>
+                            </li>
+{#                            <li class="twitter">#}
+{#                                <a href="https://youtube.com" data-toggle="tooltip" target="_blank"#}
+{#                                   title="Youtube">#}
+{#                                    <i class="fab fa-youtube"></i>#}
+{#                                </a>#}
+{#                            </li>#}
+                            <li class="instagram">
+                                <a href="https://www.instagram.com/shineaurorakw" data-toggle="tooltip" target="_blank"
+                                   title="Instagram">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="footer-social-icons--mobile sixteen columns">
+                    <ul class="social_icons">
+                        <li><a href="https://www.pinterest.com/IsolaClothing/" title="Isola Clothing on Pinterest"
+                               rel="me" target="_blank" class="icon-pinterest"></a></li>
+                        <li><a href="http://www.instagram.com/isola.clothing" title="Isola Clothing on Instagram"
+                               rel="me" target="_blank" class="icon-instagram"></a></li>
+                        <li><a href="mailto:support@isolaclothing.com" title="Email Isola Clothing" target="_blank"
+                               class="icon-mail"></a></li>
+
+                    </ul>
+                </div>
+                <div class="sixteen columns row footer_credits">
+                    <p class="credits">
+                        <!--Below line was commmented to not use shop.name (22/7/20 Sunny) -->
+                        <!--&copy; 2021 <a href="/" title="">Isola Clothing</a>.-->
+                        جميع الحقوق محفوظة &copy; 2021 <a href="{{ path('home') }}">شاين أورورا.</a> .</p>
+                    <div class="payment_methods">
+                        <img
+                                src="{{ '/media/images/icons/icon-pay.png' }}">
+                        {#                        <img#}
+                        {#                                src="//cdn.shopify.com/shopifycloud/shopify/assets/payment_icons/google_pay-c66a29c63facf2053bf69352982c958e9675cabea4f2f7ccec08d169d1856b31.svg"#}
+                        {#                                alt="Google pay"> <img#}
+                        {#                                src="//cdn.shopify.com/shopifycloud/shopify/assets/payment_icons/master-173035bc8124581983d4efa50cf8626e8553c2b311353fbf67485f9c1a2b88d1.svg"#}
+                        {#                                alt="Master"> <img#}
+                        {#                                src="//cdn.shopify.com/shopifycloud/shopify/assets/payment_icons/visa-319d545c6fd255c9aad5eeaad21fd6f7f7b4fdbdb1a35ce83b89cca12a187f00.svg"#}
+                        {#                                alt="Visa">#}
+                    </div>
+                </div><!--end footer_credits--></div>
+        </footer>
+    </div>
+
+    <!-- Shine Aurora Footer Area End Here 2 -->
 
 
 </div>

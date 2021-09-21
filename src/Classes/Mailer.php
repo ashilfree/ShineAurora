@@ -33,7 +33,7 @@ class Mailer{
 
     public function sendConfirmationEmail(Customer $customer, string $locale)
     {
-        $path = ($locale == "en") ? 'emails/register-confirmation.mjml.twig' : 'emails/register-confirmationAr.html.twig';
+        $path = 'emails/register-confirmation.mjml.twig';
         $body = $this->twig->render($path,
             [
                 'customer' => $customer,

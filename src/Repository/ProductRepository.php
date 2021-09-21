@@ -50,7 +50,9 @@ class ProductRepository extends ServiceEntityRepository
             }
         }
 
-        $query = $query->getQuery();
+        $query = $query->andWhere('p.isShow = 1')
+            ->orderBy('p.id', 'DESC')
+            ->getQuery();
         return $this->paginator->paginate(
             $query,
             $pages,

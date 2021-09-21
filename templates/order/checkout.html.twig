@@ -65,14 +65,14 @@
                         <div class="col-md-6">
                             <div class="checkout-form-list">
                                 <label>Phone <span class="required">*</span></label>
-                                {{ form_widget(form.shippingPhone, {'attr': {'class': 'form-control', 'placeholder':'Your Phone'}}) }}
+                                {{ form_widget(form.shippingPhone, {'attr': {'class': 'form-control', 'placeholder':'Your Phone', 'maxLength': 8}}) }}
                                 {{ form_errors(form.shippingPhone) }}
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="checkout-form-list">
                                 <label>Phone <span class="required">(Optional)</span></label>
-                                {{ form_widget(form.shippingSecondPhone, {'attr': {'class': 'form-control', 'placeholder':'Your Second Phone'}}) }}
+                                {{ form_widget(form.shippingSecondPhone, {'attr': {'class': 'form-control', 'placeholder':'Your Second Phone', 'maxLength': 8}}) }}
                                 {{ form_errors(form.shippingSecondPhone) }}
                             </div>
                         </div>

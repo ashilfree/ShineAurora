@@ -112,4 +112,46 @@ class ContactController extends AbstractController
             'newsletterForm' => $newsletterType->createView(),
         ]);
     }
+
+    /**
+     * @Route("/{locale}/help", name="help", defaults={"locale"="en"})
+     * @param $locale
+     * @param Request $request
+     * @return Response
+     */
+    public function help($locale, Request $request): Response
+    {
+        $contact = new Contact();
+        $form = $this->createForm(ContactType::class, $contact);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->mailer->sendContactEmail($contact);
+            $message = ($locale == "en") ? 'Your Message has been sent' : 'تم ارسال رسالتك';
+            $this->addFlash('success', $message);
+            return $this->redirectToRoute('contact.us', ['locale' => $locale]);
+        }
+        $newsletter = new Newsletter();
+        $newsletterType = $this->createForm(NewsletterType::class, $newsletter);
+        $newsletterType->handleRequest($request);
+        if ($newsletterType->isSubmitted() && $newsletterType->isValid()) {
+            $this->entityManager->persist($newsletter);
+            $this->entityManager->flush();
+
+            unset($newsletter);
+            unset($newsletterType);
+            $newsletter = new Newsletter();
+            $newsletterType = $this->createForm(NewsletterType::class, $newsletter);
+        }
+        $path = ($locale == "en") ? 'help/index.html.twig' : 'help/indexAr.html.twig';
+        return $this->render($path, [
+            'form' => $form->createView(),
+            'page' => 'contact.us',
+            'cart' => $this->cart->getFull($this->cart->get()),
+            'wishlist' => $this->wishlist->getFull(),
+            'categories' => $this->categoryRepository->findAll(),
+            'banner' =>$this->bannerRepository->findOneBy(['page'=>'Contact']),
+            'newsletterForm' => $newsletterType->createView(),
+        ]);
+    }
 }

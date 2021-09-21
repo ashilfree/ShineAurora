@@ -5,5 +5,9 @@
 {% if field.formattedValue matches '/^\\d+$/' %}
     <span class="badge badge-secondary">{{ field.formattedValue }}</span>
 {% else %}
-    {{ field.formattedValue }}
+    {% if field.value.first %}
+    <img class="xzoom-gallery" width="80" src="{{ vich_uploader_asset(field.value.first, 'imageFile') }}" >
+        {% else %}
+            <img class="xzoom-gallery" width="80" src="{{ '/media/images/no-image.png' }}" >
+        {% endif %}
 {% endif %}

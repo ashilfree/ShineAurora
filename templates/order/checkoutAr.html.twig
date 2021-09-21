@@ -1,19 +1,28 @@
 {% extends 'baseAr.html.twig' %}
 {% block body %}
-
     <!-- Begin Hiraola's Breadcrumb Area -->
     <div class="breadcrumb-area" style="background-image: url({{ vich_uploader_asset(banner, 'imageFile') | imagine_filter('Extra_large') }});background-repeat:no-repeat;background-position:center;">
         <div class="container">
-            <div class="breadcrumb-content">
-                <h2>الطلب</h2>
+            {#            <div class="breadcrumb-content">#}
+            {#                <h2>Order</h2>#}
+            {#                <ul>#}
+            {#                    <li><a href="{{ path('home', { locale: 'en' }) }}">Home</a></li>#}
+            {#                    <li class="active">Checkout</li>#}
+            {#                </ul>#}
+            {#            </div>#}
+        </div>
+    </div>
+    <!-- Hiraola's Breadcrumb Area End Here -->
+    <div style="padding-top: 60px">
+        <div class="container">
+            <div>
                 <ul>
-                    <li><a href="{{ path('home', { locale: 'ar' }) }}">الصفحة الرئيسية</a></li>
-                    <li class="active">الدفع</li>
+                    <li class="text-center" style="color: #595959;font-size: 25px;"><a href="{{ path('home', { locale: 'ar' }) }}">الصفحة الرئيسية</a> / الدفع</li>
                 </ul>
             </div>
         </div>
     </div>
-    <!-- Hiraola's Breadcrumb Area End Here -->
+    <!-- Begin Hiraola's Checkout Area -->
     <!-- Begin Hiraola's Checkout Area -->
     <div class="checkout-area">
         <div class="container">
@@ -56,14 +65,14 @@
                         <div class="col-md-6">
                             <div class="checkout-form-list">
                                 <label>رقم الهاتف <span class="required">*</span></label>
-                                {{ form_widget(form.shippingPhone, {'attr': {'class': 'form-control', 'placeholder':'هاتفك'}}) }}
+                                {{ form_widget(form.shippingPhone, {'attr': {'class': 'form-control', 'placeholder':'هاتفك', 'maxLength': 8}}) }}
                                 {{ form_errors(form.shippingPhone) }}
                             </div>
                         </div>
                         <div class="col-12">
                             <div class="checkout-form-list">
                                 <label>رقم الهاتف الثاني <span class="required">(اختياري)</span></label>
-                                {{ form_widget(form.shippingSecondPhone, {'attr': {'class': 'form-control', 'placeholder':'هاتفك الثاني'}}) }}
+                                {{ form_widget(form.shippingSecondPhone, {'attr': {'class': 'form-control', 'placeholder':'هاتفك الثاني', 'maxLength': 8}}) }}
                                 {{ form_errors(form.shippingSecondPhone) }}
                             </div>
                         </div>
@@ -78,8 +87,8 @@
                         <table class="table">
                             <thead>
                             <tr>
-                                <th class="cart-product-name">منتج</th>
-                                <th class="cart-product-total">مجموع</th>
+                                <th class="cart-product-name  text-right">منتج</th>
+                                <th class="cart-product-total  text-right">مجموع</th>
                             </tr>
                             </thead>
                             <tbody>

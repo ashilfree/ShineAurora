@@ -906,7 +906,7 @@ button, .global-overlay, .quantity .cart-plus-minus > .qtybutton, .popup_wrapper
   font-size: 14px;
   height: inherit;
   padding-left: 5px;
-  width: 99px;
+  width: 110px;
 }
 
 /* ---Color List Area--- */
@@ -1614,7 +1614,7 @@ button, .global-overlay, .quantity .cart-plus-minus > .qtybutton, .popup_wrapper
 }
 
 .template-color-1 .sp-area .sp-nav .sp-content .sp-essential_stuff > ul > li > a {
-  color: #bcbdc2;
+  color: #000000;
 }
 
 .template-color-1 .sp-area .sp-nav .sp-content .qty-btn_area > ul li > a:hover {
@@ -3452,6 +3452,10 @@ button.li-btn:hover {
   right: 30px;
 }
 
+.hiraola-product-tab_slider-3.hiraola-product-tab_second-slider-3 .slick-arrow {
+  top: -110px;
+}
+
 .hiraola-product_slider .slick-arrow:hover,
 .hiraola-product-tab_slider-3 .slick-arrow:hover,
 .arrow-type-two .slick-arrow:hover,
@@ -5172,6 +5176,7 @@ button.li-btn:hover {
 }
 
 .hiraola-product-tab_area-2 .hiraola-section_title-3 > h4,
+.hiraola-product-tab_area-2 .hiraola-tab_title > h4,
 .hiraola-product-tab_area-3 .hiraola-section_title-3 > h4,
 .hiraola-product-tab_area-4 .hiraola-section_title-3 > h4 {
   padding-bottom: 20px;

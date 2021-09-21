@@ -5,31 +5,41 @@
 {% endblock %}
 {% block body %}
     {% set total = null %}
-    {% set isTrue = false %}
+{#    {% set isTrue = false %}#}
     {% for orderDetail in cart2order %}
         {% if orderDetail.catalog.product.discountPrice != 0 %}
             {% set subTotal = ((orderDetail.quantity * orderDetail.catalog.product.discountPrice)) %}
         {% else %}
             {% set subTotal = ((orderDetail.quantity * orderDetail.catalog.product.price)) %}
         {% endif %}
-        {% if subTotal < 50 %}
-            {% set isTrue = true %}
-        {% endif %}
+{#        {% if subTotal < 50 %}#}
+{#            {% set isTrue = true %}#}
+{#        {% endif %}#}
         {% set total = total + subTotal %}
     {% endfor %}
     <!-- Begin Hiraola's Breadcrumb Area -->
     <div class="breadcrumb-area" style="background-image: url({{ vich_uploader_asset(banner, 'imageFile') | imagine_filter('Extra_large') }});background-repeat:no-repeat;background-position:center;">
         <div class="container">
-            <div class="breadcrumb-content">
-                <h2>الطلب</h2>
+            {#            <div class="breadcrumb-content">#}
+            {#                <h2>Order</h2>#}
+            {#                <ul>#}
+            {#                    <li><a href="{{ path('home', { locale: 'en' }) }}">Home</a></li>#}
+            {#                    <li class="active">Checkout</li>#}
+            {#                </ul>#}
+            {#            </div>#}
+        </div>
+    </div>
+    <!-- Hiraola's Breadcrumb Area End Here -->
+    <div style="padding-top: 60px">
+        <div class="container">
+            <div>
                 <ul>
-                    <li><a href="{{ path('home', { locale: 'ar' }) }}">الصفحة الرئيسية</a></li>
-                    <li class="active">الدفع</li>
+                    <li class="text-center" style="color: #595959;font-size: 25px;"><a href="{{ path('home', { locale: 'ar' }) }}">الصفحة الرئيسية</a> / الدفع</li>
                 </ul>
             </div>
         </div>
     </div>
-    <!-- Hiraola's Breadcrumb Area End Here -->
+    <!-- Begin Hiraola's Checkout Area -->
     <!-- Begin Hiraola's Checkout Area -->
     <div class="checkout-area js-checkout">
         <div class="container">
@@ -107,8 +117,8 @@
                             <table class="table">
                                 <thead>
                                 <tr>
-                                    <th class="cart-product-name">المنتج</th>
-                                    <th class="cart-product-total">مجموع</th>
+                                    <th class="cart-product-name text-right">المنتج</th>
+                                    <th class="cart-product-total text-right">مجموع</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -155,15 +165,7 @@
                                     <div class="payment-type">
 
                                         <div class="types flex justify-space-between">
-                                            <div class="type type1 selected">
-                                                <div class="logo">
-                                                    <i class="fas fa-handshake"></i>
-                                                </div>
-                                                <div class="text">
-                                                    <p>الدفع عند الاستلام</p>
-                                                </div>
-                                            </div>
-                                            <div class="type type2 {% if isTrue %} disabled {% endif %}">
+                                            <div class="type type2 selected ">
                                                 <div class="logo">
                                                     <i class="far fa-credit-card"></i>
                                                 </div>
@@ -171,10 +173,20 @@
                                                     <p>الدفع الالكتروني</p>
                                                 </div>
                                             </div>
+                                            <div class="type type1 disabled">
+                                                <div class="logo">
+                                                    <i class="fas fa-handshake"></i>
+                                                </div>
+                                                <div class="text">
+                                                    <p>الدفع عند الاستلام</p>
+                                                </div>
+                                            </div>
+{#                                            <div class="type type2 {% if isTrue %} disabled {% endif %}">#}
+
 
                                         </div>
                                     </div>
-                                    <div class="select-wrapper m-b-15 m-t-15" style="display: none">
+                                    <div class="select-wrapper m-b-15 m-t-15">
 
                                         {#                            <select class="nice-select" name="payment" required="required">#}
                                         {#                                <option value="">Select a payment method...</option>#}
@@ -186,7 +198,7 @@
                                         {#                            </select>#}
                                         {#                            <div class="dropDownSelect2"></div>#}
 
-                                        {{ form_widget(payment_method_form.paymentMethod, {'attr': {'class': 'nice-select wide', 'placeholder':'Choose a Credit Card *'}}) }}
+                                        {{ form_widget(payment_method_form.paymentMethod, {'attr': {'class': 'nice-select wide', 'placeholder':'اختر طريقة الدفع', 'required': 'true'}}) }}
                                     </div>
 
                                 </div>
@@ -194,187 +206,11 @@
                                 <main>
                                     <article class="terms-and-conditions">
                                         <h1>الأحكام والشروط</h1>
-                                        <h2>مرحبا فى موقعنا</h2>
-                                        <p>تحدد هذه الشروط والأحكام القواعد واللوائح الخاصة باستخدام شركتنا.</p>
-                                        <p>
-                                            من خلال الوصول إلى هذا الموقع ، نفترض أنك تقبل هذه الشروط والأحكام. لا تستمر في استخدام موقعنا على شبكة الإنترنت إذا كنت لا توافق على أخذ جميع الشروط والأحكام المذكورة في هذه الصفحة.
-                                        </p>
-                                        <p>
-                                            تنطبق المصطلحات التالية على هذه الشروط والأحكام وبيان الخصوصية وإشعار إخلاء المسؤولية وجميع الاتفاقيات: يشير مصطلح "العميل" و "أنت" و "الخاص بك" إليك ، والشخص الذي يقوم بتسجيل الدخول إلى هذا الموقع الإلكتروني ومتوافق مع شروط وأحكام الشركة. تشير "الشركة" و "أنفسنا" و "نحن" و "لنا" و "نحن" إلى شركتنا.
-                                            يشير "الطرف" أو "الأطراف" أو "نحن" إلى كل من العميل وأنفسنا. تشير جميع الشروط إلى العرض والقبول والنظر في الدفع اللازم للاضطلاع بعملية مساعدتنا للعميل في أغلب الأحيان
-                                            بطريقة مناسبة للغرض الصريح المتمثل في تلبية احتياجات العميل فيما يتعلق بتوفير
-                                            الخدمات المعلنة للشركة ، وفقًا للقانون السائد في هولندا وتخضع له. أي استخدام لبرنامج
-                                            المصطلحات أعلاه أو غيرها من الكلمات في صيغة المفرد والجمع والأحرف الكبيرة و / أو هو / هي أو هم ، تؤخذ على أنها
-                                            قابلة للتبديل وبالتالي تشير إلى نفس الشيء.
-                                        </p>
-{#                                        <h3>Cookies</h3>#}
-{#                                        <p>#}
-{#                                            We employ the use of cookies. By accessing our website, you agreed to use cookies in agreement with our#}
-{#                                            company's Privacy Policy.#}
-{#                                        </p>#}
-{#                                        <p>#}
-{#                                            Most interactive websites use cookies to let us retrieve the user's details for each visit. Cookies are used#}
-{#                                            by our website to enable the functionality of certain areas to make it easier for people visiting our website.#}
-{#                                            Some of our affiliate/advertising partners may also use cookies.#}
-{#                                        </p>#}
-{#                                        <h3>License</h3>#}
-{#                                        <p>#}
-{#                                            Unless otherwise stated, LOPYI and its licensors own the intellectual property rights for all material on our#}
-{#                                            website. All intellectual property rights are reserved. You may access this from our website for your own#}
-{#                                            personal use subjected to restrictions set in these terms and conditions.#}
-{#                                        </p>#}
-{#                                        <p>You must not:</p>#}
-{#                                        <ul>#}
-{#                                            <li>Republish material from our website</li>#}
-{#                                            <li>Sell, rent or sub-license material from our website</li>#}
-{#                                            <li>Reproduce, duplicate or copy material from our website</li>#}
-{#                                            <li>Redistribute content from our website</li>#}
-{#                                        </ul>#}
-{#                                        <p>This Agreement shall begin on the date hereof.</p>#}
-{#                                        <p>#}
-{#                                            Parts of this website offer an opportunity for users to post and exchange opinions and information in certain#}
-{#                                            areas of the website. LOPYI does not filter, edit, publish or review Comments prior to their presence on the#}
-{#                                            website. Comments do not reflect the views and opinions of LOPYI,its agents and/or affiliates. Comments#}
-{#                                            reflect the views and opinions of the person who post their views and opinions. To the extent permitted by#}
-{#                                            applicable laws, LOPYI shall not be liable for the Comments or for any liability, damages or expenses caused#}
-{#                                            and/or suffered as a result of any use of and/or posting of and/or appearance of the Comments on this website.#}
-{#                                        </p>#}
-{#                                        <p>#}
-{#                                            LOPYI reserves the right to monitor all Comments and to remove any Comments which can be considered#}
-{#                                            inappropriate, offensive or causes breach of these Terms and Conditions.#}
-{#                                        </p>#}
-{#                                        <p>You warrant and represent that:</p>#}
-{#                                        <ul>#}
-{#                                            <li>#}
-{#                                                You are entitled to post the Comments on our website and have all necessary licenses and consents to do so;#}
-{#                                            </li>#}
-{#                                            <li>#}
-{#                                                The Comments do not invade any intellectual property right, including without limitation copyright, patent#}
-{#                                                or trademark of any third party;#}
-{#                                            </li>#}
-{#                                            <li>#}
-{#                                                The Comments do not contain any defamatory, libelous, offensive, indecent or otherwise unlawful material#}
-{#                                                which is an invasion of privacy#}
-{#                                            </li>#}
-{#                                            <li>#}
-{#                                                The Comments will not be used to solicit or promote business or custom or present commercial activities or#}
-{#                                                unlawful activity.#}
-{#                                            </li>#}
-{#                                        </ul>#}
-                                        {#                                        <p>#}
-                                        {#                                            You hereby grant LOPYI a non-exclusive license to use, reproduce, edit and authorize others to use, reproduce#}
-                                        {#                                            and edit any of your Comments in any and all forms, formats or media.#}
-                                        {#                                        </p>#}
-                                        {#                                        <h2>Hyperlinking to our Content</h2>#}
-                                        {#                                        <p>The following organizations may link to our website without prior written approval:</p>#}
-                                        {#                                        <ul>#}
-                                        {#                                            <li>Government agencies;</li>#}
-                                        {#                                            <li>Search engines;</li>#}
-                                        {#                                            <li>News organizations;</li>#}
-                                        {#                                            <li>#}
-                                        {#                                                Online directory distributors may link to our website in the same manner as they hyperlink to the websites#}
-                                        {#                                                of other listed businesses; and#}
-                                        {#                                            </li>#}
-                                        {#                                            <li>#}
-                                        {#                                                System wide Accredited Businesses except soliciting non-profit organizations, charity shopping malls, and#}
-                                        {#                                                charity fundraising groups which may not hyperlink to our Web site.#}
-                                        {#                                            </li>#}
-                                        {#                                        </ul>#}
-                                        {#                                        <p>#}
-                                        {#                                            These organizations may link to our home page, to publications or to other website information so long as the#}
-                                        {#                                            link: (a) is not in any way deceptive; (b) does not falsely imply sponsorship, endorsement or approval of the#}
-                                        {#                                            linking party and its products and/or services; and (c) fits within the context of the linking party's site.#}
-                                        {#                                        </p>#}
-                                        {#                                        <p>We may consider and approve other link requests from the following types of organizations:</p>#}
-                                        {#                                        <ul>#}
-                                        {#                                            <li>commonly-known consumer and/or business information sources;</li>#}
-                                        {#                                            <li>dot.com community sites;</li>#}
-                                        {#                                            <li>associations or other groups representing charities;</li>#}
-                                        {#                                            <li>online directory distributors;</li>#}
-                                        {#                                            <li>internet portals;</li>#}
-                                        {#                                            <li>accounting, law and consulting firms; and</li>#}
-                                        {#                                            <li>ducational institutions and trade associations.</li>#}
-                                        {#                                        </ul>#}
-                                        {#                                        <p>#}
-                                        {#                                            We will approve link requests from these organizations if we decide that: (a) the link would not make us look#}
-                                        {#                                            unfavorably to ourselves or to our accredited businesses; (b) the organization does not have any negative#}
-                                        {#                                            records with us; (c) the benefit to us from the visibility of the hyperlink compensates the absence of LOPYI;#}
-                                        {#                                            and (d) the link is in the context of general resource information.#}
-                                        {#                                        </p>#}
-                                        {#                                        <p>#}
-                                        {#                                            These organizations may link to our home page so long as the link: (a) is not in any way deceptive; (b) does#}
-                                        {#                                            not falsely imply sponsorship, endorsement or approval of the linking party and its products or services; and#}
-                                        {#                                            (c) fits within the context of the linking party's site.#}
-                                        {#                                        </p>#}
-                                        {#                                        <p>#}
-                                        {#                                            If you are one of the organizations listed in paragraph 2 above and are interested in linking to our website,#}
-                                        {#                                            you must inform us by sending an e-mail to our company. Please include your name, your organization name,#}
-                                        {#                                            contact information as well as the URL of your site, a list of any URLs from which you intend to link to our#}
-                                        {#                                            website, and a list of the URLs on our site to which you would like to link. Wait 2-3 weeks for a response.#}
-                                        {#                                        </p>#}
-                                        {#                                        <p>Approved organizations may hyperlink to our website as follows:</p>#}
-                                        {#                                        <ul>#}
-                                        {#                                            <li>By use of our corporate name; or</li>#}
-                                        {#                                            <li>By use of the uniform resource locator being linked to; or</li>#}
-                                        {#                                            <li>#}
-                                        {#                                                By use of any other description of our website being linked to that makes sense within the context and#}
-                                        {#                                                format of content on the linking party's site.#}
-                                        {#                                            </li>#}
-                                        {#                                            <li>#}
-                                        {#                                                No use of our company's logo or other artwork will be allowed for linking absent a trademark license#}
-                                        {#                                                agreement.#}
-                                        {#                                            </li>#}
-                                        {#                                        </ul>#}
-                                        {#                                        <h3>iFrames</h3>#}
-                                        {#                                        <p>#}
-                                        {#                                            Without prior approval and written permission, you may not create frames around our Webpages that alter in any#}
-                                        {#                                            way the visual presentation or appearance of our website.#}
-                                        {#                                        </p>#}
-                                        {#                                        <h3>Content Liability</h3>#}
-                                        {#                                        <p>#}
-                                        {#                                            We shall not be hold responsible for any content that appears on your website. You agree to protect and defend#}
-                                        {#                                            us against all claims that is rising on your website. No link(s) should appear on any website that may be#}
-                                        {#                                            interpreted as libelous, obscene or criminal, or which infringes, otherwise violates, or advocates the#}
-                                        {#                                            infringement or other violation of, any third party rights.#}
-                                        {#                                        </p>#}
-                                        {#                                        <h3>Reservation of Rights</h3>#}
-                                        {#                                        <p>#}
-                                        {#                                            We reserve the right to request that you remove all links or any particular link to our website. You approve#}
-                                        {#                                            to immediately remove all links to our website upon request. We also reserve the right to amen these terms and#}
-                                        {#                                            conditions and it's linking policy at any time. By continuously linking to our website, you agree to be bound#}
-                                        {#                                            to and follow these linking terms and conditions.#}
-                                        {#                                        </p>#}
-                                        {#                                        <h3>Removal of links from our website</h3>#}
-                                        {#                                        <p>#}
-                                        {#                                            If you find any link on our website that is offensive for any reason, you are free to contact and inform us#}
-                                        {#                                            any moment. We will consider requests to remove links but we are not obligated to or so or to respond to you#}
-                                        {#                                            directly.#}
-                                        {#                                        </p>#}
-                                        {#                                        <p>#}
-                                        {#                                            We do not ensure that the information on this website is correct, we do not warrant its completeness or#}
-                                        {#                                            accuracy; nor do we promise to ensure that the website remains available or that the material on the website#}
-                                        {#                                            is kept up to date.#}
-                                        {#                                        </p>#}
-                                        {#                                        <h3>Disclaimer</h3>#}
-                                        {#                                        <p>#}
-                                        {#                                            To the maximum extent permitted by applicable law, we exclude all representations, warranties and conditions#}
-                                        {#                                            relating to our website and the use of this website. Nothing in this disclaimer will:#}
-                                        {#                                        </p>#}
-                                        {#                                        <ul>#}
-                                        {#                                            <li>limit or exclude our or your liability for death or personal injury;</li>#}
-                                        {#                                            <li>limit or exclude our or your liability for fraud or fraudulent misrepresentation;</li>#}
-                                        {#                                            <li>limit any of our or your liabilities in any way that is not permitted under applicable law; or</li>#}
-                                        {#                                            <li>exclude any of our or your liabilities that may not be excluded under applicable law.</li>#}
-                                        {#                                        </ul>#}
-                                        {#                                        <p>#}
-                                        {#                                            The limitations and prohibitions of liability set in this Section and elsewhere in this disclaimer: (a) are#}
-                                        {#                                            subject to the preceding paragraph; and (b) govern all liabilities arising under the disclaimer, including#}
-                                        {#                                            liabilities arising in contract, in tort and for breach of statutory duty.#}
-                                        {#                                        </p>#}
-{#                                        <p id="last">#}
-{#                                            As long as the website and the information and services on the website are provided free of charge, we will#}
-{#                                            not be liable for any loss or damage of any nature.#}
-{#                                        </p>#}
+                                        <div><strong>المقدمة</strong><br>نرحّب بكم في موقع شاين اورورا دوت كوم (www.shineaurora.com) تنطبقُ هذه الشروط والأحكام ("شروط وأحكام") على الموقع&nbsp; في دولة الكويت فضلًا عن جميع أقسامها وفروعها وموقع الإنترنت التابع لها التي تُشير إلى هذه الشروط والأحكام كمرجعٍ آمنٍ لها.</div><div><br>ضيفنا الكريم، إثر زيارتك للموقع، أنت تؤكد موافقتك على الشروط والأحكام الحالية. وإن كنت لا توافق عليها، يجدر بك عدم استخدام هذا الموقع. يحتفظ الموقع بالحق في تغيير أجزاء من الشروط والأحكام أو تعديلها أو إضافة البعض منها، أو إزالتها في أي وقت من الأوقات. وتصبح التغييرات فعّالة عندما يتم نشرها على الموقع من دون إشعار مسبق. يُرجى مراجعة شروط الاستخدام والأحكام بشكل منتظم لمواكبة كل التحديثات. ويشكل استخدامك المستمر للموقع موافقتك التامة على كل التغييرات التي يتم إجراؤها على الشروط والأحكام.<br><br><br></div><div><strong>كيفية استخدام الموقع</strong></div><div>أيّها الضيف الكريم، إمّا تبلغ من العمر ثمانية عشر عامًا أو تزور هذا الموقع تحت إشراف أحد الوالدين أو الوصي القانوني.</div><div><br>نمنحك ترخيصًا غير قابلٍ للتحويل أو الإلغاء لكي تستخدم الموقع تحت الشروط والأحكام المحدّدة. وتكمن غاية هذا الترخيص في التسوّق لشراء سلعٍ شخصية تُباع على الموقع. ويُحظر الاستخدام لأغراضٍ تجارية أو الاستخدام باسم أي طرفٍ ثالث، باستثناء ما تمّ السماح به من قبلنا بوضوح وشفافية سلفًا. ويؤدي أي خرق لهذه الشروط والأحكام إلى إلغاء فوري للترخيص الممنوح في هذه الفقرة من دون أي سابق إنذار.</div><div><br>يتمّ عرض المحتوى المقدّم في هذا الموقع لأغراضٍ إعلاميةٍ لا غير.&nbsp;</div><div><br>تتطلب بعض الخدمات والميّزات ذات الصلة التي قد تكون متوفرةَ على الموقع التسجيل أو الاشتراك فيها. وباختيارك التسجيل أو الاشتراك في أيّةٍ من هذه الخدمات أو المّيزات ذات الصلة، فإنّك توافق على تقديم معلومات دقيقة وحالية عن نفسك وعلى تحديثها على الفور إذا طرأت أيّة تغييرات. ويتحمّل كلّ مستخدمٍ للموقع وحده مسؤولية حفظ كلمات السرّ أو المرور أو غيرها من أساليب التعريف سليمةً وآمنة. وتقع كامل المسؤولية على عاتق صاحب الحساب بالنسبة إلى جميع النشاطات التي تحدث بموجب كلمة سرّه أو ضمن حسابه. بالإضافة إلى ذلك، يجدرُ بك تبلغينا عن أي استخدام غير مصرّح به لكلمة سرّك أو لحسابك. أخيرًا، إنّ الموقع ليس مسؤولًا بتاتًا، بشكلٍ مباشرٍ أو غير مباشرٍ وبأي شكلٍ من الأشكال، عن أيّة خسارة أو أضرارٍ من أي نوع، قد تنتجُ عن فشلك في الامتثال لهذا القسم أو لها علاقةٌ به على الأقلّ.</div><div><br>وإنّك توافق، أثناء عملية التسجيل، على تلقي رسائل إلكترونية ترويجية من قِبل الموقع. ويمكنك، في وقتٍ لاحق، إلغاء هذا الخيار وعدم تلقي رسائل إلكترونية ترويجية من خلال الضغط على الرابط في الجزء السفلي من أية رسالة إلكترونية ترويجية.<br><br><br></div><div><strong>الموافقة على الطلبيات والتسعير</strong></div><div>يُرجى الملاحظة أنّه في بعض الحالات، قد لا تتمّ الموافقة على طلبيةٍ ما لعدّة أسباب. ويحتفظ الموقع بالحقّ في رفض أو إلغاء أية طلبية لأي سببٍ من الأسباب وفي أي وقتٍ من الأوقات. وقبل أن نوافق على الطلبية قد نطلب منك تقديم معلومات أو تثبيتات إضافية، بما في ذلك ولكن ليس على سبيل الحصر، رقم الهاتف والعنوان.<br><br><br></div><div><strong>لا يمكنك شراء المنتجات بكميات كبيرة عبر موقعنا لغرض إعادة بيعها.</strong></div><div>نحن عازمون على توفير أدقّ المعلومات الخاصة بالتسعير إلى كافة المستخدمين الذين يزورون الموقع. إلّا أنّ الأخطاء قد تَرِدُ في بعض الأحيان، كالحالات حيث لا يتمّ تسعير المنتوج بشكلٍ صحيحٍ على الموقع. وعلى هذا النحو، نحتفظ بالحقّ في رفض أو إلغاء أية طلبية. وفي حال لم يتمّ تسعير المنتوج بشكلٍ صحيح، ما قد نقوم به، وفقًا لتقديرنا الخاص، هو الاتصال بك للحصول على تعليماتٍ أو إلغاء طلبيتك بعد إبلاغك بهذا الإلغاء. ولنا الحق في رفض أو إلغاء أية طلبيات سواء تمّ أو لم يتمّ التأكيد على الطلبية وأضيفت الرسوم على بطاقة الائتمان.<br><br><br></div><div><strong>العلامات التجارية وحقوق النشر</strong></div><div>إنّ جميع حقوق الملكية الفكرية، سواء كانت مسجلة أو غير مسجلة في الموقع، وكافة المعلومات والتصاميم الواردة على الموقع، تُعتبرُ ملكًا لنا، بما في ذلك ولكن ليس على سبيل الحصر، النصوص والرسوم والبرامج والصور والفيديو والموسيقى والصوت، واختيارها وتنسيقها، فضلًا عن جميع مصنّفات البرمجيات ورموز المصادر والبرامج الرئيسة. وإنّ كلّ محتويات الموقع محميةٌ أيضًا بموجب حقوق النشر كونها عمل جماعي يخضع لقوانين حقوق نشر دولة الكويت والاتفاقيات الدولية. جميع حقوق النشر محفوظة.<br><br><br></div><div><strong>تطبيق القانون والهيئات القضائية</strong></div><div>تُفسّرُ هذه الشروط والأحكام وتُطبّقُ بموجب القوانين النافذة في دولة الكويت،&nbsp; وإثر الخضوع للتحكيم المفصّل أدناه، يوافقُ كلّ فريق ههنا على المثول أمام هيئات محاكم دولة الكويت، والتنازل عن أية اعتراضات مبنية على مكان الدعوى.<br><br><br></div><div><strong>التحكيم</strong></div><div>فضلًا عن أيّة تعويضاتٍ قانونيةٍ أو مُنصفةٍ، قد نُبطل فورًا، ومن دون سابق إنذار، هذه الشروط والأحكام أو نلغي أيًّا من حقوقك الممنوحة أو جميعها بموجب الشروط والأحكام. بناءً على أيّ إبطال لهذا الاتفاق، يتعيّن عليك التوقّف فورًا عن زيارة الموقع واستخدامه، وقد نُلغي فورًا، فضلًا عن أيّة تعويضاتٍ قانونية أو مُنصفةٍ، جميع كلمات السرّ أو المرور أو غيرها من أساليب التعريف الخاصة بك، ونرفض أي زيارة أو استخدام لهذا الموقع ، كلّيًا أو جزئيًا. ولن يؤثر أي إبطال لهذا الاتفاق على كلّ حقوق والتزامات (بما في ذلك ولكن ليس على سبيل الحصر، إلتزامات الدفع) الأطراف الصادرة قبل تاريخ الإبطال. وإنّك توافق أيضًا على أنّ الموقع ما عاد مسؤولًا عنك أو عن أيّ فردٍ آخر نتيجة تعليق الموقع أو إبطاله. وإذا كنتَ غير راضٍ عن هذا الموقع أو عن أيّة من شروطه أو أحكامه أو نظامه أو سياساته أو مبادئه التوجيهية أو ممارسات الشركة&nbsp; في دولة الكويت في كيفيّة إدارة الموقع، فحلُّكَ الوحيد والحصري عندئذٍ هو التوقّف عن استخدام الموقع<br><br><strong>عملية الإبطال<br></strong>ضلًا عن أيّة تعويضاتٍ قانونيةٍ أو مُنصفةٍ، قد نُبطل فورًا، ومن دون سابق إنذار، هذه الشروط والأحكام أو نلغي أيًّا من حقوقك الممنوحة أو جميعها بموجب الشروط والأحكام. بناءً على أيّ إبطال لهذا الاتفاق، يتعيّن عليك التوقّف فورًا عن زيارة الموقع واستخدامه، وقد نُلغي فورًا، فضلًا عن أيّة تعويضاتٍ قانونية أو مُنصفةٍ، جميع كلمات السرّ أو المرور أو غيرها من أساليب التعريف الخاصة بك، ونرفض أي زيارة أو استخدام لهذا الموقع ، كلّيًا أو جزئيًا. ولن يؤثر أي إبطال لهذا الاتفاق على كلّ حقوق والتزامات (بما في ذلك ولكن ليس على سبيل الحصر، إلتزامات الدفع) الأطراف الصادرة قبل تاريخ الإبطال. وإنّك توافق أيضًا على أنّ الموقع ما عاد مسؤولًا عنك أو عن أيّ فردٍ آخر نتيجة تعليق الموقع أو إبطاله. وإذا كنتَ غير راضٍ عن هذا الموقع أو عن أيّة من شروطه أو أحكامه أو نظامه أو سياساته أو مبادئه التوجيهية أو ممارسات الشركة&nbsp; في دولة الكويت في كيفيّة إدارة الموقع، فحلُّكَ الوحيد والحصري عندئذٍ هو التوقّف عن استخدام الموقع</div>
+                                        <h1>سياسة الموقع</h1>
+                                        <div><strong>&nbsp;سياسة الخصوصية‎</strong></div><div>تطبق سياسة الخصوصية هذه على موقع شاين اورورا وسارية على جميع العملاء سواء كانوا من مستخدمي الموقع عبر www.shineaurora.com إن أي إشارة إلى "الموقع" أو "الموقع الإلكتروني" تعني الإشارة إلى موقع&nbsp;</div><div><br><br></div><div><strong>تغيير سياسة الخصوصية</strong></div><div>قد تخضع سياسة الخصوصية هذه للتغيير من وقت لآخر. تم نشر النسخة الحالية من سياسة الخصوصية هذه على الإنترنت من قبل شاين اورورا. يتحتم عليك التحقق من سياسة الخصوصية الخاصة بنا بشكل منتظم. استخدامك المستمر لموقع شاين اورورا وخدماتها يشكل موافقتك على سياسة الخصوصية هذه، حيث يتم تعديلها من وقت لآخر.<br><br><br></div><div><strong>حقوقك</strong></div><div>حقوقك حول بياناتك الشخصية:</div><div><br>1. يحقّ لك أن تكون على علم بأي من بياناتك الشخصية التي قد نحتفظ أو نعمل بها من أجلك.</div><div><br>2. يحقّ لك طلب النّفاذ إلى بياناتك الشخصيّة التي قد نحتفظ أو نعمل بها من أجلك.</div><div><br>3. يحقّ لك أن تطلب منّا تصحيح أية أخطاء في بياناتك الشخصيّة ويتم ذلك مجانًا.</div><div><br>4. يحق لك مطالبتنا بالكفّ عن استخدام بياناتك الشخصية لأغراض تسويقيّة مباشرة.</div><div><br>5. يحق لك أن تطالبنا بمحو بياناتك الشخصية أو تحديد إجراء التعامل بها.</div><div><br>6. يحق لك أن تطلب منا بأن ننقل أي من بياناتك الشخصية التي نحتفظ بها إليك أو لأي مزود خدمة آخر من اختيارك.</div><div><br>7. يحق لك التقدم بشكوى إلى السلطة الإشرافية في حال تعرضت إلى مشكلة ما.<br><br><br></div><div><strong>اقرار</strong></div><div>أقر بموجب ذلك أنني قرأت وفهمت سياسة الخصوصية هذه. من خلال إرسال البيانات إلى شاين اورورا&nbsp; أو استخدامي لموقع شاين اورورا أو خدماته، أوافق طوعا وبشكل صريح على جمع بياناتي ومشاركتها واستخدامها في الإجراءات والاحتفاظ بها على النحو المبين في سياسة الخصوصية هذه.<br><br><br></div><div><strong>الأمان</strong></div><div>نستخدم تقنيات وإجراءات الأمان الملائمة لمنع نفاذٍ غير مصرّح به أو غير قانونيّ لمعلوماتك أو فقدانها أو تدميرها . فعندما نجمع البيانات من خلال الموقع، نقوم بتخزين معلوماتك الشخصية على قاعدة بيانات ضمن خادم إلكتروني آمن.&nbsp; بما أنّنّا لا نستطيع ضمان الحماية بنسبة مئة في المئة. وننصحك بشدّة عدم إرسال كامل تفاصيل بطاقة الائتمان أو بطاقة السحب الآلي عندما تتواصل معنا إلكترونيًا ومن دون تشفير. ونضع ضمانات ماديّة والكترونية وإجرائيّة مباشرة على عملية جمع معلوماتك اوالإفصاح عنها. وتتطلّب إجراءاتنا الأمنية أن نطلب منك أحيانًا إثبات هويتك قبل أن نفصح لك عن معلوماتك الشخصية. وتقع على عاتقك مسؤوليّة حماية كلمتك السريّة وحاسوبك من أيّ نفاذ غير مصرّح به.<br><br><br></div><div><strong>البيانات التي نجمعها</strong></div><div>قد نحتاج لجمع المعلومات الخاصة بكَ إذا أردت تسجيل طلبية شراء لسلعة من موقعنا.</div><div>&nbsp;نقوم بجمع البيانات اللازمة واستخدامها لتحضير طلبيتك وتأمين أية مطالب محتملة قد تظهر لاحقا، ولتزويدك بالخدمات المتوفرة لدينا. مثال على ذلك، الإسم&nbsp; وعنوان البريد الإلكتروني والعنوان البريدي وعنوان التسليم (إذا كان مختلفًا) ورقم الهاتف ورقم الجوّال وتفاصيل الدفع، تفاصيل عن بطاقات الدفع أو تفاصيل عن الحساب المصرفي.<br>يتم التواصل عبر البريد الإلكتروني لتزويدكَ ببعض التفاصيل حول المنتجات والخدمات الأخرى إذا كنت ترغب في ذلك، وإذا كنت تفضل عدم تلقي أية اتصالات ترويجية وتسويقية، يُرجى الانسحاب من هذا الخيار في أي وقت من الأوقات<br>وقد نُقرُّ باسمك وعنوانك إلى طرفٍ ثالث بغية تسليمكَ طلبية شرائكَ (على سبيل المثال، شركة التوصيل أو المورّد).<br>قد يتم التواصل معك على رقم هاتفك لاعلامك بأي تحديث يتعلق بحالة طلبيتك أو لأي اعلان عن آخر تخفيضاتنا وعروضنا الترويجية.<br><br><strong><br>الغرض المشروع</strong></div><div>قد نحتفظ بمعلوماتك حتى بعد إغلاق حسابك حتى لو كنت لا تستخدم خدماتنا وذلك للكشف عن الاحتيال ومنعه والالتزام بمتطلباتنا القانونية / التوافقية / التنظيمية وحل أي نزاعات وتنفيذ سياسات الخصوصية الخاصة بنا والشروط والأحكام.<br><br><strong><br>الطرف الثالث والروابط</strong></div><div>قد نشارك معلومات تعريفية شخصية نجمعها (بما في ذلك عناوين البريد الإلكتروني) مع شركات أخرى في مجموعتنا ولأغراض تجارية - مثل الإعلانات .وقد ننقل معلوماتك إلى شركاتٍ أخرى في مجموعتنا أو إلى وكلائنا ومقاولينا لمساعدتنا في المعاملات المتعلقة وفقا لبنود سياسة الخصوصية. فقد نلجأ على سبيل المثال إلى طرف ثالث لمعاونتنا في تسليم المنتجات إليك، واستلام الدفعات منك، واستخدامها لأغراض الإحصاءات وأبحاث التسويق أو لمساعدة فريق خدمة العملاء. وقد نحتاج لتبادل المعلومات مع طرفٍ ثالث بغية الحماية من الاحتيال والحدّ من مخاطر الائتمان. و في حال تمّ بيع شركتنا أو جزءًا منها ، قد نضطر لنقل قواعد بياناتنا التي تشمل معلوماتك الشخصيّة.<br><br><strong><br>إعلان موافقة الزبون</strong></div><div>أوافق طوعا وبشكل صريح على جمع بياناتي ومشاركتها واستخدامها في الإجراءات والاحتفاظ بها وفقا للطريقة المنصوص عليها كما ورد أعلاه.</div><div><br></div>
+                                        <h1>سياسة الاسترجاع</h1>
+                                        <div>ما الفرق بين إرجاع منتج إلينا وتبديله بمقاس آخر؟<br><br><strong>الإرجاع:</strong><br>• يمكنك إرجاع أي منتج لست راضيًا عنه فيما عدا تلك المنتجات التي تندرج تحت خصوصية الشركة بعدم الإرجاع<br>•&nbsp; بالنسبة للمنتجات التي تعيدها إلينا، يمكنك استرداد المبلغ على عن طريق بطاقة الائتمان التي تم بها الطلب<br>&nbsp;</div><div><strong>الاستبدال:</strong></div><div>&nbsp;عند إنشاء عملية الاستبدال، يمكنك تبديل أي منتج طلبته باختيار مقاس آخر من نفس المنتج (فيما عدا .المنتجات&nbsp; تندرج تحت خصوصية الشركة بعدم الإرجاع)</div><div>في حال تم اعادة المبلغ للزبون في حالة الدفع بنظام الكي - نت يستلم البلغ خلال 12ساعة ، أما اذا تم الدفع&nbsp; . نظام الفيزا أو الماستر يتم استلام المبلغ خلال فترة زمنية تقدر ب 3-7 ايام عمل</div><div><br><strong>القواعد والشروط المتبعة عند الاستبدال/ الإرجاع:</strong><br>1- أن يتم إرجاع المنتج خلال ١٤ يوم من تاريخ استلامكم الطلب.<br>2- يجب أن يكون المنتج بحالة جيدة، غير مستخدم ‎وعليه ملصق العلامة التجارية.<br>3- يجب إرجاع المنتج مع صندوق الماركة الأصلي الذي تم إرساله اليكم.<br><strong>4- فساتين السهرة والملابس الداخلية وملابس السباحة والأكسسوارات غير قابلة للإرجاع أو الإستبدال.<br></strong><br></div><div><strong>للأسف تقتضي سياستنا على عدم إرجاع بعض المنتجات. لذلك ننصح بقراءة وصف المنتج جيدا قبل شرائه."</strong></div><div><br></div>
                                     </article>
                                     <div class="term-buttons-container">
                                         <button class="scroll-to-bottom">

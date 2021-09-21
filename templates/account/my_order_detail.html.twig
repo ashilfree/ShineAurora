@@ -2,27 +2,35 @@
 
 {% block body %}
 
-    <!--================Categories Banner Area =================-->
-    <section class="solid_banner_area">
+    <!-- Begin Hiraola's Breadcrumb Area -->
+    <div class="breadcrumb-area"  style="background-image: url({{ vich_uploader_asset(banner, 'imageFile') | imagine_filter('Extra_large') }});background-repeat:no-repeat;background-position:center;">
         <div class="container">
-            <div class="solid_banner_inner">
-                <h3>My Orders</h3>
+            {#            <div class="breadcrumb-content">#}
+            {#                <h2>About Us</h2>#}
+            {#                <ul>#}
+            {#                    <li><a href="{{ path('home', { locale: 'en' }) }}">Home</a></li>#}
+            {#                    <li class="active">About Us</li>#}
+            {#                </ul>#}
+            {#            </div>#}
+        </div>
+    </div>
+    <!-- Hiraola's Breadcrumb Area End Here -->
+    <div style="padding-top: 60px">
+        <div class="container">
+            <div>
                 <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a>My Orders</a></li>
+                    <li class="text-center" style="color: #595959;font-size: 25px;"><a href="{{ path('home', { locale: 'en' }) }}">Home</a> / My Account</li>
                 </ul>
             </div>
         </div>
-    </section>
-    <!--================End Categories Banner Area =================-->
-
-    <!--================login Area =================-->
-    <div class="p-all-40">
-        <!--====== Section Content ======-->
-        <div class="section__content">
-            <div class="dash">
-                <div class="container">
-                    <div class="row">
+    </div>
+    <!-- Begin Hiraola's About Us Area -->
+<!-- Begin Hiraola's Page Content Area -->
+<main class="page-content">
+    <!-- Begin Hiraola's Account Page Area -->
+    <div class="account-page-area">
+        <div class="container">
+            <div class="row">
                         {% include 'account/side_bar.html.twig' %}
                         <div class="col-lg-9 col-md-12">
                             <h1 class="dash__h1 u-s-m-b-30">Order Details</h1>
@@ -147,13 +155,12 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
             </div>
         </div>
-        <!--====== End - Section Content ======-->
     </div>
-    <!--================End login Area =================-->
+    <!-- Hiraola's Account Page Area End Here -->
+</main>
+    <!-- Hiraola's Page Content Area End Here -->
 
 {% endblock %}
 

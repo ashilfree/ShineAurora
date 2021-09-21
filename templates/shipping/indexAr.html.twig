@@ -1,0 +1,60 @@
+{% extends 'baseAr.html.twig' %}
+
+{% block body %}
+
+    <!-- Begin Hiraola's Breadcrumb Area -->
+    <div class="breadcrumb-area"  style="background-image: url({{ vich_uploader_asset(banner, 'imageFile') | imagine_filter('Extra_large') }});background-repeat:no-repeat;background-position:center;">
+        <div class="container">
+            {#            <div class="breadcrumb-content">#}
+            {#                <h2>About Us</h2>#}
+            {#                <ul>#}
+            {#                    <li><a href="{{ path('home', { locale: 'en' }) }}">Home</a></li>#}
+            {#                    <li class="active">About Us</li>#}
+            {#                </ul>#}
+            {#            </div>#}
+        </div>
+    </div>
+    <!-- Hiraola's Breadcrumb Area End Here -->
+    <div style="padding-top: 60px">
+        <div class="container">
+            <div>
+                <ul>
+                    <li class="text-center" style="color: #595959;font-size: 25px;"><a href="{{ path('home', { locale: 'en' }) }}">الصفحة الرئيسية</a> / التوصيل و التسلبم</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Begin Hiraola's About Us Area -->
+    <div class="about-us-area">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-7 d-flex align-items-center">
+                    <div class="overview-content text-right">
+                        <h2>التوصيل و التسلبم</h2>
+                        <div class="col-10 m-auto">
+
+                            <img class="img-full" src="{{ vich_uploader_asset(about, 'imageFile') }}" alt="Shine Aurora About Us Image">
+                        </div>
+                        <p class="short_desc">
+                            {% autoescape "html" %}
+                                {{ about.descriptionAr|raw }}
+                            {% endautoescape %}
+                        </p>
+                    </div>
+                </div>
+                {#                <div class="col-lg-6 col-md-5">#}
+                {#                    <div class="overview-img text-center img-hover_effect">#}
+                {#                        <a href="#">#}
+                {#                            <img class="img-full" src="{{ vich_uploader_asset(about, 'imageFile') }}" alt="Shine Aurora About Us Image">#}
+                {#                        </a>#}
+                {#                    </div>#}
+                {#                </div>#}
+            </div>
+        </div>
+    </div>
+    <!-- Hiraola's About Us Area End Here -->
+
+
+
+{% endblock %}
+

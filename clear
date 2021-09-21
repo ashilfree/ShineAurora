@@ -1,0 +1,2 @@
+#!/bin/sh
+ssh -i codeguard_sftp shineaur@shineaurora.com 'cd ~/public_html/test && php bin/console cache:clear'

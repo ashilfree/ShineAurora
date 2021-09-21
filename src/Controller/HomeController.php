@@ -106,7 +106,7 @@ class HomeController extends AbstractController
             return $this->render($path, [
                 'page' => 'home',
                 'categories' => $this->categoryRepository->findAll(),
-                'products' => $this->productRepository->findAll(),
+                'products' => $this->productRepository->findBy(['isShow' => 1], array('id' => 'DESC')),
                 'slides' => $this->slideRepository->findAll(),
                 'cart' => $this->cart->getFull($this->cart->get()),
                 'wishlist' => $this->wishlist->getFull(),

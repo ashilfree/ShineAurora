@@ -1,0 +1,97 @@
+{% extends 'baseAr.html.twig' %}
+
+{% block body %}
+
+    <!-- Begin Hiraola's Breadcrumb Area -->
+    <div class="breadcrumb-area" style="background-image: url({{ vich_uploader_asset(banner, 'imageFile') | imagine_filter('Extra_large') }});background-repeat:no-repeat;background-position:center;">
+        <div class="container">
+            {#            <div class="breadcrumb-content">#}
+            {#                <h2>Cart</h2>#}
+            {#                <ul>#}
+            {#                    <li><a href="{{ path('home', { locale: 'en' }) }}">Home</a></li>#}
+            {#                    <li class="active">Empty Cart</li>#}
+            {#                </ul>#}
+            {#            </div>#}
+        </div>
+    </div>
+    <!-- Hiraola's Breadcrumb Area End Here -->
+    <div style="padding-top: 60px">
+        <div class="container">
+            <div>
+                <ul>
+                    <li class="text-center" style="color: #595959;font-size: 25px;"><a href="{{ path('home', { locale: 'ar' }) }}">الصفحة الرئيسية</a> / قائمة المفضلات</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Begin Hiraola's Error 404 Page Area -->
+
+    <!--Begin Hiraola's Wishlist Area -->
+    <div class="hiraola-wishlist_area">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <form action="javascript:void(0)">
+                        <div class="table-content table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="hiraola-product_remove">إزالة</th>
+                                    <th class="hiraola-product-thumbnail">الصور</th>
+                                    <th class="cart-product-name">المنتج</th>
+                                    <th class="hiraola-product-price">سعر</th>
+                                    <th class="hiraola-product-stock-status">حالة المنتج</th>
+                                    <th class="hiraola-cart_btn">أضف إلى العربة</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for wishlistItem in wishlist %}
+                                    {# {{ dump(wishlistItem) }} #}
+                                    <tr>
+                                        <td class="hiraola-product_remove"><a
+                                                    href="{{ path('delete.wishlist', {locale: 'ar' ,id: wishlistItem.product.id, route:page}) }}"><i
+                                                        class="fa fa-trash"
+                                                        title="Remove"></i></a></td>
+                                        <td class="hiraola-product-thumbnail"><a href="javascript:void(0)"><img
+                                                        src="{{ vich_uploader_asset(wishlistItem.product.images.first, 'imageFile') | imagine_filter('small') }}"
+                                                        alt="Hiraola's Wishlist Thumbnail"></a>
+                                        </td>
+                                        <td class="hiraola-product-name"><a
+                                                    href="javascript:void(0)">{{ wishlistItem.product.name|upper }}</a>
+                                        </td>
+                                        <td class="hiraola-product-price"><span class="amount">
+                                                           {% if wishlistItem.product.discountPrice != 0 %}
+                                                               <span class="amount"> {{ (wishlistItem.product.discountPrice / 100) |number_format(2, '.', ',') }}</span>{{ currency }}
+                                        {% else %}
+                                                               <span class="amount">{{ (wishlistItem.product.price / 100) |number_format(2, '.', ',') }}</span>{{ currency }}
+                                                           {% endif %}
+                                        </span></td>
+                                        <td class="hiraola-product-stock-status"><span class="in-stock">{{ wishlistItem.product.inStock }}</span>
+                                        </td>
+                                        {% set break = false %}
+                                        <td class="hiraola-cart_btn"><a
+                                                    {% for catalog in wishlistItem.product.catalogs %}
+                                                        {% if not break %}
+                                                            {% if catalog.quantity > 0 %}
+                                                                href="{{ path('add.cart', { locale: 'ar', id: catalog.id }) }}"
+                                                                {% set break = true %}
+                                                            {% endif %}
+                                                        {% endif %}
+                                                        {% if not break %}
+                                                            href="javascript:void(0)"
+                                                        {% endif %}
+                                                    {% endfor %}
+
+                                            >أضف إلى العربة</a></td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Hiraola's Wishlist Area End Here -->
+{% endblock %}

@@ -5,16 +5,26 @@
     <!-- Begin Hiraola's Breadcrumb Area -->
     <div class="breadcrumb-area" style="background-image: url({{ vich_uploader_asset(banner, 'imageFile') | imagine_filter('Extra_large') }});background-repeat:no-repeat;background-position:center;">
         <div class="container">
-            <div class="breadcrumb-content">
-                <h2>عربة التسوق</h2>
+            {#            <div class="breadcrumb-content">#}
+            {#                <h2>Cart</h2>#}
+            {#                <ul>#}
+            {#                    <li><a href="{{ path('home', { locale: 'en' }) }}">Home</a></li>#}
+            {#                    <li class="active">Empty Cart</li>#}
+            {#                </ul>#}
+            {#            </div>#}
+        </div>
+    </div>
+    <!-- Hiraola's Breadcrumb Area End Here -->
+    <div style="padding-top: 60px">
+        <div class="container">
+            <div>
                 <ul>
-                    <li><a href="{{ path('home', { locale: 'en' }) }}">الصفحة الرئيسية</a></li>
-                    <li class="active">عربة التسوق</li>
+                    <li class="text-center" style="color: #595959;font-size: 25px;"><a href="{{ path('home', { locale: 'ar' }) }}">الصفحة الرئيسية</a> / عربة التسوق</li>
                 </ul>
             </div>
         </div>
     </div>
-    <!-- Hiraola's Breadcrumb Area End Here -->
+    <!-- Begin Hiraola's Error 404 Page Area -->
     <!-- Begin Hiraola's Cart Area -->
     {% if(delivery == '') %}
         {% set delivery = 0 %}
@@ -150,5 +160,12 @@
         </div>
     </div>
     <!-- Hiraola's Cart Area End Here -->
-
+    <style>
+        .nice-select {
+            float:right;
+        }
+        .nice-select .option {
+            text-align: right;
+        }
+    </style>
 {% endblock %}

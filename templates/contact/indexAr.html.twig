@@ -2,24 +2,50 @@
 
 {% block body %}
 
+{#    <!-- Begin Hiraola's Breadcrumb Area -->#}
+{#    <div class="breadcrumb-area" style="background-image: url({{ vich_uploader_asset(banner, 'imageFile') | imagine_filter('Extra_large') }});background-repeat:no-repeat;background-position:center;">#}
+{#        <div class="container">#}
+{#            <div class="breadcrumb-content">#}
+{#                <h2>اتصل بنا</h2>#}
+{#                <ul>#}
+{#                    <li><a href="{{ path('home', { locale: 'en' }) }}">الصفحة الرئيسية</a></li>#}
+{#                    <li class="active">اتصل بنا</li>#}
+{#                </ul>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#    <!-- Hiraola's Breadcrumb Area End Here -->#}
+
     <!-- Begin Hiraola's Breadcrumb Area -->
     <div class="breadcrumb-area" style="background-image: url({{ vich_uploader_asset(banner, 'imageFile') | imagine_filter('Extra_large') }});background-repeat:no-repeat;background-position:center;">
         <div class="container">
-            <div class="breadcrumb-content">
-                <h2>اتصل بنا</h2>
+            {#            <div class="breadcrumb-content">#}
+            {#                <h2>Contact</h2>#}
+            {#                <ul>#}
+            {#                    <li><a href="{{ path('home', { locale: 'en' }) }}">Home</a></li>#}
+            {#                    <li class="active">Contact</li>#}
+            {#                </ul>#}
+            {#            </div>#}
+        </div>
+    </div>
+    <!-- Hiraola's Breadcrumb Area End Here -->
+    <div style="padding-top: 60px">
+        <div class="container">
+            <div>
                 <ul>
-                    <li><a href="{{ path('home', { locale: 'en' }) }}">الصفحة الرئيسية</a></li>
-                    <li class="active">اتصل بنا</li>
+                    <li class="text-center" style="color: #595959;font-size: 25px;"><a href="{{ path('home', { locale: 'en' }) }}">الصفحة الرئيسية</a> / اتصل بنا</li>
                 </ul>
             </div>
         </div>
     </div>
-    <!-- Hiraola's Breadcrumb Area End Here -->
+    <!-- Begin Contact Main Page Area -->
+
     <!-- Begin Contact Main Page Area -->
     <div class="contact-main-page">
         <div class="container">
             <div class="map-responsive">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d11694.217954194917!2d47.99204620230539!3d29.37872667581416!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3fcf849850d401e9%3A0x767eb1122316959c!2sAl%20Hamra%20Tower%2C%20Al-Shuhada%20St%2C%20Al%20Kuwayt%2C%20Kuwait!5e0!3m2!1sen!2sdz!4v1620149276134!5m2!1sen!2sdz" width="1110" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3477.8205254609975!2d48.08247731546521!3d29.346255158169274!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3fcf762fcd8ae1c5%3A0x3d38baeb187cf5f1!2sSymphony%20Style%20Kuwait!5e0!3m2!1sen!2sdz!4v1631184136112!5m2!1sen!2sdz" width="1110" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+{#                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3477.8205254609975!2d48.08247731546521!3d29.346255158169274!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3fcf762fcd8ae1c5%3A0x3d38baeb187cf5f1!2sSymphony%20Style%20Kuwait!5e0!3m2!1sen!2sdz!4v1631184136112!5m2!1sen!2sdz" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>#}
             </div>
         </div>
         <div class="container">
@@ -27,21 +53,19 @@
                 <div class="col-lg-5 offset-lg-1 col-md-12 order-1 order-lg-2">
                     <div class="contact-page-side-content text-right">
                         <h3 class="contact-page-title">اتصل بنا</h3>
-                        <p class="contact-page-message">سطوع Dynamicus هو أيضًا العملية التالية
-                            أسرة تغيير كونسوتوديوم. من المدهش أن نلاحظ أنه مكتوب باللغة القوطية أعتقد أنه من الواضح الآن أحرف anteposuerit للشكل البشري.</p>
                         <div class="single-contact-block">
                             <h4><i class="fa fa-fax"></i> العنوان</h4>
-                            <p>مدينة جابر الأحمد ، الكويت</p>
+                            <p>فندق سيمفوني السالمية ، السرداب 1 ، محل رقم 33</p>
                         </div>
                         <div class="single-contact-block">
                             <h4><i class="fa fa-phone"></i> هاتف</h4>
-                            <p>محمول: (08) 123 456 789</p>
-                            <p>الخط: 1009 678 456</p>
+                            <p>محمول: +965 50266444</p>
+{#                            <p>الخط: 1009 678 456</p>#}
                         </div>
                         <div class="single-contact-block last-child">
                             <h4><i class="fa fa-envelope-o"></i> بريد إلكتروني</h4>
-                            <p>yourmail@domain.com</p>
-                            <p>support@hastech.company</p>
+                            <p>info@shineaurora.com</p>
+{#                            <p>support@hastech.company</p>#}
                         </div>
                     </div>
                 </div>

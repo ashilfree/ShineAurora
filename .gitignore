@@ -22,4 +22,9 @@ yarn-error.log
 
 ###> liip/imagine-bundle ###
 /public/media/cache/
+/public/media/video/
 ###< liip/imagine-bundle ###
+
+###> MyFatourah ###
+/src/Controller/MyFatoorahController.php
+###< MyFatourah ###

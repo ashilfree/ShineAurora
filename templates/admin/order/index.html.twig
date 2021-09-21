@@ -235,7 +235,11 @@
     {{ parent() }}
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
     <script src="{{ asset('assets/admin/plugins/table/datatable/datatables.js') }}"></script>
-
+    <script>
+        setTimeout(function() {
+            location.reload();
+        }, 180000);
+    </script>
     <script type="text/javascript">
         $(function () {
             const customSwitches = document.querySelectorAll('td.field-boolean .custom-control.custom-switch input[type="checkbox"]');

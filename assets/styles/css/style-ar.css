@@ -51,11 +51,12 @@ INDEX:
 
 */
 @import url("https://fonts.googleapis.com/css?family=Dancing+Script:400,700|Lato:300,300i,400,400i,700,700i,900,900i|Pacifico");
+@font-face{font-family:hm sans regular;src:url(fonts/HMSans-Regular.woff2) format("woff2"),url(fonts/HMSans-Regular.woff) format("woff");font-weight:400;font-style:normal;font-display:swap}
 /*----------------------------------------*/
 /*  00 - Base - Typography
 /*----------------------------------------*/
 body {
-  font-family: "Lato", sans-serif;
+  font-family: "hm sans regular", "Lato", sans-serif;
   background-color: #ffffff;
   color: #595959;
   font-size: 16px;
@@ -68,14 +69,14 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "Lato", sans-serif;
+  font-family: "hm sans regular", "Lato", sans-serif;
   color: #333333;
   line-height: 1;
   font-weight: 700;
 }
 
 p {
-  font-family: "Lato", sans-serif;
+  font-family: "hm sans regular", "Lato", sans-serif;
   color: #595959;
   font-size: 16px;
   line-height: 24px;
@@ -906,7 +907,7 @@ button, .global-overlay, .quantity .cart-plus-minus > .qtybutton, .popup_wrapper
   font-size: 14px;
   height: inherit;
   padding-left: 5px;
-  width: 99px;
+  width: 110px;
 }
 
 /* ---Color List Area--- */
@@ -1614,7 +1615,7 @@ button, .global-overlay, .quantity .cart-plus-minus > .qtybutton, .popup_wrapper
 }
 
 .template-color-1 .sp-area .sp-nav .sp-content .sp-essential_stuff > ul > li > a {
-  color: #bcbdc2;
+  color: #000000;
 }
 
 .template-color-1 .sp-area .sp-nav .sp-content .qty-btn_area > ul li > a:hover {
@@ -3024,7 +3025,7 @@ button.li-btn:hover {
 
 .fb-filter-btn_area .hiraola-filter_btn:before {
   content: "\f00d";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "hm sans regular", 'Font Awesome 5 Free';
   font-weight: 600;
   padding-right: 10px;
 }
@@ -3450,6 +3451,10 @@ button.li-btn:hover {
   top: -80px;
   right: auto;
   left: 0px;
+}
+
+.hiraola-product-tab_slider-3.hiraola-product-tab_second-slider-3 .slick-arrow {
+  top: -110px;
 }
 
 .hiraola-product_slider .slick-arrow:hover,
@@ -4262,7 +4267,7 @@ button.li-btn:hover {
 
 .category-menu .category-heading > h2:after {
   content: "\f03c";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "hm sans regular", 'Font Awesome 5 Free';
   font-weight: 600;
   position: absolute;
   top: 18px;
@@ -4334,7 +4339,7 @@ button.li-btn:hover {
 
 .category-menu .category-menu-list > ul > li.right-menu > a::after {
   content: '\f078';
-  font-family: 'Font Awesome 5 Free';
+  font-family: "hm sans regular", 'Font Awesome 5 Free';
   font-weight: 600;
   font-size: 12px;
   position: absolute;
@@ -4556,7 +4561,7 @@ button.li-btn:hover {
   }
   .category-menu-list > ul > li i.menu-expand:before {
     content: "\f489";
-    font-family: "Ionicons";
+    font-family: "hm sans regular", "Ionicons";
     font-size: 20px;
     position: absolute;
     left: 50%;
@@ -5131,7 +5136,7 @@ button.li-btn:hover {
 
 .hiraola-social_link > ul > li {
   display: inline-block;
-  padding-right: 10px;
+  padding-left: 10px;
 }
 
 .hiraola-social_link > ul > li:last-child {
@@ -5172,6 +5177,7 @@ button.li-btn:hover {
 }
 
 .hiraola-product-tab_area-2 .hiraola-section_title-3 > h4,
+.hiraola-product-tab_area-2 .hiraola-tab_title > h4,
 .hiraola-product-tab_area-3 .hiraola-section_title-3 > h4,
 .hiraola-product-tab_area-4 .hiraola-section_title-3 > h4 {
   padding-bottom: 20px;
@@ -5257,6 +5263,7 @@ button.li-btn:hover {
   content: "";
   position: absolute;
   top: 50%;
+  left: -9px;
   height: 2px;
   width: 18px;
 }
@@ -5281,7 +5288,7 @@ button.li-btn:hover {
 .hiraola-product-tab_area-2 .product-tab > ul.product-menu > li:last-child > a,
 .hiraola-product-tab_area-3 .product-tab > ul.product-menu > li:last-child > a,
 .hiraola-product-tab_area-4 .product-tab > ul.product-menu > li:last-child > a {
-  padding-right: 0;
+  padding-left: 0;
 }
 
 .hiraola-product-tab_area-2 .product-tab > ul.product-menu > li:last-child > a:after,
@@ -5747,7 +5754,7 @@ button.li-btn:hover {
 
 .breadcrumb-area .breadcrumb-content ul > li:before {
   content: "\f053";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "hm sans regular", 'Font Awesome 5 Free';
   font-weight: 600;
   position: absolute;
   left: -15px;
@@ -6894,7 +6901,7 @@ button.li-btn:hover {
   height: 2px;
   position: absolute;
   bottom: -2px;
-  left: 0;
+  right: 0;
 }
 
 .hiraola-sidebar-catagories_area .hiraola-sidebar_categories .hiraola-categories_title h5 {
@@ -7501,7 +7508,7 @@ button.li-btn:hover {
 }
 
 .sp-area .sp-nav .sp-content .product-size_box > span {
-  padding-right: 15px;
+  padding-left: 15px;
 }
 
 .sp-area .sp-nav .sp-content .product-size_box .myniceselect.nice-select > span {
@@ -8968,7 +8975,7 @@ button.li-btn:hover {
   top: 0;
   display: block;
   content: "\f00c";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "hm sans regular", 'Font Awesome 5 Free';
   font-weight: 600;
   font-size: 12px;
   line-height: 20px;
@@ -9279,7 +9286,7 @@ button.li-btn:hover {
   color: #bcbdc2;
   content: "\f133";
   display: inline-block;
-  font-family: 'Font Awesome 5 Free';
+  font-family: "hm sans regular", 'Font Awesome 5 Free';
   font-weight: 600;
   left: 24px;
   position: absolute;
@@ -10129,7 +10136,7 @@ button.li-btn:hover {
 
 .frequently-area .frequently-accordion .card-header a.collapsed:before {
   content: "\f067";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "hm sans regular", 'Font Awesome 5 Free';
   font-weight: 600;
   position: absolute;
   right: 15px;
@@ -10145,7 +10152,7 @@ button.li-btn:hover {
 
 .frequently-area .frequently-accordion .card-header a:after {
   content: "\f068";
-  font-family: 'Font Awesome 5 Free';
+  font-family: "hm sans regular", 'Font Awesome 5 Free';
   font-weight: 600;
   position: absolute;
   right: 15px;
@@ -10450,7 +10457,7 @@ button.li-btn:hover {
   width: 100%;
   font-weight: 300;
   border-radius: 50px;
-  font-family: 'Rubik',sans-serif;
+  font-family: "hm sans regular", 'Rubik',sans-serif;
 }
 
 .subscribe-area .subscribe-form > form input::-moz-placeholder {
@@ -10551,7 +10558,7 @@ button.li-btn:hover {
 
 .DateCountdown .time_circles > div > h4 {
   color: #ffffff;
-  font-family: "Rubik", sans-serif;
+  font-family: "hm sans regular", "Rubik", sans-serif;
   font-size: 18px !important;
   font-weight: 400;
   margin: 89px 0 0;
@@ -10587,7 +10594,7 @@ button.li-btn:hover {
 .DateCountdown .time_circles > div > span {
   color: #ffffff;
   display: block;
-  font-family: "Teko",
+  font-family: "hm sans regular", "Teko",
  sans-serif;
   font-size: 60px !important;
   font-weight: 400;

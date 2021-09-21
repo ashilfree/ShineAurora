@@ -1,0 +1,249 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <!-- Begin Hiraola's Breadcrumb Area -->
+    <div class="breadcrumb-area"
+         style="background-image: url({{ vich_uploader_asset(banner, 'imageFile') | imagine_filter('Extra_large') }});background-repeat:no-repeat;background-position:center;">
+        <div class="container">
+            {# <div class="breadcrumb-content"> #}
+            {# <h2>Cart</h2> #}
+            {# <ul> #}
+            {# <li><a href="{{ path('home', { locale: 'en' }) }}">Home</a></li> #}
+            {# <li class="active">Cart</li> #}
+            {# </ul> #}
+            {# </div> #}
+        </div>
+    </div>
+    <!-- Hiraola's Breadcrumb Area End Here -->
+    <div style="padding-top: 60px">
+        <div class="container">
+            <div>
+                <ul>
+                    <li class="text-center" style="color: #595959;font-size: 25px;"><a
+                                href="{{ path('home', { locale: 'en' }) }}">Home</a> / WishList
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!--Begin Hiraola's Wishlist Area -->
+    <div class="hiraola-wishlist_area">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <form action="javascript:void(0)">
+                        <div class="table-content table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="hiraola-product_remove">remove</th>
+                                    <th class="hiraola-product-thumbnail">images</th>
+                                    <th class="cart-product-name">Product</th>
+                                    <th class="hiraola-product-price">Unit Price</th>
+                                    <th class="hiraola-product-stock-status">Stock Status</th>
+                                    <th class="hiraola-cart_btn">add to cart</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for wishlistItem in wishlist %}
+                                    {# {{ dump(wishlistItem) }} #}
+                                    <tr>
+                                        <td class="hiraola-product_remove"><a
+                                                    href="{{ path('delete.wishlist', {locale: 'en' ,id: wishlistItem.product.id, route:page}) }}"><i
+                                                        class="fa fa-trash"
+                                                        title="Remove"></i></a></td>
+                                        <td class="hiraola-product-thumbnail"><a href="javascript:void(0)"><img
+                                                        src="{{ vich_uploader_asset(wishlistItem.product.images.first, 'imageFile') | imagine_filter('small') }}"
+                                                        alt="Hiraola's Wishlist Thumbnail"></a>
+                                        </td>
+                                        <td class="hiraola-product-name"><a
+                                                    href="javascript:void(0)">{{ wishlistItem.product.name|upper }}</a>
+                                        </td>
+                                        <td class="hiraola-product-price"><span class="amount">
+                                                           {% if wishlistItem.product.discountPrice != 0 %}
+                                                               <span class="amount"> {{ (wishlistItem.product.discountPrice / 100) |number_format(2, '.', ',') }}</span>{{ currency }}
+                                        {% else %}
+                                                               <span class="amount">{{ (wishlistItem.product.price / 100) |number_format(2, '.', ',') }}</span>{{ currency }}
+                                                           {% endif %}
+                                        </span></td>
+                                        <td class="hiraola-product-stock-status"><span class="in-stock">{{ wishlistItem.product.inStock }}</span>
+                                        </td>
+                                        {% set break = false %}
+                                        <td class="hiraola-cart_btn"><a
+                                                    {% for catalog in wishlistItem.product.catalogs %}
+                                                        {% if not break %}
+                                                            {% if catalog.quantity > 0 %}
+                                                                href="{{ path('add.cart', { locale: 'en', id: catalog.id }) }}"
+                                                                {% set break = true %}
+                                                            {% endif %}
+                                                        {% endif %}
+                                                        {% if not break %}
+                                                        href="javascript:void(0)"
+                                                        {% endif %}
+                                                    {% endfor %}
+
+                                            >add to cart</a></td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Hiraola's Wishlist Area End Here -->
+{#    <!-- Begin Hiraola's Cart Area -->#}
+{#    <div class="hiraola-cart-area">#}
+{#        <div class="container">#}
+{#            <div class="row">#}
+{#                <div class="col-12">#}
+{#                    <form class="js-cart-form" action="{{ path('update.cart', { locale: 'en' }) }}">#}
+{#                        <div class="table-content table-responsive">#}
+{#                            <table class="table">#}
+{#                                <thead>#}
+{#                                <tr>#}
+{#                                    <th class="hiraola-product-remove">remove</th>#}
+{#                                    <th class="hiraola-product-thumbnail">images</th>#}
+{#                                    <th class="cart-product-name">Product</th>#}
+{#                                    <th class="hiraola-product-size">size</th>#}
+{#                                    <th class="hiraola-product-color">color</th>#}
+{#                                    <th class="hiraola-product-price">Unit Price</th>#}
+{#                                    <th class="hiraola-product-quantity">Quantity</th>#}
+{#                                    <th class="hiraola-product-subtotal">Total</th>#}
+{#                                </tr>#}
+{#                                </thead>#}
+{#                                <tbody>#}
+{#                                {% set total = null %}#}
+{#                                {% if cart %}#}
+{#                                    {% for cartItem in cart %}#}
+{#                                        <tr>#}
+{#                                            <td class="hiraola-product-remove"><a#}
+{#                                                        href="{{ path('delete.cart', {locale: 'en' ,id: cartItem.catalog.id, route:page}) }}"><i#}
+{#                                                            class="fa fa-trash"#}
+{#                                                            title="Remove"></i></a></td>#}
+{#                                            <td class="hiraola-product-thumbnail"><a href="javascript:void(0)"><img#}
+{#                                                            src="{{ vich_uploader_asset(cartItem.catalog.product.images.first, 'imageFile') | imagine_filter('small') }}"#}
+{#                                                            alt="{{ cartItem.catalog.product.name }}"></a></td>#}
+{#                                            <td class="hiraola-product-name"><a#}
+{#                                                        href="javascript:void(0)">{{ cartItem.catalog.product.name|upper }}</a>#}
+{#                                            </td>#}
+{#                                            <td class="hiraola-product-size"><span>{{ cartItem.catalog.size }}</span>#}
+{#                                            </td>#}
+{#                                            <td class="hiraola-product-color"><a href="javascript:void(0)"#}
+{#                                                                                 class="cart-single-color"#}
+{#                                                                                 data-swatch-color="red">#}
+{#                                                    <span style="background-color: {{ cartItem.catalog.color }};display: block; width:100%;height: 100%"></span>#}
+{#                                                </a></td>#}
+{#                                            <td class="hiraola-product-price">#}
+{#                                                {% if cartItem.catalog.product.discountPrice != 0 %}#}
+{#                                                    <span class="amount"> {{ (cartItem.catalog.product.discountPrice * cartItem.quantity  / 100) |number_format(2, '.', ',') }}</span>{{ currency }}#}
+{#                                                {% else %}#}
+{#                                                    <span class="amount">{{ (cartItem.catalog.product.price * cartItem.quantity  / 100) |number_format(2, '.', ',') }}</span>{{ currency }}#}
+{#                                                {% endif %}#}
+{#                                            </td>#}
+{#                                            <td class="quantity">#}
+{#                                                <input type="hidden" name="catalog-{{ loop.index }}"#}
+{#                                                       value="{{ cartItem.catalog.id }}">#}
+{#                                                <label>Quantity</label>#}
+{#                                                <div class="cart-plus-minus">#}
+{#                                                    <input class="cart-plus-minus-box" value="{{ cartItem.quantity }}"#}
+{#                                                           type="number" name="quantity-{{ loop.index }}">#}
+{#                                                    <div class="dec qtybutton js-quantity"><i#}
+{#                                                                class="fa fa-angle-down"></i></div>#}
+{#                                                    <div class="inc qtybutton js-quantity"#}
+{#                                                         data-max="{{ cartItem.catalog.quantity }}"><i#}
+{#                                                                class="fa fa-angle-up"></i></div>#}
+{#                                                </div>#}
+{#                                            </td>#}
+{#                                            <td class="product-subtotal">#}
+{#                                                {% if cartItem.catalog.product.discountPrice != 0 %}#}
+{#                                                    <span class="amount"> {{ (cartItem.catalog.product.discountPrice * cartItem.quantity  / 100) |number_format(2, '.', ',') }}</span>{{ currency }}#}
+{#                                                {% else %}#}
+{#                                                    <span class="amount">{{ (cartItem.catalog.product.price * cartItem.quantity  / 100) |number_format(2, '.', ',') }}</span>{{ currency }}#}
+{#                                                {% endif %}#}
+{#                                            </td>#}
+{#                                        </tr>#}
+{#                                        {% if cartItem.catalog.product.discountPrice != 0 %}#}
+{#                                            {% set total = total + (cartItem.quantity * cartItem.catalog.product.discountPrice)/100 %}#}
+{#                                        {% else %}#}
+{#                                            {% set total = total + (cartItem.quantity * cartItem.catalog.product.price)/100 %}#}
+{#                                        {% endif %}#}
+{#                                    {% endfor %}#}
+{#                                {% endif %}#}
+{#                                </tbody>#}
+{#                            </table>#}
+{#                        </div>#}
+{#                        <div class="row">#}
+{#                            <div class="col-12">#}
+{#                                <div class="coupon-all">#}
+{#                                    <div class="coupon">#}
+{#                                        <input id="coupon_code" class="input-text" name="coupon_code" value=""#}
+{#                                               placeholder="Coupon code" type="text">#}
+{#                                        <input class="button" name="apply_coupon" value="Apply coupon" type="submit">#}
+{#                                    </div>#}
+{#                                    <div class="coupon2">#}
+{#                                        <a href="{{ path('remove.cart', {locale: 'en' ,route: page}) }}" class="button">Clear#}
+{#                                            Cart</a>#}
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                        <div class="row">#}
+{#                            <div class="col-md-5 mr-auto">#}
+{#                                <div class="cart-page-total">#}
+{#                                    <h2>Delivery</h2>#}
+{#                                    <select class="nice-select" name="delivery-index" required="required">#}
+{#                                        <option value="">Select a governorate...</option>#}
+{#                                        {% for governorate in governorates %}#}
+{#                                            <option {% if deliveryIndex is defined and deliveryIndex == loop.index %}  selected {% endif %}#}
+{#                                                    value="{{ loop.index }}"#}
+{#                                                    data-price="{{ governorate.price }}">{{ governorate.name }}</option>#}
+{#                                        {% endfor %}#}
+{#                                    </select>#}
+{#                                    <input type="hidden" name="delivery">#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="col-md-5 ml-auto">#}
+{#                                {% include 'product/_overlay.html.twig' %}#}
+{#                                <div class="cart-page-total">#}
+{#                                    <h2>Cart totals</h2>#}
+{#                                    <ul>#}
+{#                                        <li>Subtotal <span#}
+{#                                                    id="subtotal">{{ total|number_format(2, '.', ',') }}{{ currency }}</span>#}
+{#                                        </li>#}
+{#                                        <li>Delivery fees <span id="total">   {% if delivery is defined %}#}
+{#                                                    {{ (delivery/100)|number_format(2, '.', ',') }}#}
+{#                                                {% else %}#}
+{#                                                    0.00#}
+{#                                                {% endif %}#}
+{#                                                {{ currency }}#}
+{#                                            </span></li>#}
+{#                                        <li>Total#}
+{#                                            <span id="total">#}
+{#                                    {% if delivery is defined %}#}
+{#                                        {{ (total+ (delivery/100))|number_format(2, '.', ',') }}#}
+{#                                    {% else %}#}
+{#                                        {{ total|number_format(2, '.', ',') }}#}
+{#                                    {% endif %}#}
+{#                                                {{ currency }}#}
+{#								</span>#}
+
+{#                                        </li>#}
+{#                                    </ul>#}
+{#                                    <a{% if delivery is null or delivery == 0 %} href="javascript:void(0)" {% else %} href="{{ path('order', { locale: 'en' }) }}" {% endif %}#}
+{#                                            {% if delivery is null or delivery == 0 %} disabled {% endif %}#}
+{#                                    >Proceed to checkout</a>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </form>#}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#    <!-- Hiraola's Cart Area End Here -->#}
+{% endblock %}

@@ -30,46 +30,63 @@
             <div class="sp-nav">
                 <div class="row">
                     <div class="col-lg-5 col-md-5">
-                        <div class="sp-img_area">
-                            <div  class="sp-img_slider-2 slick-img-slider hiraola-slick-slider arrow-type-two" data-slick-options='{
-                                                        "slidesToShow": 1,
-                                                        "arrows": false,
-                                                        "fade": true,
-                                                        "draggable": false,
-                                                        "swipe": false,
-                                                        "asNavFor": ".sp-img_slider-nav"
-                                                        }'>
-                                {% for image in product.images %}
-                                    <div class="single-slide red">
+{#                        <div class="sp-img_area">#}
+{#                            <div  class="sp-img_slider-2 slick-img-slider hiraola-slick-slider arrow-type-two" data-slick-options='{#}
+{#                                                        "slidesToShow": 1,#}
+{#                                                        "arrows": false,#}
+{#                                                        "fade": true,#}
+{#                                                        "draggable": false,#}
+{#                                                        "swipe": false,#}
+{#                                                        "asNavFor": ".sp-img_slider-nav"#}
+{#                                                        }'>#}
+{#                                {% for image in product.images %}#}
+{#                                    <div class="single-slide red">#}
 {#                                    <img src="{{ vich_uploader_asset(image, 'imageFile') }}" class="light-zoom" alt="Shine Aurora Product Image">#}
-                                    <img class="zoomit-target"  id="zoomit-target{{ loop.index }}" src="{{ vich_uploader_asset(image, 'imageFile') }}" data-zoomed="{{ vich_uploader_asset(image, 'imageFile') }}" alt="Shine Aurora Product Image">
-                                </div>
-                                {% endfor %}
+{#                                    <img class="zoomit-target"  id="zoomit-target{{ loop.index }}" src="{{ vich_uploader_asset(image, 'imageFile') }}" data-zoomed="{{ vich_uploader_asset(image, 'imageFile') }}" alt="Shine Aurora Product Image">#}
+{#                                    <img class="xzoom"  src="{{ vich_uploader_asset(image, 'imageFile') }}" xoriginal="{{ vich_uploader_asset(image, 'imageFile') }}" alt="Shine Aurora Product Image">#}
+{#                                </div>#}
+{#                                {% endfor %}#}
 
-                                <div>
-                                    <div class="single-slide red">
-                                        <iframe src="">
-                                        </iframe>
+{#                                <div>#}
+{#                                    <div class="single-slide red">#}
+{#                                        <iframe src="">#}
+{#                                        </iframe>#}
 
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="sp-img_slider-nav slick-slider-nav hiraola-slick-slider arrow-type-two" data-slick-options='{
-                                                        "slidesToShow": 3,
-                                                        "asNavFor": ".sp-img_slider-2",
-                                                        "focusOnSelect": true
-                                                        }'>
-                                {% for image in product.images %}
-                                    <div class="single-slide red update-slide">
-                                    <img src="{{ vich_uploader_asset(image, 'imageFile') }}" alt="Shine Aurora Product Thumnail">
-                                </div>
-                                {% endfor %}
-                                <div class="single-slide red">
-                                    <img src="https://www.youtube.com/embed/lqj-QNYsZFk?controls=1">
-                                    </img>
+{#                                    </div>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="sp-img_slider-nav slick-slider-nav hiraola-slick-slider arrow-type-two xzoom-thumbs" data-slick-options='{#}
+{#                                                        "slidesToShow": 3,#}
+{#                                                        "asNavFor": ".sp-img_slider-2",#}
+{#                                                        "focusOnSelect": true#}
+{#                                                        }'>#}
+{#                                {% for image in product.images %}#}
+{#                                    <a class="single-slide red" href="{{ vich_uploader_asset(image, 'imageFile') }}">#}
+{#                                    <img class="xzoom-gallery" src="{{ vich_uploader_asset(image, 'imageFile') }}" {% if loop.index == 1 %} xpreview="{{ vich_uploader_asset(image, 'imageFile') }}" {% endif %} alt="Shine Aurora Product Thumnail">#}
+{#                                    </a>#}
+{#                                {% endfor %}#}
+{#                                <div class="single-slide red">#}
+{#                                    <img src="https://www.youtube.com/embed/lqj-QNYsZFk?controls=1">#}
+{#                                    </img>#}
 
-                                </div>
-                            </div>
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+                        <img id="image" class="xzoom" src="{{ vich_uploader_asset(product.images.first, 'imageFile') }}" xoriginal="{{ vich_uploader_asset(product.images.first, 'imageFile') }}" />
+                        <video id="video" width="100%" height="auto" controls style="display: none">
+                            <source src="{{ '/media/video/' ~ product.video }}" type="video/mp4">
+                        </video>
+                        <div class="xzoom-thumbs">
+                            {% for image in product.images %}
+                                <a href="{{ vich_uploader_asset(image, 'imageFile') }}">
+                                    <img class="xzoom-gallery" width="80" src="{{ vich_uploader_asset(image, 'imageFile') }}" {% if loop.index == 1 %} xpreview="{{ vich_uploader_asset(image, 'imageFile') }}" {% endif %}>
+                                </a>
+                            {% endfor %}
+                            {% if product.video %}
+                                <a>
+                                    <img class="xzoom-gallery" width="80" src="{{ '/media/images/film-and-vid.jpg' }}">
+                                </a>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="col-lg-7 col-md-7">
@@ -89,7 +106,12 @@
 {#                            </div>#}
                             <div class="sp-essential_stuff">
                                 <ul>
-                                    <li>Availability: <a href="javascript:void(0)">In Stock</a></li>
+                                    <li>Fabric Type: <a href="javascript:void(0)">{{ product.fabricType }}</a></li>
+                                </ul>
+                            </div>
+                            <div class="sp-essential_stuff">
+                                <ul>
+                                    <li>Availability: <a href="javascript:void(0)">{{ product.inStock }}</a></li>
                                 </ul>
                             </div>
                             <div class="price-list_area">
@@ -201,7 +223,6 @@
                             <ul class="nav product-menu">
                                 <li><a class="active" data-toggle="tab" href="#descrip"><span>Description</span></a>
                                 </li>
-                                <li><a data-toggle="tab" href="#specification"><span>Specification</span></a></li>
                                 <li><a data-toggle="tab" href="#size"><span>Size Guide</span></a></li>
                             </ul>
                         </div>
@@ -210,32 +231,6 @@
                                 <div class="product-description">
                                     {{ product.longDescription|raw }}
                                 </div>
-                            </div>
-                            <div id="specification" class="tab-pane" role="tabpanel">
-{#                                <table class="table table-bordered specification-inner_stuff">#}
-{#                                    <tbody>#}
-{#                                    <tr>#}
-{#                                        <td colspan="2"><strong>Memory</strong></td>#}
-{#                                    </tr>#}
-{#                                    </tbody>#}
-{#                                    <tbody>#}
-{#                                    <tr>#}
-{#                                        <td>test 1</td>#}
-{#                                        <td>8gb</td>#}
-{#                                    </tr>#}
-{#                                    </tbody>#}
-{#                                    <tbody>#}
-{#                                    <tr>#}
-{#                                        <td colspan="2"><strong>Processor</strong></td>#}
-{#                                    </tr>#}
-{#                                    </tbody>#}
-{#                                    <tbody>#}
-{#                                    <tr>#}
-{#                                        <td>No. of Cores</td>#}
-{#                                        <td>1</td>#}
-{#                                    </tr>#}
-{#                                    </tbody>#}
-{#                                </table>#}
                             </div>
                             <div id="size" class="tab-pane" role="tabpanel">
 {#                                <a href="#img">#}
@@ -248,7 +243,7 @@
 {#                                    <img src="{{ vich_uploader_asset(product, 'imageFile') }}">#}
 {#                                </div>#}
                                 <div class="row d-flex flex-wrap align-items-center" data-toggle="modal" data-target="#lightbox">
-                                    <div class="col-12 col-md-8 col-lg-6 offset-md-2 offset-lg-3">
+                                    <div class="col-12 col-md-10 col-lg-10 offset-md-1 offset-lg-1">
                                         <img src="{{ vich_uploader_asset(product, 'imageFile') }}" data-target="#indicators" data-slide-to="0" alt="" />
                                     </div>
                                 </div>
@@ -298,7 +293,10 @@
                 <div class="col-lg-12">
                     {% set prod = product %}
                     <div class="hiraola-product_slider-3">
+                        {% set break = false %}
                         {% for product in products %}
+                        {% if not break %}
+                            {% if loop.index <= 4 %}
                         {% if product != prod %}
                         <!-- Begin Hiraola's Slide Item Area -->
                         <div class="slide-item">
@@ -317,7 +315,7 @@
                                                             {% if not break %}
                                                                 {% if catalog.quantity > 0 %}
                                                                     href="{{ path('add.cart', { locale: 'en', id: catalog.id }) }}"
-                                                                    {% set break = true %}
+{#                                                                    {% set break = true %}#}
                                                                 {% endif %}
                                                             {% endif %}
                                                         {% endfor %}
@@ -344,7 +342,8 @@
                                     </div>
                                 </div>
                                 <div class="hiraola-product_content">
-                                    <div class="product-desc_info">
+                                    <div class="product-desc_info row">
+                                        <div class="col-10">
                                         <h6><a class="product-name" href="{{ path('product', {locale: 'en', 'slug': product.slug }) }}">{{ product.name }}</a></h6>
                                         <div class="price-box style-1">
                                             <span class="new-price">
@@ -356,11 +355,17 @@
                                                           {% endif %}
                                             </span>
                                         </div>
-                                        <div class="additional-add_action">
+                                        </div>
+                                        <div class="col-2 aadditional-add_action">
                                             <ul>
                                                 <li><a class="hiraola-add_compare"{% if wish[product.id] is defined and wish[product.id] == 1  %} href="{{ path('delete.wishlist', { locale: 'en', id:product.id, route:page }) }}" title="Remove from Wishlist" {% else %} href="{{ path('add.wishlist', { locale: 'en', id:product.id }) }}" title="Add To Wishlist" {% endif %} data-toggle="tooltip" data-placement="top" >
                                                         <i {% if wish[product.id] is defined and wish[product.id] == 1  %} class="ion-android-favorite"  {% else %} class="ion-android-favorite-outline"  {% endif %} ></i></a>
                                                 </li>
+                                                {% if product.video %}
+                                                    <li>
+                                                        <i class="ion-ios-videocam"></i>
+                                                    </li>
+                                                {% endif %}
                                             </ul>
                                         </div>
 {#                                        <div class="rating-box">#}
@@ -377,6 +382,8 @@
                             </div>
                         </div>
                         <!-- Hiraola's Slide Item Area End Here -->
+                        {% endif %}
+                            {% endif %}
                         {% endif %}
                         {% endfor %}
 
@@ -500,5 +507,21 @@
                 document.querySelector('.sold_out').style.display = 'none';
             }
         }
+    </script>
+    <script>
+
+        document.querySelectorAll('.xzoom-thumbs a').forEach(a =>{
+            a.addEventListener('click', e => {
+                    if(a.getAttribute("href")){
+                        setTimeout(function() { document.querySelector('.xzoom').style.display = 'block'; }, 10);
+
+                        document.querySelector('#video').style.display = 'none';
+                    }else{
+
+                        document.querySelector('#video').style.display = 'block';
+                        setTimeout(function() { document.querySelector('.xzoom').style.display = 'none'; }, 10);
+                    }
+            })
+        } )
     </script>
 {% endblock %}

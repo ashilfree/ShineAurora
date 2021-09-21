@@ -7,12 +7,17 @@ use App\Entity\Banner;
 use App\Entity\Category;
 use App\Entity\Customer;
 use App\Entity\DiscountBanner;
+use App\Entity\FabricType;
 use App\Entity\Governorate;
 use App\Entity\Newsletter;
 use App\Entity\Order;
 use App\Entity\Popup;
+use App\Entity\PrivacyPolicy;
 use App\Entity\Product;
+use App\Entity\ReturnPolicy;
+use App\Entity\ShippingDelivery;
 use App\Entity\Slide;
+use App\Entity\TermsConditions;
 use App\Repository\ConnectedRepository;
 use App\Repository\OrderRepository;
 use App\Repository\VisitStatsRepository;
@@ -137,6 +142,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Customer', 'fa fa-user', Customer::class);
         yield MenuItem::linkToCrud('Order', 'fa fa-university', Order::class);
         yield MenuItem::linkToCrud('Category', 'fa fa-list', Category::class);
+        yield MenuItem::linkToCrud('Fabric Type', 'fa fa-list', FabricType::class);
         yield MenuItem::linkToCrud('Slide', 'fa fa-bank', Slide::class);
         yield MenuItem::linkToCrud('Banner', 'fa fa-desktop', Banner::class);
         yield MenuItem::linkToCrud('Discount Banner', 'fa fa-desktop', DiscountBanner::class);
@@ -145,6 +151,10 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Newsletter', 'fa fa-tags', Newsletter::class);
         yield MenuItem::linkToCrud('Governorate', 'fa fa-university', Governorate::class);
         yield MenuItem::linkToCrud('About Us', 'fa fa-university', About::class);
+        yield MenuItem::linkToCrud('Terms & Conditions', 'fa fa-university', TermsConditions::class);
+        yield MenuItem::linkToCrud('Shipping & Delivery', 'fa fa-university', ShippingDelivery::class);
+        yield MenuItem::linkToCrud('Return Policy', 'fa fa-university', ReturnPolicy::class);
+        yield MenuItem::linkToCrud('Privacy Policy', 'fa fa-university', PrivacyPolicy::class);
 
     }
 }

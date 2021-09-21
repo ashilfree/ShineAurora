@@ -2,19 +2,43 @@
 {% block title %}Our Products{% endblock %}
 {% block body %}
 
+{#    <!-- Begin Hiraola's Breadcrumb Area -->#}
+{#    <div class="breadcrumb-area" style="background-image: url({{ vich_uploader_asset(banner, 'imageFile') | imagine_filter('Extra_large') }});background-repeat:no-repeat;background-position:center;">#}
+{#        <div class="container">#}
+{#            <div class="breadcrumb-content">#}
+{#                <h2>متجر</h2>#}
+{#                <ul>#}
+{#                    <li><a href="{{ path('home', { locale: 'ar' }) }}">الصفحة الرئيسية</a></li>#}
+{#                    <li class="active">متجر</li>#}
+{#                </ul>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#    <!-- Hiraola's Breadcrumb Area End Here -->#}
+
     <!-- Begin Hiraola's Breadcrumb Area -->
     <div class="breadcrumb-area" style="background-image: url({{ vich_uploader_asset(banner, 'imageFile') | imagine_filter('Extra_large') }});background-repeat:no-repeat;background-position:center;">
         <div class="container">
-            <div class="breadcrumb-content">
-                <h2>متجر</h2>
+            {#            <div class="breadcrumb-content">#}
+            {#                <h2>Shop</h2>#}
+            {#                <ul>#}
+            {#                    <li><a href="{{ path('home', { locale: 'en' }) }}">Home</a></li>#}
+            {#                    <li class="active">Shop</li>#}
+            {#                </ul>#}
+            {#            </div>#}
+        </div>
+    </div>
+    <!-- Hiraola's Breadcrumb Area End Here -->
+    <div style="padding-top: 60px">
+        <div class="container">
+            <div>
                 <ul>
-                    <li><a href="{{ path('home', { locale: 'ar' }) }}">الصفحة الرئيسية</a></li>
-                    <li class="active">متجر</li>
+                    <li class="text-center" style="color: #595959;font-size: 25px;"><a href="{{ path('home', { locale: 'en' }) }}">الصفحة الرئيسية</a> / متجر</li>
                 </ul>
             </div>
         </div>
     </div>
-    <!-- Hiraola's Breadcrumb Area End Here -->
+    <!-- Begin Hiraola's Content Wrapper Area -->
 
     <!-- Begin Hiraola's Content Wrapper Area -->
     <div class="hiraola-content_wrapper  js-filter">
@@ -59,20 +83,24 @@
                                     {#                                            </li>#}
                                     {#                                        </ul>#}
                                     {#                                    </li>#}
-                                    <li><a href="{{ path('products', { locale: 'ar' }) }}">جميع المنتجات</a></li>
+                                    <li class="nav-item"><a href="{{ path('products', { locale: 'ar' }) }}">جميع المنتجات</a></li>
                                     {% for category in categories %}
-                                        <li>
-                                            <a href="{{ path('products', { locale: 'ar', id: category.id }) }}">{{ category.nameAr }} ({{ category.products|length }})</a>
+                                        {% if category.products|length > 0 %}
+                                            <li class="nav-item dropdown">
+                                            <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="#">{{ category.nameAr }} ({{ category.products|length }})</a>
                                             {% if category.subCategories.getValues() is not empty %}
-                                                <ul class="module-sub-list_item">
+                                                <ul class="module-sub-list_item dropdown-menu text-right" aria-labelledby="navbarDropdown">
                                                     <li>
                                                         {% for subCategory in category.subCategories %}
-                                                            <a href="{{ path('products', { locale: 'ar', id: category.id, sub: subCategory.id }) }}">{{ subCategory.nameAr }} ({{ subCategory.products|length }})</a>
+                                                            {% if subCategory.products|length > 0 %}
+                                                                <a href="{{ path('products', { locale: 'ar', id: category.id, sub: subCategory.id }) }}">{{ subCategory.nameAr }} ({{ subCategory.products|length }})</a>
+                                                            {% endif %}
                                                         {% endfor %}
                                                     </li>
                                                 </ul>
                                             {% endif %}
                                         </li>
+                                        {% endif %}
                                     {% endfor %}
                                 </ul>
                             </div>
@@ -129,13 +157,13 @@
                                                                         {% endif %}
                                                                     {% endif %}
                                                                 {% endfor %}
-                                                           data-toggle="tooltip" data-placement="top" title="Add To Cart"><i class="ion-bag"></i></a>
+                                                           data-toggle="tooltip" data-placement="top" title="أضف إلى السلة"><i class="ion-bag"></i></a>
                                                     </li>
                                                     {#                                                <li><a class="hiraola-add_compare" href="compare.html" data-toggle="tooltip" data-placement="top" title="Compare This Product"><i#}
                                                     {#                                                                class="ion-ios-shuffle-strong"></i></a>#}
                                                     {#                                                </li>#}
                                                     <li class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter">
-                                                        <a class="js-show-modal1" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="Quick View"
+                                                        <a class="js-show-modal1" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="نظرة سريعة"
                                                            data-id="{{ product.id }}"
                                                            data-name="{{ product.nameAr }}"
                                                            data-slug="{{ path('product', {locale: 'ar', 'slug': product.slug }) }}"
@@ -156,7 +184,8 @@
                                             </div>
                                         </div>
                                         <div class="hiraola-product_content">
-                                            <div class="product-desc_info">
+                                            <div class="product-desc_info row">
+                                                <div class="col-10">
                                                 <h6><a class="product-name" href="{{ path('product', {locale: 'ar', 'slug': product.slug }) }}">{{ product.nameAr }}</a></h6>
                                                 <div class="price-box style-1">
                                                     {% if product.discountPrice != 0 %}
@@ -166,11 +195,17 @@
                                                         <ins><span class="new-price">{{ (product.price / 100) |number_format(2, '.', ',') }} {{ currency_ar }}</span></ins>
                                                     {% endif %}
                                                 </div>
-                                                <div class="additional-add_action">
+                                                </div>
+                                                <div class="col-2 additional-add_action">
                                                     <ul>
                                                         <li><a class="hiraola-add_compare"{% if wish[product.id] is defined and wish[product.id] == 1  %} href="{{ path('delete.wishlist', { locale: 'ar', id:product.id, route:page }) }}" title="Remove from Wishlist" {% else %} href="{{ path('add.wishlist', { locale: 'ar', id:product.id }) }}" title="Add To Wishlist" {% endif %} data-toggle="tooltip" data-placement="top" >
                                                                 <i {% if wish[product.id] is defined and wish[product.id] == 1  %} class="ion-android-favorite"  {% else %} class="ion-android-favorite-outline"  {% endif %} ></i></a>
                                                         </li>
+                                                        {% if product.video %}
+                                                            <li>
+                                                                <i class="ion-ios-videocam"></i>
+                                                            </li>
+                                                        {% endif %}
                                                     </ul>
                                                 </div>
                                                 {#                                            <div class="rating-box">#}
@@ -220,14 +255,14 @@
                                             </div>
                                             <div class="add-actions">
                                                 <ul>
-                                                    <li><a class="hiraola-add_cart" href="cart.html" data-toggle="tooltip" data-placement="top" title="Add To Cart">أضف إلى العربة</a></li>
-                                                    {#                                                <li><a class="hiraola-add_compare" href="compare.html" data-toggle="tooltip" data-placement="top" title="Compare This Product"><i#}
-                                                    {#                                                                class="ion-ios-shuffle-strong"></i></a></li>#}
-                                                    <li class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter"><a href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="Quick View"><i
-                                                                    class="ion-eye"></i></a></li>
-                                                    <li><a class="hiraola-add_compare" href="wishlist.html" data-toggle="tooltip" data-placement="top" title="Add To Wishlist"><i
-                                                                    class="ion-android-favorite-outline"></i></a>
+                                                    <li><a class="hiraola-add_compare"{% if wish[product.id] is defined and wish[product.id] == 1  %} href="{{ path('delete.wishlist', { locale: 'en', id:product.id, route:page }) }}" title="Remove from Wishlist" {% else %} href="{{ path('add.wishlist', { locale: 'en', id:product.id }) }}" title="Add To Wishlist" {% endif %} data-toggle="tooltip" data-placement="top" >
+                                                            <i {% if wish[product.id] is defined and wish[product.id] == 1  %} class="ion-android-favorite"  {% else %} class="ion-android-favorite-outline"  {% endif %} ></i></a>
                                                     </li>
+                                                    {% if product.video %}
+                                                        <li>
+                                                            <i class="ion-ios-videocam"></i>
+                                                        </li>
+                                                    {% endif %}
                                                 </ul>
                                             </div>
                                         </div>
@@ -251,15 +286,15 @@
                                         {#                                        </ul>#}
                                         {{ knp_pagination_render(products) }}
                                     </div>
-                                    {% if products|length > 0 %}
-                                        <div class="col-lg-6 col-md-6 col-sm-6">
-                                            <div class="product-select-box">
-                                                <div class="product-short">
-                                                    <p>عرض {% if pages == 1 %} 1 {% else %} {{ (pages-1) * 6 }} {% endif %} ل {{ pages * 6 }} ({{ pages }} الصفحات)</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    {% endif %}
+{#                                    {% if products|length > 0 %}#}
+{#                                        <div class="col-lg-6 col-md-6 col-sm-6">#}
+{#                                            <div class="product-select-box">#}
+{#                                                <div class="product-short">#}
+{#                                                    <p>عرض {% if pages == 1 %} 1 {% else %} {{ (pages-1) * 6 }} {% endif %} ل {{ pages * 6 }} ({{ pages }} الصفحات)</p>#}
+{#                                                </div>#}
+{#                                            </div>#}
+{#                                        </div>#}
+{#                                    {% endif %}#}
                                 </div>
                             </div>
                         </div>

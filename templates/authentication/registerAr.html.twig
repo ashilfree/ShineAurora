@@ -2,19 +2,42 @@
 
 {% block body %}
 
+{#    <!-- Begin Shine AuroraBreadcrumb Area -->#}
+{#    <div class="breadcrumb-area" style="background-image: url({{ vich_uploader_asset(banner, 'imageFile') | imagine_filter('Extra_large') }});background-repeat:no-repeat;background-position:center;">#}
+{#        <div class="container">#}
+{#            <div class="breadcrumb-content">#}
+{#                <h2>تسجيل</h2>#}
+{#                <ul>#}
+{#                    <li><a href="{{ path('home', { locale: 'en' }) }}">الصفحة الرئيسية</a></li>#}
+{#                    <li class="active">تسجيل</li>#}
+{#                </ul>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#    <!-- Shine AuroraBreadcrumb Area End Here -->#}
     <!-- Begin Shine AuroraBreadcrumb Area -->
     <div class="breadcrumb-area" style="background-image: url({{ vich_uploader_asset(banner, 'imageFile') | imagine_filter('Extra_large') }});background-repeat:no-repeat;background-position:center;">
         <div class="container">
-            <div class="breadcrumb-content">
-                <h2>تسجيل</h2>
+            {#            <div class="breadcrumb-content">#}
+            {#                <h2>Login & Register</h2>#}
+            {#                <ul>#}
+            {#                    <li><a href="{{ path('home', { locale: 'en' }) }}">Home</a></li>#}
+            {#                    <li class="active">Register</li>#}
+            {#                </ul>#}
+            {#            </div>#}
+        </div>
+    </div>
+    <!-- Shine AuroraBreadcrumb Area End Here -->
+    <div style="padding-top: 60px">
+        <div class="container">
+            <div>
                 <ul>
-                    <li><a href="{{ path('home', { locale: 'en' }) }}">الصفحة الرئيسية</a></li>
-                    <li class="active">تسجيل</li>
+                    <li class="text-center" style="color: #595959;font-size: 25px;"><a href="{{ path('home', { locale: 'ar' }) }}">الصفحة الرئيسية</a> / تسجيل</li>
                 </ul>
             </div>
         </div>
     </div>
-    <!-- Shine AuroraBreadcrumb Area End Here -->
+    <!-- Begin Shine AuroraLogin Register Area -->
     <!-- Begin Shine AuroraLogin Register Area -->
     <div class="hiraola-login-register_area">
         <div class="container">
@@ -43,7 +66,7 @@
                             </div>
                             <div class="col-md-12">
                                 <label>هاتف*</label>
-                                {{ form_row(form.phone, {'attr': {'placeholder':'هاتف'}}) }}
+                                {{ form_row(form.phone, {'attr': {'placeholder':'هاتف', 'maxLength': 8}}) }}
                             </div>
                             <div class="col-md-6">
                                 <label>كلمة المرور</label>

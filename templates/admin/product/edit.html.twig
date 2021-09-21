@@ -92,13 +92,7 @@
                 {{ form_row(edit_form.discountPrice, {'attr': {'placeholder':'Discount'}}) }}
             </div>
             <div class="col">
-                {{ form_row(edit_form.weight, {'attr': {'class': 'form-control', 'placeholder':'Weight'}}) }}
-            </div>
-            <div class="col">
-                {{ form_row(edit_form.materials, {'attr': {'class': 'form-control', 'placeholder':'Materials'}}) }}
-            </div>
-            <div class="col">
-                {{ form_row(edit_form.materialsAr, {'attr': {'class': 'form-control text-right', 'placeholder':'المواد'}}) }}
+                {{ form_row(edit_form.fabricType, {'attr': {'class': 'basic'}}) }}
             </div>
         </div>
         <div class="statbox widget box box-shadow m-b-5">
@@ -284,6 +278,12 @@
             margin-top: 10px;
             background-color:#fff;
         }
+
+
+         #Product_videoFile_file{
+             opacity: 1;
+         }
+
     </style>
 
     {{ include('@EasyAdmin/crud/includes/_select2_widget.html.twig') }}

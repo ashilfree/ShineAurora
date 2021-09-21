@@ -5,16 +5,26 @@
     <!-- Begin Hiraola's Breadcrumb Area -->
     <div class="breadcrumb-area"  style="background-image: url({{ vich_uploader_asset(banner, 'imageFile') | imagine_filter('Extra_large') }});background-repeat:no-repeat;background-position:center;">
         <div class="container">
-            <div class="breadcrumb-content">
-                <h2>My Account</h2>
+            {#            <div class="breadcrumb-content">#}
+            {#                <h2>About Us</h2>#}
+            {#                <ul>#}
+            {#                    <li><a href="{{ path('home', { locale: 'en' }) }}">Home</a></li>#}
+            {#                    <li class="active">About Us</li>#}
+            {#                </ul>#}
+            {#            </div>#}
+        </div>
+    </div>
+    <!-- Hiraola's Breadcrumb Area End Here -->
+    <div style="padding-top: 60px">
+        <div class="container">
+            <div>
                 <ul>
-                    <li><a href="{{ path('home', { locale: 'en' }) }}">Home</a></li>
-                    <li class="active">My Account</li>
+                    <li class="text-center" style="color: #595959;font-size: 25px;"><a href="{{ path('home', { locale: 'en' }) }}">Home</a> / My Account</li>
                 </ul>
             </div>
         </div>
     </div>
-    <!-- Hiraola's Breadcrumb Area End Here -->
+    <!-- Begin Hiraola's About Us Area -->
     <!-- Begin Hiraola's Page Content Area -->
     <main class="page-content">
         <!-- Begin Hiraola's Account Page Area -->
@@ -24,7 +34,7 @@
                     {% include 'account/side_bar.html.twig' %}
                     <div class="col-lg-9">
                         <div class="tab-content myaccount-tab-content" id="account-page-tab-content">
-                            <div class="tab-pane fade show active" id="account-dashboard" role="tabpanel" aria-labelledby="account-dashboard-tab">
+                            <div class="tab-pane fade show active hiraola-form" id="account-dashboard" role="tabpanel" aria-labelledby="account-dashboard-tab">
                                 <h3>My Profile</h3>
                                 <div class="myaccount-dashboard">
                                     <p>Hello <b>{{ customer.fullName }}</b></p>
@@ -32,14 +42,17 @@
                                     <p>Phone: <b>{{ customer.phone }}</b></p>
                                     <p>UserName: <b>{{ customer.username }}</b></p>
                                 </div>
-                                <div class="single-input">
-                                    <a href="{{ path('edit.account', { locale: 'en' }) }}" class="hiraola-btn hiraola-btn_dark" ><span>Edit Profile
+                                <div class="hiraola-form-inner">
+                                    <div class="single-input">
+                                        <a href="{{ path('edit.account', { locale: 'en' }) }}" class="hiraola-btn hiraola-btn_dark" ><span>Edit Profile
                                                 </span></a>
-                                </div>
-                                <div class="single-input">
-                                    <a href="{{ path('edit.password', { locale: 'en' }) }}" class="hiraola-btn hiraola-btn_dark" ><span>Change Password
+                                    </div>
+                                    <div class="single-input">
+                                        <a href="{{ path('edit.password', { locale: 'en' }) }}" class="hiraola-btn hiraola-btn_dark" ><span>Change Password
                                                 </span></a>
+                                    </div>
                                 </div>
+
                             </div>
                             <div class="tab-pane fade" id="account-orders" role="tabpanel" aria-labelledby="account-orders-tab">
                                 <div class="myaccount-orders">

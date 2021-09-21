@@ -2,19 +2,29 @@
 
 {% block body %}
 
-<!-- Begin Hiraola's Breadcrumb Area -->
-<div class="breadcrumb-area"  style="background-image: url({{ vich_uploader_asset(banner, 'imageFile') | imagine_filter('Extra_large') }});background-repeat:no-repeat;background-position:center;">
-    <div class="container">
-        <div class="breadcrumb-content">
-            <h2>My Account</h2>
-            <ul>
-                <li><a href="{{ path('home', { locale: 'en' }) }}">Home</a></li>
-                <li class="active">My Account</li>
-            </ul>
+    <!-- Begin Hiraola's Breadcrumb Area -->
+    <div class="breadcrumb-area"  style="background-image: url({{ vich_uploader_asset(banner, 'imageFile') | imagine_filter('Extra_large') }});background-repeat:no-repeat;background-position:center;">
+        <div class="container">
+            {#            <div class="breadcrumb-content">#}
+            {#                <h2>About Us</h2>#}
+            {#                <ul>#}
+            {#                    <li><a href="{{ path('home', { locale: 'en' }) }}">Home</a></li>#}
+            {#                    <li class="active">About Us</li>#}
+            {#                </ul>#}
+            {#            </div>#}
         </div>
     </div>
-</div>
-<!-- Hiraola's Breadcrumb Area End Here -->
+    <!-- Hiraola's Breadcrumb Area End Here -->
+    <div style="padding-top: 60px">
+        <div class="container">
+            <div>
+                <ul>
+                    <li class="text-center" style="color: #595959;font-size: 25px;"><a href="{{ path('home', { locale: 'en' }) }}">Home</a> / My Account</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Begin Hiraola's About Us Area -->
 <!-- Begin Hiraola's Page Content Area -->
 <main class="page-content">
     <!-- Begin Hiraola's Account Page Area -->
@@ -42,7 +52,7 @@
                                             </div>
                                             <div class="single-input">
                                                 <label for="account-details-oldpass">PHONE*</label>
-                                                {{ form_row(form.phone) }}
+                                                {{ form_row(form.phone, {'attr': {'maxLength': 8}}) }}
                                             </div>
                                             <div class="single-input">
                                                 <button class="hiraola-btn hiraola-btn_dark" type="submit"><span>SAVE

@@ -9,7 +9,7 @@ parameters:
     app.path.banner.images: /media/images/banner
     app.path.about.images: /media/images/about
     app.path.popup.images: /media/images/popup
-#    app.path.video.file: /media/video
+    app.path.video.file: /media/video
     maintenanceFilePath: '%kernel.project_dir%/public/.maintenance'
 
 services:

@@ -8,16 +8,16 @@
 {% endblock %}
 {% block body %}
 {% set total = null %}
-{% set isTrue = false %}
+{#{% set isTrue = false %}#}
     {% for orderDetail in cart2order %}
      {% if orderDetail.catalog.product.discountPrice != 0 %}
         {% set subTotal = ((orderDetail.quantity * orderDetail.catalog.product.discountPrice)) %}
         {% else %}
         {% set subTotal = ((orderDetail.quantity * orderDetail.catalog.product.price)) %}
         {% endif %}
-        {% if subTotal < 50 %}
-            {% set isTrue = true %}
-        {% endif %}
+{#        {% if subTotal < 50 %}#}
+{#            {% set isTrue = true %}#}
+{#        {% endif %}#}
         {% set total = total + subTotal %}
     {% endfor %}
     <!-- Begin Hiraola's Breadcrumb Area -->
@@ -167,15 +167,7 @@
                                         <div class="payment-type">
 
                                             <div class="types flex justify-space-between">
-                                                <div class="type type1 selected">
-                                                    <div class="logo">
-                                                        <i class="fas fa-handshake"></i>
-                                                    </div>
-                                                    <div class="text">
-                                                        <p>Pay on Delivery</p>
-                                                    </div>
-                                                </div>
-                                                <div class="type type2 {% if isTrue %} disabled {% endif %}">
+                                                <div class="type type2 selected">
                                                     <div class="logo">
                                                         <i class="far fa-credit-card"></i>
                                                     </div>
@@ -183,10 +175,17 @@
                                                         <p>Pay with Credit Card</p>
                                                     </div>
                                                 </div>
-
+                                                <div class="type type1 disabled ">
+                                                    <div class="logo">
+                                                        <i class="fas fa-handshake"></i>
+                                                    </div>
+                                                    <div class="text">
+                                                        <p>Pay on Delivery</p>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="select-wrapper m-b-15 m-t-15" style="display: none">
+                                        <div class="select-wrapper m-b-15 m-t-15">
 
                                             {#                            <select class="nice-select" name="payment" required="required">#}
                                             {#                                <option value="">Select a payment method...</option>#}
@@ -198,7 +197,7 @@
                                             {#                            </select>#}
                                             {#                            <div class="dropDownSelect2"></div>#}
 
-                                            {{ form_widget(payment_method_form.paymentMethod, {'attr': {'class': 'nice-select wide', 'placeholder':'Choose a Credit Card *'}}) }}
+                                            {{ form_widget(payment_method_form.paymentMethod, {'attr': {'class': 'nice-select wide', 'placeholder':'Choose a Credit Card *', 'required': 'true'}}) }}
                                         </div>
 
                                     </div>
@@ -206,187 +205,11 @@
                                 <main>
                                     <article class="terms-and-conditions">
                                         <h1>Terms and Conditions</h1>
-                                        <h2>Welcome to our website</h2>
-                                        <p>These terms and conditions outline the rules and regulations for the use of our company.</p>
-                                        <p>
-                                            By accessing this website we assume you accept these terms and conditions. Do not continue to use our website
-                                            if you do not agree to take all of the terms and conditions stated on this page.
-                                        </p>
-                                        <p>
-                                            The following terminology applies to these Terms and Conditions, Privacy Statement and Disclaimer Notice and
-                                            all Agreements: “Client”, “You” and “Your” refers to you, the person log on this website and compliant to the
-                                            Company's terms and conditions. “The Company”, “Ourselves”, “We”, “Our” and “Us”, refers to our Company.
-                                            “Party”, “Parties”, or “Us”, refers to both the Client and ourselves. All terms refer to the offer, acceptance
-                                            and consideration of payment necessary to undertake the process of our assistance to the Client in the most
-                                            appropriate manner for the express purpose of meeting the Client's needs in respect of provision of the
-                                            Company's stated services, in accordance with and subject to, prevailing law of Netherlands. Any use of the
-                                            above terminology or other words in the singular, plural, capitalization and/or he/she or they, are taken as
-                                            interchangeable and therefore as referring to same.
-                                        </p>
-                                        <h3>Cookies</h3>
-                                        <p>
-                                            We employ the use of cookies. By accessing our website, you agreed to use cookies in agreement with our
-                                            company's Privacy Policy.
-                                        </p>
-                                        <p>
-                                            Most interactive websites use cookies to let us retrieve the user's details for each visit. Cookies are used
-                                            by our website to enable the functionality of certain areas to make it easier for people visiting our website.
-                                            Some of our affiliate/advertising partners may also use cookies.
-                                        </p>
-                                        <h3>License</h3>
-                                        <p>
-                                            Unless otherwise stated, LOPYI and its licensors own the intellectual property rights for all material on our
-                                            website. All intellectual property rights are reserved. You may access this from our website for your own
-                                            personal use subjected to restrictions set in these terms and conditions.
-                                        </p>
-                                        <p>You must not:</p>
-                                        <ul>
-                                            <li>Republish material from our website</li>
-                                            <li>Sell, rent or sub-license material from our website</li>
-                                            <li>Reproduce, duplicate or copy material from our website</li>
-                                            <li>Redistribute content from our website</li>
-                                        </ul>
-                                        <p>This Agreement shall begin on the date hereof.</p>
-                                        <p>
-                                            Parts of this website offer an opportunity for users to post and exchange opinions and information in certain
-                                            areas of the website. LOPYI does not filter, edit, publish or review Comments prior to their presence on the
-                                            website. Comments do not reflect the views and opinions of LOPYI,its agents and/or affiliates. Comments
-                                            reflect the views and opinions of the person who post their views and opinions. To the extent permitted by
-                                            applicable laws, LOPYI shall not be liable for the Comments or for any liability, damages or expenses caused
-                                            and/or suffered as a result of any use of and/or posting of and/or appearance of the Comments on this website.
-                                        </p>
-                                        <p>
-                                            LOPYI reserves the right to monitor all Comments and to remove any Comments which can be considered
-                                            inappropriate, offensive or causes breach of these Terms and Conditions.
-                                        </p>
-                                        <p>You warrant and represent that:</p>
-                                        <ul>
-                                            <li>
-                                                You are entitled to post the Comments on our website and have all necessary licenses and consents to do so;
-                                            </li>
-                                            <li>
-                                                The Comments do not invade any intellectual property right, including without limitation copyright, patent
-                                                or trademark of any third party;
-                                            </li>
-                                            <li>
-                                                The Comments do not contain any defamatory, libelous, offensive, indecent or otherwise unlawful material
-                                                which is an invasion of privacy
-                                            </li>
-                                            <li>
-                                                The Comments will not be used to solicit or promote business or custom or present commercial activities or
-                                                unlawful activity.
-                                            </li>
-                                        </ul>
-{#                                        <p>#}
-{#                                            You hereby grant LOPYI a non-exclusive license to use, reproduce, edit and authorize others to use, reproduce#}
-{#                                            and edit any of your Comments in any and all forms, formats or media.#}
-{#                                        </p>#}
-{#                                        <h2>Hyperlinking to our Content</h2>#}
-{#                                        <p>The following organizations may link to our website without prior written approval:</p>#}
-{#                                        <ul>#}
-{#                                            <li>Government agencies;</li>#}
-{#                                            <li>Search engines;</li>#}
-{#                                            <li>News organizations;</li>#}
-{#                                            <li>#}
-{#                                                Online directory distributors may link to our website in the same manner as they hyperlink to the websites#}
-{#                                                of other listed businesses; and#}
-{#                                            </li>#}
-{#                                            <li>#}
-{#                                                System wide Accredited Businesses except soliciting non-profit organizations, charity shopping malls, and#}
-{#                                                charity fundraising groups which may not hyperlink to our Web site.#}
-{#                                            </li>#}
-{#                                        </ul>#}
-{#                                        <p>#}
-{#                                            These organizations may link to our home page, to publications or to other website information so long as the#}
-{#                                            link: (a) is not in any way deceptive; (b) does not falsely imply sponsorship, endorsement or approval of the#}
-{#                                            linking party and its products and/or services; and (c) fits within the context of the linking party's site.#}
-{#                                        </p>#}
-{#                                        <p>We may consider and approve other link requests from the following types of organizations:</p>#}
-{#                                        <ul>#}
-{#                                            <li>commonly-known consumer and/or business information sources;</li>#}
-{#                                            <li>dot.com community sites;</li>#}
-{#                                            <li>associations or other groups representing charities;</li>#}
-{#                                            <li>online directory distributors;</li>#}
-{#                                            <li>internet portals;</li>#}
-{#                                            <li>accounting, law and consulting firms; and</li>#}
-{#                                            <li>ducational institutions and trade associations.</li>#}
-{#                                        </ul>#}
-{#                                        <p>#}
-{#                                            We will approve link requests from these organizations if we decide that: (a) the link would not make us look#}
-{#                                            unfavorably to ourselves or to our accredited businesses; (b) the organization does not have any negative#}
-{#                                            records with us; (c) the benefit to us from the visibility of the hyperlink compensates the absence of LOPYI;#}
-{#                                            and (d) the link is in the context of general resource information.#}
-{#                                        </p>#}
-{#                                        <p>#}
-{#                                            These organizations may link to our home page so long as the link: (a) is not in any way deceptive; (b) does#}
-{#                                            not falsely imply sponsorship, endorsement or approval of the linking party and its products or services; and#}
-{#                                            (c) fits within the context of the linking party's site.#}
-{#                                        </p>#}
-{#                                        <p>#}
-{#                                            If you are one of the organizations listed in paragraph 2 above and are interested in linking to our website,#}
-{#                                            you must inform us by sending an e-mail to our company. Please include your name, your organization name,#}
-{#                                            contact information as well as the URL of your site, a list of any URLs from which you intend to link to our#}
-{#                                            website, and a list of the URLs on our site to which you would like to link. Wait 2-3 weeks for a response.#}
-{#                                        </p>#}
-{#                                        <p>Approved organizations may hyperlink to our website as follows:</p>#}
-{#                                        <ul>#}
-{#                                            <li>By use of our corporate name; or</li>#}
-{#                                            <li>By use of the uniform resource locator being linked to; or</li>#}
-{#                                            <li>#}
-{#                                                By use of any other description of our website being linked to that makes sense within the context and#}
-{#                                                format of content on the linking party's site.#}
-{#                                            </li>#}
-{#                                            <li>#}
-{#                                                No use of our company's logo or other artwork will be allowed for linking absent a trademark license#}
-{#                                                agreement.#}
-{#                                            </li>#}
-{#                                        </ul>#}
-{#                                        <h3>iFrames</h3>#}
-{#                                        <p>#}
-{#                                            Without prior approval and written permission, you may not create frames around our Webpages that alter in any#}
-{#                                            way the visual presentation or appearance of our website.#}
-{#                                        </p>#}
-{#                                        <h3>Content Liability</h3>#}
-{#                                        <p>#}
-{#                                            We shall not be hold responsible for any content that appears on your website. You agree to protect and defend#}
-{#                                            us against all claims that is rising on your website. No link(s) should appear on any website that may be#}
-{#                                            interpreted as libelous, obscene or criminal, or which infringes, otherwise violates, or advocates the#}
-{#                                            infringement or other violation of, any third party rights.#}
-{#                                        </p>#}
-{#                                        <h3>Reservation of Rights</h3>#}
-{#                                        <p>#}
-{#                                            We reserve the right to request that you remove all links or any particular link to our website. You approve#}
-{#                                            to immediately remove all links to our website upon request. We also reserve the right to amen these terms and#}
-{#                                            conditions and it's linking policy at any time. By continuously linking to our website, you agree to be bound#}
-{#                                            to and follow these linking terms and conditions.#}
-{#                                        </p>#}
-{#                                        <h3>Removal of links from our website</h3>#}
-{#                                        <p>#}
-{#                                            If you find any link on our website that is offensive for any reason, you are free to contact and inform us#}
-{#                                            any moment. We will consider requests to remove links but we are not obligated to or so or to respond to you#}
-{#                                            directly.#}
-{#                                        </p>#}
-{#                                        <p>#}
-{#                                            We do not ensure that the information on this website is correct, we do not warrant its completeness or#}
-{#                                            accuracy; nor do we promise to ensure that the website remains available or that the material on the website#}
-{#                                            is kept up to date.#}
-{#                                        </p>#}
-{#                                        <h3>Disclaimer</h3>#}
-{#                                        <p>#}
-{#                                            To the maximum extent permitted by applicable law, we exclude all representations, warranties and conditions#}
-{#                                            relating to our website and the use of this website. Nothing in this disclaimer will:#}
-{#                                        </p>#}
-{#                                        <ul>#}
-{#                                            <li>limit or exclude our or your liability for death or personal injury;</li>#}
-{#                                            <li>limit or exclude our or your liability for fraud or fraudulent misrepresentation;</li>#}
-{#                                            <li>limit any of our or your liabilities in any way that is not permitted under applicable law; or</li>#}
-{#                                            <li>exclude any of our or your liabilities that may not be excluded under applicable law.</li>#}
-{#                                        </ul>#}
-{#                                        <p>#}
-{#                                            The limitations and prohibitions of liability set in this Section and elsewhere in this disclaimer: (a) are#}
-{#                                            subject to the preceding paragraph; and (b) govern all liabilities arising under the disclaimer, including#}
-{#                                            liabilities arising in contract, in tort and for breach of statutory duty.#}
-{#                                        </p>#}
+                                        <h2>Introduction</h2><div>Welcome to the shineaurora.com website (the "Site"). These terms and conditions ("Terms and Conditions") apply to the Site to all of its divisions, subsidiaries, and affiliate operated Internet sites which reference these Terms and Conditions.</div><div><br>By accessing the Site, you confirm your understanding of the Terms and Conditions, and you agree to be bound by these Terms and Conditions. If you do not agree to these Terms and Conditions of use, you shall not use this website. The Site reserves the right, to change, modify, add, or remove portions of these Terms and Conditions of use at any time. Changes will be effective when posted on the Site with no other notice provided. Please check these Terms and Conditions of use regularly for updates. Your continued use of the Site following the posting of changes to these Terms and Conditions of use constitutes your acceptance of those changes.<br><br><br></div><h2>Use of the Site</h2><div>You are either at least 18 years of age or are accessing the Site under the supervision of a parent or legal guardian.</div><div><br>We grant you a non-transferable and revocable license to use the Site, under the Terms and Conditions described, for the purpose of shopping for personal items sold on the Site. Commercial use or use on behalf of any third party is prohibited, except as explicitly permitted by us in advance. Any breach of these Terms and Conditions shall result in the immediate revocation of the license granted in this paragraph without notice to you.</div><div><br>Content provided on this site is solely for informational purposes.&nbsp;</div><div><br>Certain services and related features that may be made available on the Site may require registration or subscription. Should you choose to register or subscribe for any such services or related features, you agree to provide accurate and current information about yourself, and to promptly update such information if there are any changes. Every user of the Site is solely responsible for keeping passwords and other account identifiers safe and secure. The account owner is entirely responsible for all activities that occur under such password or account. Furthermore, you must notify us of any unauthorized use of your password or account. The Site shall not be responsible or liable, directly or indirectly, in any way for any loss or damage of any kind incurred as a result of, or in connection with, your failure to comply with this section.</div><div><br>During the registration process you agree to receive promotional emails from the Site. You can subsequently opt out of receiving such promotional e-mails by clicking on the link at the bottom of any promotional email.<br><br><br></div><h2>Order Of Acceptance and Pricing</h2><div>Please note that there are cases when an order cannot be processed for various reasons. The Site reserves the right to refuse or cancel any order for any reason at any given time. You may be asked to provide additional verifications or information, including but not limited to phone number and address, before we accept the order.<br><br><br></div><h2>The Site May Not be Used to Order Items in Bulk for Resale</h2><div>We are determined to provide the most accurate pricing information on the Site to our users; however, errors may still occur, such as cases when the price of an item is not displayed correctly on the website. As such, we reserve the right to refuse or cancel any order. In the event that an item is mispriced, we may, at our own discretion, either contact you for instructions or cancel your order and notify you of such cancellation. We shall have the right to refuse or cancel any such orders whether or not the order has been confirmed and your credit card charged.</div><div><br><br></div><h2>Applicable Law and Jurisdiction</h2><div>These Terms and Conditions shall be interpreted and governed by the laws in force in kuwait, Subject to the Arbitration section below, each party hereby agrees to submit to the jurisdiction of the courts of kuwait and to waive any objections based upon venue.<br><br><br></div><h2>Applicable Law and Jurisdiction</h2><div>These Terms and Conditions shall be interpreted and governed by the laws in force in kuwait , Subject to the Arbitration section below, each party hereby agrees to submit to the jurisdiction of the courts of kuwait and to waive any objections based upon venue.<br><br><br></div><h2>Arbitration</h2><div>The arbitrator shall be a person who is legally trained and who has experience in the information technology field in kuwait and is independent of either party. Notwithstanding the foregoing, the Site reserves the right to pursue the protection of intellectual property rights and confidential information through injunctive or other equitable relief through the courts.<br><br><br></div><h2>Termination</h2><div>In addition to any other legal or equitable remedies, we may, without prior notice to you, immediately terminate the Terms and Conditions or revoke any or all of your rights granted under the Terms and Conditions. Upon any termination of this Agreement, you shall immediately cease all access to and use of the Site and we shall, in addition to any other legal or equitable remedies, immediately revoke all password(s) and account identification issued to you and deny your access to and use of this Site in whole or in part. Any termination of this agreement shall not affect the respective rights and obligations (including without limitation, payment obligations) of the parties arising before the date of termination. You furthermore agree that the Site shall not be liable to you or to any other person as a result of any such suspension or termination. If you are dissatisfied with the Site or with any terms, conditions, rules, policies, guidelines, or practices of shineaurora.com in operating the Site, your sole and exclusive remedy is to discontinue using the Site.</div><div><br></div>
+                                        <h1>PRIVACY POLICY</h1>
+                                        <div><strong>Privacy Policy</strong></div><div>This privacy policy is applicable to all of shineaurora's customer facing platforms including shineaurora’s website, www. shineaurora.com . Any reference to “site” or “website” may also refer to platforms interchangeably.&nbsp;</div><div><br></div><div><br></div><div><strong>Privacy Policy Changes</strong></div><div>This Privacy Policy may be subject to change from time to time. The current version of this Privacy Policy is posted online by shineaurora.</div><div>You should check our Privacy Policy regularly. Your continued use of the shineaurora website,&nbsp; and services constitutes your agreement to this Privacy Policy, as amended from time to time.</div><div><br></div><div><br></div><div><strong>Your rights</strong></div><div>You have rights about your personal data:</div><div><br></div><div>1. You have the right to be informed of any personal data which we may hold or process about you</div><div>2. You have the right to request access to the personal data which we may hold or process about you</div><div>3. You have the right to require us to correct any inaccuracies in your data free of charge</div><div>4. You have the right to ask us to stop using your personal data for direct marketing purposes</div><div>5. You have the right to ask us to erase your personal data or restrict the processing of your personal data</div><div>6. You have the right to request us to transfer any personal data which we may hold to you or any other service provider of your choice.</div><div>7. You have the right to lodge a complaint with the supervisory authority.</div><div><br></div><div><strong>Consent</strong></div><div>I hereby confirm that I have read and understood this Privacy Policy. By submitting data to shineaurora or by my using of shineaurora website, or services, I voluntarily and expressly consent to shineaurora's collection, use, sharing, processing and retention of my data in the manner set out in this Privacy Policy.&nbsp;</div><div><br></div><div><br></div><div><strong>Security</strong></div><div>We have in place appropriate technical and security measures to prevent unauthorised or unlawful access to or accidental loss of or destruction or damage to your information. When we collect data through the Site, we collect your personal details on a secure server. . Whilst we are unable to guarantee 100% security, this makes it hard for a hacker to decrypt your details. You are strongly recommended not to send full credit or debit card details in unencrypted electronic communications with us. We maintain physical, electronic and procedural safeguards in connection with the collection and disclosure of your information. Our security procedures mean that we may occasionally request proof of identity before we disclose personal information to you. You are responsible for protecting against unauthorised access to your password and to your computer.&nbsp;</div><div><br></div><div><br></div><div><strong>Data that we collect from you</strong></div><div>We may collect various information if you seek to place an order for a product to us on any of our Platforms.</div><div>We collect, process your data for processing your purchase on our Platforms and any possible later claims, and to provide you with our services. We may collect your title, name,&nbsp; email address, postal address, delivery address (if different), telephone number, mobile number, payment details, payment card details or bank account details.</div><div><br></div><div>Subject to obtaining your consent we may contact you by email with details of other products and services. If you prefer not to receive any marketing communications from us, you can opt out at any time.</div><div><br></div><div>We may pass your name, phone number and address on to a third party in order to make delivery of the product to you (for example to our courier or supplier).</div><div><br></div><div>Your phone number and email address may be used for notifications regarding order status and announcements of the latest deals and campaigns.</div><div><br></div><div><br></div><div><strong>Legitimate Purpose</strong></div><div>We may keep your information even after you have closed your account and are no longer availing our services to detect and prevent fraud, meet our legal/compliance/regulatory requirements, resolve any disputes and enforce our privacy policies and terms and conditions.</div><div><br></div><div><strong>Third Parties and Links</strong></div><div>We may share collected personally identifying information (including email addresses) with other companies in our group and for commercial purposes - such as advertising. We may also pass your details to our agents and subcontractors to help us with any of our uses of your data set out in our Privacy Policy. For example, we may use third parties to assist us with delivering products to you, to help us to collect payments from you, to analyse data, and to provide us with marketing or customer service assistance. We may exchange information with third parties for the purposes of fraud protection and credit risk reduction. We may transfer our databases containing your personal information if we sell our business or part of it.</div><div><br></div><div><strong>Customer Declaration of Consent</strong></div><div>I voluntarily and expressly consent to shineaurora's collection, use, sharing, processing and retention of my data in the manner set out here in above.</div>
+                                        <h1>Return Policy</h1>
+                                        <h3>What is the difference between returning something back to us and exchanging your product size?</h3><div>What’s the difference between a creating a return and a size exchange?</div><div><strong><br>Return:</strong></div><ul><li>You can return any product that you’re not happy with apart from those that fall under our no-return policy.</li><li>For products that you return back to us, you can&nbsp; a credit / debit card refund based on the mode of payment earlier in your order.</li></ul><div><br><br><strong>Exchange:</strong></div><ul><li>By creating an exchange, you can exchange any product you ordered, with another size of the same product (apart from those that fall under our no-exchange policy).</li><li>Incase of refund : k-net within 12 hours , if visa or master with 3-7 business days</li></ul><div><br></div><div><strong>Rules and Conditions for Exchanges:</strong><br>1. Exchange can only be made within 14 days from the date of delivery.<br>2. Item should be in a good condition and not used along with the original tag.<br>3. It should also be in the same brand box you received.</div><div><strong><em>4.Evening dresses , swimwear , lingerie and accessories are not returnable or exchangeable.</em></strong></div><div><strong>Unfortunately, it is our policy not to return some products. Therefore, we recommend that you read the product description carefully before purchasing it.</strong></div>
                                         <p id="last">
                                             As long as the website and the information and services on the website are provided free of charge, we will
                                             not be liable for any loss or damage of any nature.

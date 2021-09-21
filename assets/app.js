@@ -22,9 +22,8 @@ import './controllers/js/plugins/jquery.ui.touch-punch.min.js';
 import './controllers/js/plugins/lightgallery.min.js';
 import './controllers/js/plugins/scroll-top.js';
 import './controllers/js/plugins/theia-sticky-sidebar.min.js';
-// import './controllers/js/plugins/lightzoom.js';
 import './controllers/js/plugins/jquery.zoomit.js';
-// import './controllers/js/plugins/waypoints.min.js';
+import './controllers/js/plugins/xzoom.js';
 import './controllers/js/plugins/instafeed.min.js';
 import './controllers/js/plugins/jquery.elevateZoom-3.0.8.min.js';
 import './controllers/js/plugins/timecircles.js';
@@ -40,15 +39,15 @@ if(checkout){
     let type1 = document.querySelector('.type1');
     let type2 = document.querySelector('.type2');
     document.querySelector('#payment_method_paymentMethod').firstChild.textContent = 'Choose a payment method';
-    type1.addEventListener('click', function(){
-        this.classList.add('selected');
-        this.nextElementSibling.classList.remove('selected');
-        $('#payment_method_paymentMethod').val('');
-        $('.nice-select').niceSelect('update');
-        document.querySelector('.select-wrapper').style.display = 'none';
-        document.querySelector('#payment_method_paymentMethod').required = false;
-
-    })
+    // type1.addEventListener('click', function(){
+    //     this.classList.add('selected');
+    //     this.nextElementSibling.classList.remove('selected');
+    //     $('#payment_method_paymentMethod').val('');
+    //     $('.nice-select').niceSelect('update');
+    //     document.querySelector('.select-wrapper').style.display = 'none';
+    //     document.querySelector('#payment_method_paymentMethod').required = false;
+    //
+    // })
     type2.addEventListener('click', function(){
         if(!this.classList.contains('disabled')) {
         this.classList.add('selected');
@@ -165,14 +164,4 @@ $('#exampleModalCenter').on('hidden', function(e){
     console.log('HIDE')
 })
 
-// $('img.light-zoom').lightzoom({
-//     zoomPower   : 1.5,    //Default
-//     glassSize   : 200,  //Default
-// });
-let i = 1;
-$('.zoomit-target').each(function(){
-    $('#zoomit-target'+i).zoomIt();
-    i++
-})
-
-
+$(".xzoom, .xzoom-gallery").xzoom({tint: '#333', defaultScale: 0.7});
