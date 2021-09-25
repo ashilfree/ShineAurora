@@ -111,4 +111,20 @@ class Mailer{
 
         $this->mailer->send($message);
     }
+
+    public function sendReceivedOrderEmail(Order $order)
+    {
+        $body = $this->twig->render('emails/order-received.mjml.twig',
+            [
+                'order' => $order
+            ]
+        );
+        $message = (new \Swift_Message('Received New Order'))
+            ->setFrom('info@shineaurora.com')
+            ->setTo('support@shineaurora.com')
+            ->setReplyTo('support@shineaurora.com')
+            ->setBody($body, 'text/html');
+
+        $this->mailer->send($message);
+    }
 }

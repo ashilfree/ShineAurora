@@ -88,6 +88,7 @@ class OrderValidateController extends AbstractController
             $order->setIsPaid(1);
 			$this->entityManager->flush();
             $this->mailer->sendSuccessOrderEmail($order);
+            $this->mailer->sendReceivedOrderEmail($order);
 		}
         $newsletter = new Newsletter();
         $newsletterType = $this->createForm(NewsletterType::class, $newsletter);

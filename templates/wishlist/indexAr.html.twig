@@ -52,8 +52,8 @@
                                                     href="{{ path('delete.wishlist', {locale: 'ar' ,id: wishlistItem.product.id, route:page}) }}"><i
                                                         class="fa fa-trash"
                                                         title="Remove"></i></a></td>
-                                        <td class="hiraola-product-thumbnail"><a href="javascript:void(0)"><img
-                                                        src="{{ vich_uploader_asset(wishlistItem.product.images.first, 'imageFile') | imagine_filter('small') }}"
+                                        <td  class="hiraola-product-thumbnail"><a href="javascript:void(0)"><img width="50"
+                                                        src="{{ vich_uploader_asset(wishlistItem.product.images.first, 'imageFile') }}"
                                                         alt="Hiraola's Wishlist Thumbnail"></a>
                                         </td>
                                         <td class="hiraola-product-name"><a

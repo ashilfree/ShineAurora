@@ -293,7 +293,7 @@
                                        href="{{ path('delete.cart', {locale: 'ar', id: cartItem.catalog.id, route:page}) }}"><i
                                                 class="ion-android-close"></i></a>
                                     <div class="product-item_img">
-                                        <img src="{{ vich_uploader_asset(cartItem.catalog.product.images.first, 'imageFile') | imagine_filter('small') }}"
+                                        <img src="{{ vich_uploader_asset(cartItem.catalog.product.images.first, 'imageFile') }}"
                                              alt="{{ cartItem.catalog.product.name }}">
                                     </div>
                                     <div class="product-item_content">

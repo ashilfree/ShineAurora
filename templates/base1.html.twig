@@ -244,7 +244,7 @@
                     {% for cartItem in cart %}
                         <li class="header-cart-item flex-w flex-t m-b-12">
                             <a class="header-cart-item-img" href="{{ path('delete.cart', {id: cartItem.catalog.id, route:page}) }}">
-                                <img src="{{ vich_uploader_asset(cartItem.catalog.product.images.first, 'imageFile') | imagine_filter('small') }} "
+                                <img src="{{ vich_uploader_asset(cartItem.catalog.product.images.first, 'imageFile') }} "
                                      alt="{{ cartItem.catalog.product.name }}">
                             </a>
 
@@ -319,7 +319,7 @@
                     {% for cartItem in wishlist %}
                         <li class="header-cart-item flex-w flex-t m-b-12">
                             <a class="header-cart-item-img" href="{{ path('delete.wishlist', {id: cartItem.product.id, route:page, locale: 'en'}) }}">
-                                <img src="{{ vich_uploader_asset(cartItem.product.images.first, 'imageFile') | imagine_filter('small') }} "
+                                <img src="{{ vich_uploader_asset(cartItem.product.images.first, 'imageFile') }} "
                                      alt="{{ cartItem.product.name }}">
                             </a>
 

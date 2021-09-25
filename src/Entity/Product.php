@@ -93,16 +93,6 @@ class Product
      * @ORM\OneToMany(targetEntity=Catalog::class, mappedBy="product", cascade={"persist"}, orphanRemoval=true)
      */
     private $catalogs;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Tag::class, mappedBy="products", cascade={"persist"})
-     */
-    private $tags;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Tog::class, mappedBy="products", cascade={"persist"})
-     */
-    private $togs;
     /**
      * @ORM\Column(type="text")
      */
@@ -154,8 +144,6 @@ class Product
         $this->updatedAt = new \DateTime();
         $this->images = new ArrayCollection();
         $this->catalogs = new ArrayCollection();
-        $this->tags = new ArrayCollection();
-        $this->togs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -377,60 +365,6 @@ class Product
             $quantity += $catalog->getQuantity();
         }
         return $quantity;
-    }
-
-    /**
-     * @return Collection|Tag[]
-     */
-    public function getTags(): Collection
-    {
-        return $this->tags;
-    }
-
-    public function addTag(Tag $tag): self
-    {
-        if (!$this->tags->contains($tag)) {
-            $this->tags[] = $tag;
-            $tag->addProduct($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTag(Tag $tag): self
-    {
-        if ($this->tags->removeElement($tag)) {
-            $tag->removeProduct($this);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Tog[]
-     */
-    public function getTogs(): Collection
-    {
-        return $this->togs;
-    }
-
-    public function addTog(Tog $tog): self
-    {
-        if (!$this->togs->contains($tog)) {
-            $this->togs[] = $tog;
-            $tog->addProduct($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTog(Tog $tog): self
-    {
-        if ($this->togs->removeElement($tog)) {
-            $tog->removeProduct($this);
-        }
-
-        return $this;
     }
 
     public function getLongDescription(): ?string

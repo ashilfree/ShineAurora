@@ -170,12 +170,12 @@
 {#                                    <li><a class="qty-compare_btn" href="compare.html" data-toggle="tooltip" title="Compare This Product"><i class="ion-ios-shuffle-strong"></i></a></li>#}
                                 </ul>
                             </div>
-                            <div class="hiraola-tag-line">
-                                <h6>Tags:</h6>
-                                {% for tag in product.tags %}
-                                    <a href="javascript:void(0)">{{ tag }}</a>,
-                                {% endfor %}
-                            </div>
+{#                            <div class="hiraola-tag-line">#}
+{#                                <h6>Tags:</h6>#}
+{#                                {% for tag in product.tags %}#}
+{#                                    <a href="javascript:void(0)">{{ tag }}</a>,#}
+{#                                {% endfor %}#}
+{#                            </div>#}
 {#                            <div class="hiraola-social_link">#}
 {#                                <ul>#}
 {#                                    <li class="facebook">#}
@@ -331,7 +331,7 @@
                                                         {% for catalog in  product.catalogs %} data-catalog{{ loop.index }}="{{ catalog.id }}" {% endfor %}
                                                         {% for catalog in  product.catalogs %} data-size{{ loop.index }}="{{ catalog.size }}" {% endfor %}
                                                         {% for catalog in  product.catalogs %} data-color{{ loop.index }}="{{ catalog.color }}" {% endfor %}
-                                                        {% for tag in  product.tags %} data-tag{{ loop.index }}="{{ tag }}" {% endfor %}
+{#                                                        {% for tag in  product.tags %} data-tag{{ loop.index }}="{{ tag }}" {% endfor %}#}
                                                         {% for image in  product.images %} data-image{{ loop.index }}="{{ image }}" {% endfor %}
                                                    data-href-a ="{{ path('add.cart', { locale: 'en' }) }}"
                                                 >
