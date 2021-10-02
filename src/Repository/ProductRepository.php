@@ -29,6 +29,18 @@ class ProductRepository extends ServiceEntityRepository
         $this->paginator = $paginator;
     }
 
+    public function findVisibleProducts()
+    {
+        return $this->createQueryBuilder('p')
+            ->select('p', 'pics', 'cats')
+            ->leftJoin('p.images', 'pics')
+            ->leftJoin('p.catalogs', 'cats')
+            ->where('p.isShow = 1')
+            ->orderBy('p.id', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
     /**
      * @param Filter $filter
      * @param string|null $search
@@ -76,7 +88,10 @@ class ProductRepository extends ServiceEntityRepository
 
     private function getSearchQuery(Filter $filter, $ignorePrice = false):QueryBuilder
     {
-        $query = $this->createQueryBuilder('p');
+        $query = $this->createQueryBuilder('p')
+            ->select('p', 'pics', 'cats')
+            ->leftJoin('p.images', 'pics')
+            ->leftJoin('p.catalogs', 'cats');
 
 
         if (!empty($filter->min) && $ignorePrice === false){

@@ -81,7 +81,7 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}", name="home", defaults={"locale"="en"})
+     * @Route("/{locale}", name="home", defaults={"locale"="ar"})
      * @param $locale
      * @param Request $request
      * @return Response
@@ -106,7 +106,8 @@ class HomeController extends AbstractController
             return $this->render($path, [
                 'page' => 'home',
                 'categories' => $this->categoryRepository->findAll(),
-                'products' => $this->productRepository->findBy(['isShow' => 1], array('id' => 'DESC')),
+//                'products' => $this->productRepository->findBy(['isShow' => 1], array('id' => 'DESC')),
+                'products' => $this->productRepository->findVisibleProducts(),
                 'slides' => $this->slideRepository->findAll(),
                 'cart' => $this->cart->getFull($this->cart->get()),
                 'wishlist' => $this->wishlist->getFull(),

@@ -106,7 +106,7 @@ class MyFatoorahController extends AbstractController
                     'Street' => '', //optional
                     'HouseBuildingNo' => '', //optional
                     'Address' => $order->getShippingAddress(), //optional
-                    'AddressInstructions' => $order->getShippingCity() . '-' . $order->getShippingProvince(), //optional
+//                    'AddressInstructions' => $order->getShippingCity() . '-' . $order->getShippingProvince(), //optional
                 );
 
                 //Fill invoice item array

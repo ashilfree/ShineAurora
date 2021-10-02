@@ -85,12 +85,12 @@ class Product
     private $subCategory;
 
     /**
-     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="product", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="product", cascade={"persist"}, orphanRemoval=true, fetch="EAGER")
      */
     private $images;
 
     /**
-     * @ORM\OneToMany(targetEntity=Catalog::class, mappedBy="product", cascade={"persist"}, orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Catalog::class, mappedBy="product", cascade={"persist"}, orphanRemoval=true, fetch="EAGER")
      */
     private $catalogs;
     /**

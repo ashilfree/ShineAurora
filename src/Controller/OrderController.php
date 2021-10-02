@@ -119,8 +119,8 @@ class OrderController extends AbstractController
             $order->setShippingFullName($user->getFullName());
             $order->setShippingPhone($user->getPhone()??'');
             $order->setShippingAddress($user->getAddress()??'');
-            $order->setShippingCity($user->getRegion()??'');
-            $order->setShippingProvince($user->getGovernorate()??'');
+//            $order->setShippingCity($user->getRegion()??'');
+//            $order->setShippingProvince($user->getGovernorate()??'');
         }
         if ($this->session->get('orderId')) {
             $order = $this->entityManager->getRepository(Order::class)->find($this->session->get('orderId'));

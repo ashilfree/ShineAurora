@@ -1151,8 +1151,9 @@ button, .global-overlay, .quantity .cart-plus-minus > .qtybutton, .popup_wrapper
   color: #333333;
   font-weight: 600;
   font-size: 30px;
+  width: 450px;
   text-transform: capitalize;
-  margin-bottom: 0;
+  margin: 0;
   padding-bottom: 20px;
 }
 

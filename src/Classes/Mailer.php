@@ -121,8 +121,8 @@ class Mailer{
         );
         $message = (new \Swift_Message('Received New Order'))
             ->setFrom('info@shineaurora.com')
-            ->setTo('support@shineaurora.com')
-            ->setReplyTo('support@shineaurora.com')
+            ->setTo('order@shineaurora.com')
+            ->setReplyTo('order@shineaurora.com')
             ->setBody($body, 'text/html');
 
         $this->mailer->send($message);

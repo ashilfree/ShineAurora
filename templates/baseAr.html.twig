@@ -42,7 +42,7 @@
                         <span class="popup_off"><i class="ion-android-close"></i></span>
                         <div class="subscribe_area text-right">
                             <h2>اشترك في النشرة الإخبارية</h2>
-                            <p>اشترك في القائمة البريدية لمتجرنا لتلقي تحديثات عن الوافدين الجدد والعروض الخاصة ومعلومات الخصم الأخرى.</p>
+                            <p>اشترك في القائمة البريدية لتلقي العروضات والخصومات وكل ما وصل حديثا.</p>
                             <div class="subscribe-form-group">
                                 {{ form_start(newsletterForm, {'attr': {'class': 'subscribe-form'}}) }}
                                 {{ form_widget(newsletterForm.email, {'attr': {'placeholder':'أدخل عنوان بريدك الالكتروني', 'autocomplete':'off'}}) }}
@@ -83,7 +83,7 @@
                                     </li>
                                     <li class="megamenu-holder"><a href="{{ path('products', { locale: 'ar' }) }}">المنتجات</a>
                                     </li>
-                                    <li><a href="{{ path('about.us', { locale: 'ar' }) }}">معلومات عنا</a></li>
+                                    <li><a href="{{ path('about.us', { locale: 'ar' }) }}">من نحن</a></li>
                                     <li><a href="{{ path('contact.us', { locale: 'ar' }) }}">تواصل معنا</a></li>
                                 </ul>
                             </nav>
@@ -368,7 +368,7 @@
                             </li>
                             <li>
                                 <a href="{{ path('about.us', { locale: 'ar' }) }}">
-                                    <span class="mm-text">معلومات عنا</span>
+                                    <span class="mm-text">من نحن</span>
                                 </a>
                             </li>
                             <li>
@@ -576,8 +576,8 @@
                         blur-up lazyloaded"
              style="background-image: url(https://cdn.shopify.com/s/files/1/2710/6368/files/Descarga_gratis_Fondo_Textura_Papel_Marron_1600x.jpeg?v=1595406612)">
             <div class="container">
-                <div class="offset-by-three ten columns section_form"><h2 class="title">تريد بعض الجمال في البريد الوارد؟</h2>
-                    <div class="newsletter-text"><p>تلقي الأخبار عن آخر الصفقات والأحداث</p></div>
+                <div class="offset-by-three ten columns section_form"><h2 class="title">اشترك في القائمة البريدية</h2>
+                    <div class="newsletter-text"><p> لتلقي العروضات والخصومات وكل ما وصل حديثا</p></div>
                     <div class="newsletter"><span class="message"></span>
                         {% if page is defined and page != 'home' %}
                             {{ form_start(newsletterForm) }}

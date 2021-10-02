@@ -70,15 +70,15 @@ class Order
      */
     private $shippingAddress;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $shippingCity;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $shippingProvince;
+//    /**
+//     * @ORM\Column(type="string", length=255, nullable=true)
+//     */
+//    private $shippingCity;
+//
+//    /**
+//     * @ORM\Column(type="string", length=255, nullable=true)
+//     */
+//    private $shippingProvince;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
@@ -312,29 +312,29 @@ class Order
         return $this;
     }
 
-    public function getShippingCity(): ?string
-    {
-        return $this->shippingCity;
-    }
-
-    public function setShippingCity(string $shippingCity): self
-    {
-        $this->shippingCity = $shippingCity;
-
-        return $this;
-    }
-
-    public function getShippingProvince(): ?string
-    {
-        return $this->shippingProvince;
-    }
-
-    public function setShippingProvince(string $shippingProvince): self
-    {
-        $this->shippingProvince = $shippingProvince;
-
-        return $this;
-    }
+//    public function getShippingCity(): ?string
+//    {
+//        return $this->shippingCity;
+//    }
+//
+//    public function setShippingCity(string $shippingCity): self
+//    {
+//        $this->shippingCity = $shippingCity;
+//
+//        return $this;
+//    }
+//
+//    public function getShippingProvince(): ?string
+//    {
+//        return $this->shippingProvince;
+//    }
+//
+//    public function setShippingProvince(string $shippingProvince): self
+//    {
+//        $this->shippingProvince = $shippingProvince;
+//
+//        return $this;
+//    }
 
     public function getShippingEmail(): ?string
     {

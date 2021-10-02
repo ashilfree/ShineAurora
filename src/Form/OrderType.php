@@ -25,12 +25,12 @@ class OrderType extends AbstractType
             ->add('shippingAddress', TextType::class, [
                 'label'=>false
             ])
-            ->add('shippingCity', TextType::class, [
-                'label'=>false
-            ])
-            ->add('shippingProvince', TextType::class, [
-                'label'=>false
-            ])
+//            ->add('shippingCity', TextType::class, [
+//                'label'=>false
+//            ])
+//            ->add('shippingProvince', TextType::class, [
+//                'label'=>false
+//            ])
             ->add('shippingEmail', EmailType::class, [
                 'label'=>false
             ])
