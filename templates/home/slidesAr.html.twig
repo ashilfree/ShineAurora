@@ -1,6 +1,7 @@
 <div class="hiraola-slider_area-2">
     <div class="main-slider">
         {% for slide in slides %}
+            {% cache 'slideAr;' ~ slide.id ~ ";" ~ slide.updatedAt.timestamp %}
             <!-- Begin Single Slide Area -->
             <div class="single-slide animation-style-0{{ loop.index }}  bg-5"
                  style="background-image:  url({{ vich_uploader_asset(slide, 'imageFile') | imagine_filter('Extra_large') | imagine_filter('my_flip') }});">
@@ -18,6 +19,7 @@
                 </div>
             </div>
             <!-- Single Slide Area End Here -->
+            {% endcache %}
         {% endfor %}
     </div>
 </div>

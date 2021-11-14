@@ -20,8 +20,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class MyFatoorahController extends AbstractController
 {
     //Test
-//    private $apiURL = 'https://apitest.myfatoorah.com';
-//    private $apiKey = 'rLtt6JWvbUHDDhsZnfpAhpYk4dxYDQkbcPTyGaKp2TYqQgG7FGZ5Th_WD53Oq8Ebz6A53njUoo1w3pjU1D4vs_ZMqFiz_j0urb_BH9Oq9VZoKFoJEDAbRZepGcQanImyYrry7Kt6MnMdgfG5jn4HngWoRdKduNNyP4kzcp3mRv7x00ahkm9LAK7ZRieg7k1PDAnBIOG3EyVSJ5kK4WLMvYr7sCwHbHcu4A5WwelxYK0GMJy37bNAarSJDFQsJ2ZvJjvMDmfWwDVFEVe_5tOomfVNt6bOg9mexbGjMrnHBnKnZR1vQbBtQieDlQepzTZMuQrSuKn-t5XZM7V6fCW7oP-uXGX-sMOajeX65JOf6XVpk29DP6ro8WTAflCDANC193yof8-f5_EYY-3hXhJj7RBXmizDpneEQDSaSz5sFk0sV5qPcARJ9zGG73vuGFyenjPPmtDtXtpx35A-BVcOSBYVIWe9kndG3nclfefjKEuZ3m4jL9Gg1h2JBvmXSMYiZtp9MR5I6pvbvylU_PP5xJFSjVTIz7IQSjcVGO41npnwIxRXNRxFOdIUHn0tjQ-7LwvEcTXyPsHXcMD8WtgBh-wxR8aKX7WPSsT1O8d8reb2aR7K3rkV3K82K_0OgawImEpwSvp9MNKynEAJQS6ZHe_J_l77652xwPNxMRTMASk1ZsJL';
+    private $apiURL = 'https://apitest.myfatoorah.com';
+    private $apiKey = 'rLtt6JWvbUHDDhsZnfpAhpYk4dxYDQkbcPTyGaKp2TYqQgG7FGZ5Th_WD53Oq8Ebz6A53njUoo1w3pjU1D4vs_ZMqFiz_j0urb_BH9Oq9VZoKFoJEDAbRZepGcQanImyYrry7Kt6MnMdgfG5jn4HngWoRdKduNNyP4kzcp3mRv7x00ahkm9LAK7ZRieg7k1PDAnBIOG3EyVSJ5kK4WLMvYr7sCwHbHcu4A5WwelxYK0GMJy37bNAarSJDFQsJ2ZvJjvMDmfWwDVFEVe_5tOomfVNt6bOg9mexbGjMrnHBnKnZR1vQbBtQieDlQepzTZMuQrSuKn-t5XZM7V6fCW7oP-uXGX-sMOajeX65JOf6XVpk29DP6ro8WTAflCDANC193yof8-f5_EYY-3hXhJj7RBXmizDpneEQDSaSz5sFk0sV5qPcARJ9zGG73vuGFyenjPPmtDtXtpx35A-BVcOSBYVIWe9kndG3nclfefjKEuZ3m4jL9Gg1h2JBvmXSMYiZtp9MR5I6pvbvylU_PP5xJFSjVTIz7IQSjcVGO41npnwIxRXNRxFOdIUHn0tjQ-7LwvEcTXyPsHXcMD8WtgBh-wxR8aKX7WPSsT1O8d8reb2aR7K3rkV3K82K_0OgawImEpwSvp9MNKynEAJQS6ZHe_J_l77652xwPNxMRTMASk1ZsJL';
     /**
      * @var EntityManagerInterface
      */
@@ -47,8 +47,8 @@ class MyFatoorahController extends AbstractController
      */
     private $session;
     //Live
-    private $apiURL = 'https://api.myfatoorah.com';
-    private $apiKey = 'BjLe20XA0nuIXZFMDRuah-vE_-B6Sr632vLQ8CUE2KRttdNDUMQ7x0bvXUPoss_NXgN3KBsWt-Z2CSYQ1xamRcVbLV5nPtM5F7R9xRObWqJ2Op-HpJU5mr6aIChaNcT5rmRlWSFZcfjRydLvJNHv9qlCBCorGKXCgPDBa8jbO0kTY7XkuNHGgrNrJIL2SuGc7iMEDyEfszPLnjhDUAhEpaa0dpm-_QGlPP-R6zHZXASP5TRIgqOlYrQ3EJj5bW8vFtRInDsr7mu7ehSF7jB_WsxnlUfENXRL328WK-yLo9ac_9bWL_JD-sWvDQdzlLIuhAnPjyfr-9rP80WQHNxW2TYYSNSz-j24HHXCR3RG0T0dL35yjxTTRVfFgT2SQXKoqwN2_0roZD4HUsIhVsZLIrKNcNN4ba90NmD3FEPOlKvDzWtpmmCoIa8h405AYPCb9Br6I7ShUQCmrS7gHVfGZShuTVDWii4zFs1UvCTduWbYgRhvUUMwpFZvFJWGd2AX20HpP-aNGeh0eGEPLRR66GM-ZAtomDfm59SNAYf2j2WzLCRDUzOt-islodbIJ5UuqtYYXw4epcyR9N5m8LCwIO8iFRV7pbLQFGofDQ5wqmFBjlpax0fcxwgJD0xLFiNOyrX_IanRXIL9--c8w5pSB5QlqjSHF4VPoLTmRuAvVGMZjzpDF0bgNV1PsXViZdPG6pGjWw'; //Live token value to be placed here: https://myfatoorah.readme.io/docs/live-token
+//    private $apiURL = 'https://api.myfatoorah.com';
+//    private $apiKey = 'BjLe20XA0nuIXZFMDRuah-vE_-B6Sr632vLQ8CUE2KRttdNDUMQ7x0bvXUPoss_NXgN3KBsWt-Z2CSYQ1xamRcVbLV5nPtM5F7R9xRObWqJ2Op-HpJU5mr6aIChaNcT5rmRlWSFZcfjRydLvJNHv9qlCBCorGKXCgPDBa8jbO0kTY7XkuNHGgrNrJIL2SuGc7iMEDyEfszPLnjhDUAhEpaa0dpm-_QGlPP-R6zHZXASP5TRIgqOlYrQ3EJj5bW8vFtRInDsr7mu7ehSF7jB_WsxnlUfENXRL328WK-yLo9ac_9bWL_JD-sWvDQdzlLIuhAnPjyfr-9rP80WQHNxW2TYYSNSz-j24HHXCR3RG0T0dL35yjxTTRVfFgT2SQXKoqwN2_0roZD4HUsIhVsZLIrKNcNN4ba90NmD3FEPOlKvDzWtpmmCoIa8h405AYPCb9Br6I7ShUQCmrS7gHVfGZShuTVDWii4zFs1UvCTduWbYgRhvUUMwpFZvFJWGd2AX20HpP-aNGeh0eGEPLRR66GM-ZAtomDfm59SNAYf2j2WzLCRDUzOt-islodbIJ5UuqtYYXw4epcyR9N5m8LCwIO8iFRV7pbLQFGofDQ5wqmFBjlpax0fcxwgJD0xLFiNOyrX_IanRXIL9--c8w5pSB5QlqjSHF4VPoLTmRuAvVGMZjzpDF0bgNV1PsXViZdPG6pGjWw'; //Live token value to be placed here: https://myfatoorah.readme.io/docs/live-token
     /**
      * @var CategoryRepository
      */
@@ -73,6 +73,9 @@ class MyFatoorahController extends AbstractController
      */
     public function index($locale, $id, Request $request): Response
     {
+        /**
+         * @var Order $order
+         */
         $order = $this->entityManager->getRepository(Order::class)->find($id);
         $form = $this->createForm(PaymentMethodType::class, $order);
         $form->handleRequest($request);
@@ -86,7 +89,8 @@ class MyFatoorahController extends AbstractController
 //            $YOUR_DOMAIN = 'https://shineaurora.com';
                 $YOUR_DOMAIN = 'https://127.0.0.1:8000';
                 //Fill POST fields array
-                $ipPostFields = ['InvoiceAmount' => ($order->getTotal() + $order->getDeliveryPrice()) / 100, 'CurrencyIso' => 'KWD'];
+
+                $ipPostFields = ['InvoiceAmount' => ($order->getTotalOrder() / 100), 'CurrencyIso' => 'KWD'];
 
                 //Call endpoint
                 $paymentMethods = $this->initiatePayment($this->apiURL, $this->apiKey, $ipPostFields);
@@ -124,11 +128,19 @@ class MyFatoorahController extends AbstractController
                     'Quantity' => 1, //Item's quantity
                     'UnitPrice' => $order->getDeliveryPrice() / 100, //Price per item
                 ];
+                if($order->getDiscountValue()){
+                    $invoiceItems[] = [
+                        'ItemName' => 'Discount', //ISBAN, or SKU
+                        'Quantity' => 1, //Item's quantity
+                        'UnitPrice' => -$order->getDiscountValue(), //Price per item
+                    ];
+                }
+
                 //Fill POST fields array
                 $postFields = [
                     //Fill required data
                     'paymentMethodId' => $paymentMethodId,
-                    'InvoiceValue' => (($order->getTotal() + $order->getDeliveryPrice()) / 100),
+                    'InvoiceValue' => ($order->getTotalOrder() / 100),
                     'CallBackUrl' => $YOUR_DOMAIN . '/' . $locale . '/order/thank/' . $order->getReference(),
                     'ErrorUrl' => $YOUR_DOMAIN . '/' . $locale . '/order/error/' . $order->getReference(),
                     'CustomerName' => $order->getShippingFullName(),

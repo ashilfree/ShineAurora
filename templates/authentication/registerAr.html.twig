@@ -2,32 +2,7 @@
 
 {% block body %}
 
-{#    <!-- Begin Shine AuroraBreadcrumb Area -->#}
-{#    <div class="breadcrumb-area" style="background-image: url({{ vich_uploader_asset(banner, 'imageFile') | imagine_filter('Extra_large') }});background-repeat:no-repeat;background-position:center;">#}
-{#        <div class="container">#}
-{#            <div class="breadcrumb-content">#}
-{#                <h2>تسجيل</h2>#}
-{#                <ul>#}
-{#                    <li><a href="{{ path('home', { locale: 'en' }) }}">الصفحة الرئيسية</a></li>#}
-{#                    <li class="active">تسجيل</li>#}
-{#                </ul>#}
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
-{#    <!-- Shine AuroraBreadcrumb Area End Here -->#}
-    <!-- Begin Shine AuroraBreadcrumb Area -->
-    <div class="breadcrumb-area" style="background-image: url({{ vich_uploader_asset(banner, 'imageFile') | imagine_filter('Extra_large') }});background-repeat:no-repeat;background-position:center;">
-        <div class="container">
-            {#            <div class="breadcrumb-content">#}
-            {#                <h2>Login & Register</h2>#}
-            {#                <ul>#}
-            {#                    <li><a href="{{ path('home', { locale: 'en' }) }}">Home</a></li>#}
-            {#                    <li class="active">Register</li>#}
-            {#                </ul>#}
-            {#            </div>#}
-        </div>
-    </div>
-    <!-- Shine AuroraBreadcrumb Area End Here -->
+    {% include '_banner.html.twig' %}
     <div style="padding-top: 60px">
         <div class="container">
             <div>

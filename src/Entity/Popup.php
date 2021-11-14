@@ -39,8 +39,6 @@ class Popup
 
     /**
      * @ORM\Column(type="datetime")
-     *
-     * @var \DateTimeInterface|null
      */
     private $updatedAt;
 
@@ -68,7 +66,8 @@ class Popup
     public function setIsShow(bool $isShow): self
     {
         $this->isShow = $isShow;
-
+        if (null !== $isShow)
+            $this->updatedAt = new \DateTimeImmutable();
         return $this;
     }
 

@@ -1,0 +1,86 @@
+{% cache 'productAr;' ~ product.id ~ ";" ~ product.updatedAt.timestamp %}
+    {% if product.images.first %}
+        <!-- Begin Shine Aurora Slide Item Area -->
+        <div class="slide-item">
+            <div class="single_product">
+                <div class="product-img">
+                    <a href="{{ path('product', {locale: 'ar', 'slug': product.slug }) }}">
+                        <img class="primary-img" src="{{ vich_uploader_asset(product.images.first, 'imageFile') | imagine_filter('medium') }}" alt="{{ product.name }}">
+                        <img class="secondary-img" src="{{ vich_uploader_asset(product.images.last, 'imageFile') | imagine_filter('medium') }}" alt="{{ product.name }}">
+                    </a>
+                    <div class="add-actions">
+                        <ul>
+                            {% set break = false %}
+                            <li><a class="hiraola-add_cart"
+                                        {% for catalog in product.catalogs %}
+                                            {% if not break %}
+                                                {% if catalog.quantity > 0 %}
+                                                    href="{{ path('add.cart', { locale: 'ar', id: catalog.id }) }}"
+                                                    {% set break = true %}
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
+                                   data-toggle="tooltip" data-placement="top" title="أضف إلى السلة"><i class="ion-bag"></i></a>
+                            </li>
+                            <li class="quick-view-btn" data-toggle="modal" data-target="#exampleModalCenter">
+                                <a class="js-show-modal1" href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="نظرة سريعة"
+                                   data-id="{{ product.id }}"
+                                   data-name="{{ product.nameAr }}"
+                                   data-slug="{{ path('product', {locale: 'ar', 'slug': product.slug }) }}"
+                                   data-description="{{ product.descriptionAr|raw }}"
+                                   data-price="{{ (product.price / 100) |number_format(2, '.', ',') }} {{ currency_ar }}"
+                                   data-discount="{{ (product.discountPrice / 100) |number_format(2, '.', ',') }} {{ currency_ar }}"
+                                        {% for catalog in  product.catalogs %} data-catalog{{ loop.index }}="{{ catalog.id }}" {% endfor %}
+                                        {% for catalog in  product.catalogs %} data-size{{ loop.index }}="{{ catalog.size }}" {% endfor %}
+                                        {% for catalog in  product.catalogs %} data-color{{ loop.index }}="{{ catalog.color }}" {% endfor %}
+                                        {#                                                                    {% for tag in  product.togs %} data-tag{{ loop.index }}="{{ tag }}" {% endfor %}#}
+                                        {% for image in  product.images %} data-image{{ loop.index }}="{{ image }}" {% endfor %}
+                                   data-href-a ="{{ path('add.cart', { locale: 'ar' }) }}"
+                                >
+                                    <i class="ion-eye"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="hiraola-product_content">
+                    <div class="product-desc_info row">
+                        <div class="col-10">
+                            <h6><a class="product-name" href="{{ path('product', {locale: 'ar', 'slug': product.slug }) }}">{{ product.nameAr }}</a></h6>
+                            <div class="price-box style-1">
+                                {% if product.discountPrice != 0 %}
+                                    <del><span class="new-price">{{ (product.price / 100) |number_format(2, '.', ',') }} {{ currency_ar }}</span></del>
+                                    <ins><span class="new-price">{{ (product.discountPrice / 100) |number_format(2, '.', ',') }} {{ currency_ar }}</span></ins>
+                                {% else %}
+                                    <ins><span class="new-price">{{ (product.price / 100) |number_format(2, '.', ',') }} {{ currency_ar }}</span></ins>
+                                {% endif %}
+                            </div>
+                        </div>
+                        <div class="col-2 additional-add_action">
+                            <ul>
+                                <li><a class="hiraola-add_compare"{% if wish[product.id] is defined and wish[product.id] == 1  %} href="{{ path('delete.wishlist', { locale: 'ar', id:product.id, route:page }) }}" title="إزالة من قائمة الرغبات" {% else %} href="{{ path('add.wishlist', { locale: 'ar', id:product.id }) }}" title="أضف إلى قائمة الامنيات" {% endif %} data-toggle="tooltip" data-placement="top" >
+                                        <i {% if wish[product.id] is defined and wish[product.id] == 1  %} class="ion-android-favorite"  {% else %} class="ion-android-favorite-outline"  {% endif %} ></i></a>
+                                </li>
+                                {% if product.video %}
+                                    <li>
+                                        <i class="ion-ios-videocam"></i>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                        {#                                                    <div class="rating-box">#}
+                        {#                                                        <ul>#}
+                        {#                                                            <li><i class="fa fa-star-of-david"></i></li>#}
+                        {#                                                            <li><i class="fa fa-star-of-david"></i></li>#}
+                        {#                                                            <li><i class="fa fa-star-of-david"></i></li>#}
+                        {#                                                            <li><i class="fa fa-star-of-david"></i></li>#}
+                        {#                                                            <li class="silver-color"><i class="fa fa-star-of-david"></i></li>#}
+                        {#                                                        </ul>#}
+                        {#                                                    </div>#}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Shine Aurora Slide Item Area End Here -->
+    {% endif %}
+{% endcache %}

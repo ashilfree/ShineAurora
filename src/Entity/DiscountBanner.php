@@ -100,7 +100,8 @@ class DiscountBanner
     public function setTitle(string $title): self
     {
         $this->title = $title;
-
+        if (null !== $title)
+        $this->updatedAt = new \DateTimeImmutable();
         return $this;
     }
 
@@ -112,7 +113,8 @@ class DiscountBanner
     public function setTitleAr(string $titleAr): self
     {
         $this->titleAr = $titleAr;
-
+        if (null !== $titleAr)
+        $this->updatedAt = new \DateTimeImmutable();
         return $this;
     }
 
@@ -124,7 +126,8 @@ class DiscountBanner
     public function setSubTitle(string $subTitle): self
     {
         $this->subTitle = $subTitle;
-
+        if (null !== $subTitle)
+        $this->updatedAt = new \DateTimeImmutable();
         return $this;
     }
 
@@ -136,7 +139,8 @@ class DiscountBanner
     public function setSubTitleAr(string $subTitleAr): self
     {
         $this->subTitleAr = $subTitleAr;
-
+        if (null !== $subTitleAr)
+        $this->updatedAt = new \DateTimeImmutable();
         return $this;
     }
 
@@ -148,7 +152,8 @@ class DiscountBanner
     public function setSubTitle2(string $subTitle2): self
     {
         $this->subTitle2 = $subTitle2;
-
+        if (null !== $subTitle2)
+        $this->updatedAt = new \DateTimeImmutable();
         return $this;
     }
 
@@ -160,7 +165,8 @@ class DiscountBanner
     public function setSubTitleAr2(string $subTitleAr2): self
     {
         $this->subTitleAr2 = $subTitleAr2;
-
+        if (null !== $subTitleAr2)
+        $this->updatedAt = new \DateTimeImmutable();
         return $this;
     }
 
@@ -172,7 +178,8 @@ class DiscountBanner
     public function setStartingAt(\DateTimeInterface $startingAt): self
     {
         $this->startingAt = $startingAt;
-
+        if (null !== $startingAt)
+        $this->updatedAt = new \DateTimeImmutable();
         return $this;
     }
 
@@ -184,7 +191,8 @@ class DiscountBanner
     public function setBtnTitle(string $btnTitle): self
     {
         $this->btnTitle = $btnTitle;
-
+        if (null !== $btnTitle)
+        $this->updatedAt = new \DateTimeImmutable();
         return $this;
     }
 
@@ -196,7 +204,8 @@ class DiscountBanner
     public function setBtnTitleAr(string $btnTitleAr): self
     {
         $this->btnTitleAr = $btnTitleAr;
-
+        if (null !== $btnTitleAr)
+        $this->updatedAt = new \DateTimeImmutable();
         return $this;
     }
 
@@ -208,7 +217,8 @@ class DiscountBanner
     public function setBtnUrl(string $btnUrl): self
     {
         $this->btnUrl = $btnUrl;
-
+        if (null !== $btnUrl)
+        $this->updatedAt = new \DateTimeImmutable();
         return $this;
     }
 

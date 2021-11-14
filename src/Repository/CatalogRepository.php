@@ -19,19 +19,14 @@ class CatalogRepository extends ServiceEntityRepository
         parent::__construct($registry, Catalog::class);
     }
 
-    public function findByProductName($name, $size)
+    public function findByProductName($id)
     {
-       $allProfiles = $this->createQueryBuilder('c')
-            ->join('c.size', 's')
-            ->join('c.product', 'p')
-            ->andWhere('s.name = :size')
-            ->andWhere('p.name = :product')
-            ->setParameter('size', $size)
-            ->setParameter('product', $name)
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.id = :id')
+            ->setParameter('id', $id)
             ->getQuery()
-            ->getResult()
+            ->getOneOrNullResult()
         ;
-        return $allProfiles[0];
     }
 
     // /**

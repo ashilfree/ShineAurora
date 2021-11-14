@@ -69,7 +69,7 @@
             {{ form_row(new_form.price, {'attr': {'placeholder':'Price'}}) }}
         </div>
         <div class="col">
-            {{ form_row(new_form.category, {'attr': {'class': 'basic'}}) }}
+            {{ form_row(new_form.category, {'attr': {'class': 'basic', 'required': true}}) }}
         </div>
         <div class="col">
             {{ form_row(new_form.subCategory, {'attr': {'class': 'basic'}}) }}
@@ -116,7 +116,7 @@
 {#            </div>#}
 {#        </div>#}
         <div class="widget-content widget-content-area">
-        {{ form_row(new_form.longDescription) }}
+        {{ form_row(new_form.longDescription, {'attr': {'required': 'required'}}) }}
         </div>
     </div>
     <div class="statbox widget box box-shadow">
@@ -128,7 +128,7 @@
 {#            </div>#}
 {#        </div>#}
         <div class="widget-content widget-content-area">
-            {{ form_row(new_form.longDescriptionAr) }}
+            {{ form_row(new_form.longDescriptionAr, {'attr': {'required': 'required'}}) }}
         </div>
     </div>
     <div class="statbox widget box box-shadow">

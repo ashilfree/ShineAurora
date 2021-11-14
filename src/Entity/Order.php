@@ -137,6 +137,15 @@ class Order
      */
     private $isPaid;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $discountCode;
+
+    /**
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $discountValue;
 
     public function __construct()
     {
@@ -249,7 +258,7 @@ class Order
 
     public function getTotalOrder()
     {
-        return ($this->getTotal() + $this->getDeliveryPrice());
+        return ($this->getTotal() + $this->getDeliveryPrice() - ($this->discountValue*100));
     }
 
     public function getInvoiceId(): ?string
@@ -553,6 +562,30 @@ class Order
     public function setIsPaid(bool $isPaid): self
     {
         $this->isPaid = $isPaid;
+
+        return $this;
+    }
+
+    public function getDiscountCode(): ?string
+    {
+        return $this->discountCode;
+    }
+
+    public function setDiscountCode(?string $discountCode): self
+    {
+        $this->discountCode = $discountCode;
+
+        return $this;
+    }
+
+    public function getDiscountValue(): ?float
+    {
+        return $this->discountValue;
+    }
+
+    public function setDiscountValue(?float $discountValue): self
+    {
+        $this->discountValue = $discountValue;
 
         return $this;
     }

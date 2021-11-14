@@ -147,7 +147,7 @@ class OrderCrudController extends AbstractCrudController
     public function invoice(AdminContext $context)
     {
        $entity = $context->getEntity()->getInstance();
-       $html = $this->renderView('order/invoice2.html.twig', [
+       $html = $this->renderView('order/invoice.html.twig', [
            'order' => $entity
        ]);
         $pdf = new MYPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);

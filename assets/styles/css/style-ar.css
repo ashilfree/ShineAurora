@@ -51,12 +51,14 @@ INDEX:
 
 */
 @import url("https://fonts.googleapis.com/css?family=Dancing+Script:400,700|Lato:300,300i,400,400i,700,700i,900,900i|Pacifico");
-@font-face{font-family:hm sans regular;src:url(fonts/HMSans-Regular.woff2) format("woff2"),url(fonts/HMSans-Regular.woff) format("woff");font-weight:400;font-style:normal;font-display:swap}
+/*@font-face{font-family:hm sans regular;src:url(fonts/HMSans-Regular.woff2) format("woff2"),url(fonts/HMSans-Regular.woff) format("woff");font-weight:400;font-style:normal;font-display:swap}*/
+/*@font-face{font-family:mulish;src:url(fonts/mulish.ttf) format("ttf");font-weight:400;font-style:normal;font-display:swap}*/
+@import url('https://fonts.googleapis.com/css2?family=Mulish&display=swap');
 /*----------------------------------------*/
 /*  00 - Base - Typography
 /*----------------------------------------*/
 body {
-  font-family: "hm sans regular", "Lato", sans-serif;
+  font-family: 'Mulish', "Lato", sans-serif;
   background-color: #ffffff;
   color: #595959;
   font-size: 16px;
@@ -69,14 +71,14 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "hm sans regular", "Lato", sans-serif;
+  font-family: 'Mulish', "Lato", sans-serif;
   color: #333333;
   line-height: 1;
   font-weight: 700;
 }
 
 p {
-  font-family: "hm sans regular", "Lato", sans-serif;
+  font-family: 'Mulish', "Lato", sans-serif;
   color: #595959;
   font-size: 16px;
   line-height: 24px;
@@ -3026,7 +3028,7 @@ button.li-btn:hover {
 
 .fb-filter-btn_area .hiraola-filter_btn:before {
   content: "\f00d";
-  font-family: "hm sans regular", 'Font Awesome 5 Free';
+  font-family: 'Mulish', 'Font Awesome 5 Free';
   font-weight: 600;
   padding-right: 10px;
 }
@@ -4268,7 +4270,7 @@ button.li-btn:hover {
 
 .category-menu .category-heading > h2:after {
   content: "\f03c";
-  font-family: "hm sans regular", 'Font Awesome 5 Free';
+  font-family: 'Mulish', 'Font Awesome 5 Free';
   font-weight: 600;
   position: absolute;
   top: 18px;
@@ -4340,7 +4342,7 @@ button.li-btn:hover {
 
 .category-menu .category-menu-list > ul > li.right-menu > a::after {
   content: '\f078';
-  font-family: "hm sans regular", 'Font Awesome 5 Free';
+  font-family: 'Mulish', 'Font Awesome 5 Free';
   font-weight: 600;
   font-size: 12px;
   position: absolute;
@@ -4562,7 +4564,7 @@ button.li-btn:hover {
   }
   .category-menu-list > ul > li i.menu-expand:before {
     content: "\f489";
-    font-family: "hm sans regular", "Ionicons";
+    font-family: 'Mulish', "Ionicons";
     font-size: 20px;
     position: absolute;
     left: 50%;
@@ -5755,7 +5757,7 @@ button.li-btn:hover {
 
 .breadcrumb-area .breadcrumb-content ul > li:before {
   content: "\f053";
-  font-family: "hm sans regular", 'Font Awesome 5 Free';
+  font-family: 'Mulish', 'Font Awesome 5 Free';
   font-weight: 600;
   position: absolute;
   left: -15px;
@@ -8976,7 +8978,7 @@ button.li-btn:hover {
   top: 0;
   display: block;
   content: "\f00c";
-  font-family: "hm sans regular", 'Font Awesome 5 Free';
+  font-family: 'Mulish', 'Font Awesome 5 Free';
   font-weight: 600;
   font-size: 12px;
   line-height: 20px;
@@ -9287,7 +9289,7 @@ button.li-btn:hover {
   color: #bcbdc2;
   content: "\f133";
   display: inline-block;
-  font-family: "hm sans regular", 'Font Awesome 5 Free';
+  font-family: 'Mulish', 'Font Awesome 5 Free';
   font-weight: 600;
   left: 24px;
   position: absolute;
@@ -10137,7 +10139,7 @@ button.li-btn:hover {
 
 .frequently-area .frequently-accordion .card-header a.collapsed:before {
   content: "\f067";
-  font-family: "hm sans regular", 'Font Awesome 5 Free';
+  font-family: 'Mulish', 'Font Awesome 5 Free';
   font-weight: 600;
   position: absolute;
   right: 15px;
@@ -10153,7 +10155,7 @@ button.li-btn:hover {
 
 .frequently-area .frequently-accordion .card-header a:after {
   content: "\f068";
-  font-family: "hm sans regular", 'Font Awesome 5 Free';
+  font-family: 'Mulish', 'Font Awesome 5 Free';
   font-weight: 600;
   position: absolute;
   right: 15px;
@@ -10458,7 +10460,7 @@ button.li-btn:hover {
   width: 100%;
   font-weight: 300;
   border-radius: 50px;
-  font-family: "hm sans regular", 'Rubik',sans-serif;
+  font-family: 'Mulish', 'Rubik',sans-serif;
 }
 
 .subscribe-area .subscribe-form > form input::-moz-placeholder {
@@ -10559,7 +10561,7 @@ button.li-btn:hover {
 
 .DateCountdown .time_circles > div > h4 {
   color: #ffffff;
-  font-family: "hm sans regular", "Rubik", sans-serif;
+  font-family: 'Mulish', "Rubik", sans-serif;
   font-size: 18px !important;
   font-weight: 400;
   margin: 89px 0 0;
@@ -10595,7 +10597,7 @@ button.li-btn:hover {
 .DateCountdown .time_circles > div > span {
   color: #ffffff;
   display: block;
-  font-family: "hm sans regular", "Teko",
+  font-family: 'Mulish', "Teko",
  sans-serif;
   font-size: 60px !important;
   font-weight: 400;

@@ -58,10 +58,14 @@ class ListenerForAnyRequest
                 if (($isPath && $route != 'order' && $route !== 'my.fatoorah.create.session')) {
                     if ($this->session->get('orderId')) {
                         $oldOrder = $this->entityManager->getRepository(Order::class)->find($this->session->get('orderId'));
-                        if($this->transaction->check($oldOrder, 'order_canceled2'))
+                        if($this->transaction->check($oldOrder, 'order_canceled2')){
                             $this->transaction->applyWorkFlow($oldOrder, 'order_canceled2');
-                        if($this->transaction->check($oldOrder, 'order_canceled'))
+                            $oldOrder->setCancelledAt(new \DateTime());
+                        }
+                        if($this->transaction->check($oldOrder, 'order_canceled')){
                             $this->transaction->applyWorkFlow($oldOrder, 'order_canceled');
+                            $oldOrder->setCancelledAt(new \DateTime());
+                        }
                         $this->cart->increaseStock();
                     }
                     $this->session->clear();

@@ -2,19 +2,7 @@
 
 {% block body %}
 
-    <!-- Begin Hiraola's Breadcrumb Area -->
-    <div class="breadcrumb-area" style="background-image: url({{ vich_uploader_asset(banner, 'imageFile') | imagine_filter('Extra_large') }});background-repeat:no-repeat;background-position:center;">
-        <div class="container">
-            {#            <div class="breadcrumb-content">#}
-            {#                <h2>Cart</h2>#}
-            {#                <ul>#}
-            {#                    <li><a href="{{ path('home', { locale: 'en' }) }}">Home</a></li>#}
-            {#                    <li class="active">Empty Cart</li>#}
-            {#                </ul>#}
-            {#            </div>#}
-        </div>
-    </div>
-    <!-- Hiraola's Breadcrumb Area End Here -->
+    {% include '_banner.html.twig' %}
     <div style="padding-top: 60px">
         <div class="container">
             <div>

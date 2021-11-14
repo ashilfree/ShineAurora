@@ -1,0 +1,22 @@
+{% cache 'discountBannerAr;' ~ banner.id ~ ";" ~ banner.updatedAt.timestamp %}
+    <div class="static-banner_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="static-banner-image" style="background-image: url({{ vich_uploader_asset(banner, 'imageFile') | imagine_filter('Extra_large') | imagine_filter('my_flip') }});"></div>
+                <div class="static-banner-content">
+                    <p><span>{{ banner.titleAr }}</span></p>
+                    <h2>{{ banner.subTitleAr }}</h2>
+                    <h3>{{ banner.subTitleAr2 }}</h3>
+                    <p class="schedule">
+                        يبدأ من <span>{{ banner.startingAt|date("F jS") }}</span>
+                    </p>
+                    <div class="hiraola-btn-ps_center">
+                        <a href="{{ banner.btnUrl }}" class="hiraola-btn">{{ banner.btnTitleAr }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endcache %}

@@ -17,19 +17,7 @@
 {#        {% endif %}#}
         {% set total = total + subTotal %}
     {% endfor %}
-    <!-- Begin Hiraola's Breadcrumb Area -->
-    <div class="breadcrumb-area" style="background-image: url({{ vich_uploader_asset(banner, 'imageFile') | imagine_filter('Extra_large') }});background-repeat:no-repeat;background-position:center;">
-        <div class="container">
-            {#            <div class="breadcrumb-content">#}
-            {#                <h2>Order</h2>#}
-            {#                <ul>#}
-            {#                    <li><a href="{{ path('home', { locale: 'en' }) }}">Home</a></li>#}
-            {#                    <li class="active">Checkout</li>#}
-            {#                </ul>#}
-            {#            </div>#}
-        </div>
-    </div>
-    <!-- Hiraola's Breadcrumb Area End Here -->
+    {% include '_banner.html.twig' %}
     <div style="padding-top: 60px">
         <div class="container">
             <div>
@@ -40,6 +28,7 @@
         </div>
     </div>
     <!-- Begin Hiraola's Checkout Area -->
+    {% set discount = order.discountValue ? order.discountValue : 0 %}
     <!-- Begin Hiraola's Checkout Area -->
     <div class="checkout-area js-checkout">
         <div class="container">
@@ -146,13 +135,23 @@
                                     <th>المجموع</th>
                                     <td><span class="amount">{{ total |number_format(2, '.', ',')  ~currency_ar }}</span></td>
                                 </tr>
+                                {% if order.discountValue %}
+                                    <tr class="cart-subtotal">
+                                        <th>تخفيض({{ order.discountCode }}):</th>
+                                        <td><span class="amount">-{{ discount|number_format(3, '.', ',') }} {{ currency_ar }}</span></td>
+                                    </tr>
+                                    <tr class="cart-subtotal">
+                                        <th>المجموع الجديد</th>
+                                        <td><span class="amount">{{ (total-discount)|number_format(3, '.', ',') }} {{ currency_ar }}</span></td>
+                                    </tr>
+                                {% endif %}
                                 <tr class="cart-delivery">
                                     <th>التوصيل</th>
                                     <td><span class="amount">{{ (order.deliveryPrice/100) |number_format(2, '.', ',') ~ currency_ar }}</span></td>
                                 </tr>
                                 <tr class="order-total">
                                     <th>الإجمالي</th>
-                                    <td><strong><span class="amount">{{ (total + (order.deliveryPrice/100)) |number_format(2, '.', ',') ~ currency_ar }}</span></strong></td>
+                                    <td><strong><span class="amount">{{ (total + (order.deliveryPrice/100)-discount) |number_format(2, '.', ',') ~ currency_ar }}</span></strong></td>
                                 </tr>
                                 </tfoot>
                             </table>

@@ -2,19 +2,7 @@
 
 {% block body %}
 
-    <!-- Begin Hiraola's Breadcrumb Area -->
-    <div class="breadcrumb-area" style="background-image: url({{ vich_uploader_asset(banner, 'imageFile') | imagine_filter('Extra_large') }});background-repeat:no-repeat;background-position:center;">
-        <div class="container">
-            {#            <div class="breadcrumb-content">#}
-            {#                <h2>Cart</h2>#}
-            {#                <ul>#}
-            {#                    <li><a href="{{ path('home', { locale: 'en' }) }}">Home</a></li>#}
-            {#                    <li class="active">Empty Cart</li>#}
-            {#                </ul>#}
-            {#            </div>#}
-        </div>
-    </div>
-    <!-- Hiraola's Breadcrumb Area End Here -->
+    {% include '_banner.html.twig' %}
     <div style="padding-top: 60px">
         <div class="container">
             <div>
@@ -29,6 +17,7 @@
     {% if(delivery == '') %}
         {% set delivery = 0 %}
     {% endif %}
+    {% set discount = coupon ? coupon.discount : 0 %}
     <div class="hiraola-cart-area">
         <div class="container">
             <div class="row">
@@ -99,12 +88,21 @@
                         <div class="row">
                             <div class="col-12">
                                 <div class="coupon-all">
-                                    {#                                    <div class="coupon">#}
-                                    {#                                        <input id="coupon_code" class="input-text" name="coupon_code" value="" placeholder="Coupon code" type="text">#}
-                                    {#                                        <input class="button" name="apply_coupon" value="Apply coupon" type="submit">#}
-                                    {#                                    </div>#}
+                                    <div class="form__note mb-3">
+                                        {% for message in app.flashes('error')  %}
+                                            <div style="color:#5e8350;font-size: 22px;" class="text-right">
+                                                {{ message }}
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    {% if not coupon %}
+                                        <div class="coupon">
+                                            <input id="coupon_code" class="input-text" name="coupon_code" maxLength="8" minlength="8" value="" placeholder="أدخل رمز القسيمة" type="text">
+                                            <a href="javascript:void(0)" id="coupon_submit" class="button">تطبيق</a>
+                                        </div>
+                                    {% endif %}
                                     <div class="coupon2">
-                                        <a href="{{ path('remove.cart', {locale: 'en' ,route: page}) }}" class="button" >إخلاء عربة التسوق</a>
+                                        <a href="{{ path('remove.cart', {locale: 'ar' ,route: page}) }}" class="button" >إخلاء عربة التسوق</a>
                                     </div>
                                 </div>
                             </div>
@@ -128,20 +126,24 @@
                                 <div class="cart-page-total">
                                     <h2>إجماليات سلة التسوق</h2>
                                     <ul>
-                                        <li>المجموع <span id="subtotal">{{ total|number_format(2, '.', ',') }}{{ currency_ar }}</span></li>
-                                        <li>التوصيل <span id="total">   {% if delivery is defined %}
+                                        <li>المجموع: <span id="subtotal" class="float-left">{{ total|number_format(2, '.', ',') }}{{ currency_ar }}</span></li>
+                                        {% if coupon %}
+                                            <li>تخفيض:({{ coupon.name }}): <a href="{{ path('coupon.destroy', { locale: 'ar' }) }}" style="font-size: 12px;color:#ffffff;">حذف</a><br>(استفد: {{ (coupon.type == 'fixed')? coupon.discountValue ~ currency : coupon.discountValue ~ '%' }}) <span class="float-left">{{ discount|number_format(3, '.', ',') }} {{ currency_ar }}</span></li>
+                                            <li>المجموع الجديد: <span class="float-left">{{ (total-discount)|number_format(3, '.', ',') }} {{ currency_ar }}</span></li>
+                                        {% endif %}
+                                        <li>التوصيل: <span id="total" class="float-left">   {% if delivery is defined %}
                                                     {{ (delivery/100)|number_format(2, '.', ',') }}
                                                 {% else %}
                                                     0.00
                                                 {% endif %}
                                                 {{ currency_ar }}
                                             </span></li>
-                                        <li>إجمالي
-                                            <span id="total">
+                                        <li>إجمالي:
+                                            <span id="total" class="float-left">
                                     {% if delivery is defined %}
-                                        {{ (total+ (delivery/100))|number_format(2, '.', ',') }}
+                                        {{ (total+ (delivery/100)-discount)|number_format(2, '.', ',') }}
                                     {% else %}
-                                        {{ total|number_format(2, '.', ',') }}
+                                        {{ (total-discount)|number_format(2, '.', ',') }}
                                     {% endif %}
                                                 {{ currency_ar }}
 								</span>
@@ -168,4 +170,21 @@
             text-align: right;
         }
     </style>
+    <script>
+        let input = document.getElementById('coupon_code');
+        let button = document.getElementById('coupon_submit');
+        if(input){
+            button.disabled = true;
+            input.addEventListener("change", stateHandle);
+
+            function stateHandle() {
+                if((input.value === "") || (input.value.length !== 8)) {
+                    button.href = "javascript:void(0)";
+                } else {
+                    console.log(input.value.length)
+                    button.href = "/ar/coupon/"+ input.value;
+                }
+            }
+        }
+    </script>
 {% endblock %}

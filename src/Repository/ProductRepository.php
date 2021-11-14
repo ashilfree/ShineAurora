@@ -88,10 +88,7 @@ class ProductRepository extends ServiceEntityRepository
 
     private function getSearchQuery(Filter $filter, $ignorePrice = false):QueryBuilder
     {
-        $query = $this->createQueryBuilder('p')
-            ->select('p', 'pics', 'cats')
-            ->leftJoin('p.images', 'pics')
-            ->leftJoin('p.catalogs', 'cats');
+        $query = $this->createQueryBuilder('p');
 
 
         if (!empty($filter->min) && $ignorePrice === false){

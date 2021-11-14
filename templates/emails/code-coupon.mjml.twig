@@ -1,0 +1,69 @@
+{# mail/example.mjml.twig #}
+{% block email_content %}
+    {% mjml %}
+        <mjml>
+            <mj-body background-color="#d6dde5">
+                <mj-section background-color="#E4E4E4">
+                    <mj-column width="50%">
+                        <mj-image href="https://mjml.io" src="https://shineaurora.genesistech-dz.com/media/images/icons/logo-01.png" alt="shine aurora logo" width="200" align="center" padding="10px"></mj-image>
+                    </mj-column>
+                </mj-section>
+                <mj-section background-color="#fff" padding-bottom="50px" padding-top="50px">
+                    <mj-column>
+                        <mj-text align="center" color="#247705" padding-bottom="0px" padding-top="0" >
+                            <p style="font-size: 20px;font-weight: bold;">Coupon Code</p>
+                        </mj-text>
+                        <mj-text align="center" color="#020202" font-size="13px" padding-left="25px" padding-right="25px" padding-bottom="0px" padding-top="0">
+                            <p style="font-size: 15px;font-weight: bold;">Dear customer,</p>
+                            <p style="font-size: 15px;font-weight: bold;">You can use this Coupon Code: <b>{{ code }}</b> to get a Discount</p>
+                        </mj-text>
+
+                    </mj-column>
+                </mj-section>
+                <mj-section background-color="#E4E4E4" padding-bottom="20px" padding-top="20px">
+                    <mj-column>
+                        <mj-image src="https://shineaurora.genesistech-dz.com/media/images/icons/logo-02.png" alt="Cards" width="72px"></mj-image>
+                        <mj-divider border-width="2px" border-color="#bcbdc2" width="40%"></mj-divider>
+                        <mj-social padding-top="20px">
+                            <mj-social-element name="facebook" href="[[SHORT_PERMALINK]]"></mj-social-element>
+                            <mj-social-element name="twitter" href="[[SHORT_PERMALINK]]"></mj-social-element>
+                            <mj-social-element name="youtube" href="[[SHORT_PERMALINK]]"></mj-social-element>
+                        </mj-social>
+                    </mj-column>
+                    <mj-column>
+                        <mj-text align="center" color="#020202" font-size="13px" padding-left="25px" padding-right="25px" padding-bottom="0px" padding-top="0">
+                            <p style="font-size: 15px;font-weight: bold;">SUPPORT</p>
+                        </mj-text>
+                        <mj-divider border-width="2px" border-color="#bcbdc2" width="40%"></mj-divider>
+                        <mj-text align="center" color="#020202" font-size="11px">
+                            <p>Help</p>
+                            <p>Shipping &amp; Delivery</p>
+                            <p>Return Policy</p>
+                        </mj-text>
+                    </mj-column>
+                    <mj-column>
+                        <mj-text align="center" color="#020202" font-size="13px" padding-left="25px" padding-right="25px" padding-bottom="0px" padding-top="0">
+                            <p style="font-size: 15px;font-weight: bold;">INFO</p>
+                        </mj-text>
+                        <mj-divider border-width="2px" border-color="#bcbdc2" width="40%"></mj-divider>
+                        <mj-text align="center" color="#020202" font-size="11px">
+                            <p>Contact Us</p>
+                            <p>Privacy Policy</p>
+                            <p>Terms &amp; Conditions</p>
+                        </mj-text>
+                    </mj-column>
+                </mj-section>
+                <mj-section background-color="#E4E4E4" padding-bottom="20px" padding-top="0">
+                    <mj-column>
+                        <mj-divider border-width="2px" border-color="#616161"></mj-divider>
+                        <mj-text align="center" color="#020202" font-size="13px" padding-left="25px" padding-right="25px" padding-bottom="0px" padding-top="0">
+                            <p><a href="https://mjml.io" style="text-decoration: none; color: inherit;">© 2021 SHINE AURORA COMPANY. All rights reserved.</a></p>
+                        </mj-text>
+                    </mj-column>
+                </mj-section>
+                <mj-section padding-bottom="20px" padding-top="0px"></mj-section>
+            </mj-body>
+        </mjml>
+    {% endmjml %}
+{% endblock %}
+

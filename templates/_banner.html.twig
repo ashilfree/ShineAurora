@@ -1,0 +1,8 @@
+{% cache 'banner;' ~ banner.id ~ ";" ~ banner.updatedAt.timestamp %}
+<!-- Begin Hiraola's Breadcrumb Area -->
+<div class="breadcrumb-area mobile-none"  style="background-image: url({{ vich_uploader_asset(banner, 'imageFile') | imagine_filter('Extra_large') }});background-repeat:no-repeat;background-position:center;">
+    <div class="container">
+    </div>
+</div>
+<!-- Hiraola's Breadcrumb Area End Here -->
+{% endcache %}

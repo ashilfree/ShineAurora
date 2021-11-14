@@ -397,6 +397,11 @@ a, a span, a:visited {
 .container .sixteen.columns {
     width: 1180px;
 }
+@media only screen and (max-width: 798px){
+    .container .sixteen.columns {
+        width: 300px!important;
+    }
+    }
 
 footer .footer-social-icons--mobile.columns {
     display: none;
@@ -438,7 +443,7 @@ footer .footer-social-icons--mobile.columns {
     .credits {
         float: none;
         display: block;
-        text-align: center;
+        text-align: center!important;
     }
     .payment_methods {
         text-align: center;
@@ -702,3 +707,43 @@ html,body{
         flex-direction: column-reverse;
     }
 }
+
+@media screen and (max-width: 600px) {
+    .mobile-none {
+        display: none!important;
+    }
+}
+
+.main-slider {
+    display: none;
+}
+.hiraola-product-tab_slider-3 {
+    display: none;
+}
+
+.hiraola-product-tab_area-2 .product-tab > ul.product-menu > li > a.active span {
+    color: #bcbdc2;
+}
+
+/*.footer_credits:before {*/
+/*    content: '\0020';*/
+/*    display: block;*/
+/*    overflow: hidden;*/
+/*    visibility: hidden;*/
+/*    width: 0;*/
+/*    height: 0;*/
+/*}*/
+
+/*.footer_credits:after {*/
+/*    clear: both;*/
+/*}*/
+
+/*.footer_credits:after {*/
+/*    content: '\0020';*/
+/*    display: block;*/
+/*    overflow: hidden;*/
+/*    visibility: hidden;*/
+/*    width: 0;*/
+/*    height: 0;*/
+/*}*/
+

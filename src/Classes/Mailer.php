@@ -127,4 +127,21 @@ class Mailer{
 
         $this->mailer->send($message);
     }
+
+    public function sendCodeCouponEmail(string $to, string $subject, string $code)
+    {
+        $body = $this->twig->render('emails/code-coupon.mjml.twig',
+            [
+                'subject' => $subject,
+                'code' => $code,
+            ]
+        );
+        $message = (new \Swift_Message($subject))
+            ->setFrom('info@shineaurora.com')
+            ->setTo($to)
+            ->setReplyTo($to)
+            ->setBody($body, 'text/html');
+
+        $this->mailer->send($message);
+    }
 }

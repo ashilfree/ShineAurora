@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Entity\About;
 use App\Entity\Banner;
 use App\Entity\Category;
+use App\Entity\Coupon;
 use App\Entity\Customer;
 use App\Entity\DiscountBanner;
 use App\Entity\FabricType;
@@ -139,14 +140,15 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::linktoDashboard('Dashboard', 'fa fa-home');
 //        yield MenuItem::linkToCrud('User', 'fa fa-user', User::class);
-        yield MenuItem::linkToCrud('Customer', 'fa fa-user', Customer::class);
+        yield MenuItem::linkToCrud('Product', 'fa fa-tags', Product::class);
         yield MenuItem::linkToCrud('Order', 'fa fa-university', Order::class);
+        yield MenuItem::linkToCrud('Coupon', 'fa fa-university', Coupon::class);
+        yield MenuItem::linkToCrud('Customer', 'fa fa-user', Customer::class);
         yield MenuItem::linkToCrud('Category', 'fa fa-list', Category::class);
         yield MenuItem::linkToCrud('Fabric Type', 'fa fa-list', FabricType::class);
         yield MenuItem::linkToCrud('Slide', 'fa fa-bank', Slide::class);
         yield MenuItem::linkToCrud('Banner', 'fa fa-desktop', Banner::class);
         yield MenuItem::linkToCrud('Discount Banner', 'fa fa-desktop', DiscountBanner::class);
-        yield MenuItem::linkToCrud('Product', 'fa fa-tags', Product::class);
         yield MenuItem::linkToCrud('Popup', 'fa fa-tags', Popup::class);
         yield MenuItem::linkToCrud('Newsletter', 'fa fa-tags', Newsletter::class);
         yield MenuItem::linkToCrud('Governorate', 'fa fa-university', Governorate::class);
@@ -155,6 +157,5 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Shipping & Delivery', 'fa fa-university', ShippingDelivery::class);
         yield MenuItem::linkToCrud('Return Policy', 'fa fa-university', ReturnPolicy::class);
         yield MenuItem::linkToCrud('Privacy Policy', 'fa fa-university', PrivacyPolicy::class);
-
     }
 }

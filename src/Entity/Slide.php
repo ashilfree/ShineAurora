@@ -85,7 +85,8 @@ class Slide
     public function setTitle(string $title): self
     {
         $this->title = $title;
-
+        if (null !== $title)
+        $this->updatedAt = new \DateTimeImmutable();
         return $this;
     }
 
@@ -97,7 +98,8 @@ class Slide
     public function setContent(string $content): self
     {
         $this->content = $content;
-
+        if (null !== $content)
+        $this->updatedAt = new \DateTimeImmutable();
         return $this;
     }
 
@@ -109,7 +111,8 @@ class Slide
     public function setBtnTitle(string $btnTitle): self
     {
         $this->btnTitle = $btnTitle;
-
+        if (null !== $btnTitle)
+        $this->updatedAt = new \DateTimeImmutable();
         return $this;
     }
 
@@ -121,7 +124,8 @@ class Slide
     public function setTitleAr(string $titleAr): self
     {
         $this->titleAr = $titleAr;
-
+        if (null !== $titleAr)
+        $this->updatedAt = new \DateTimeImmutable();
         return $this;
     }
 
@@ -133,7 +137,8 @@ class Slide
     public function setContentAr(string $contentAr): self
     {
         $this->contentAr = $contentAr;
-
+        if (null !== $contentAr)
+        $this->updatedAt = new \DateTimeImmutable();
         return $this;
     }
 
@@ -145,7 +150,8 @@ class Slide
     public function setBtnTitleAr(string $btnTitleAr): self
     {
         $this->btnTitleAr = $btnTitleAr;
-
+        if (null !== $btnTitleAr)
+        $this->updatedAt = new \DateTimeImmutable();
         return $this;
     }
 
@@ -157,7 +163,8 @@ class Slide
     public function setBtnUrl(string $btnUrl): self
     {
         $this->btnUrl = $btnUrl;
-
+        if (null !== $btnUrl)
+        $this->updatedAt = new \DateTimeImmutable();
         return $this;
     }
 

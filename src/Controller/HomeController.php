@@ -4,6 +4,7 @@ namespace App\Controller;
 
 
 use App\Classes\Cart;
+use App\Classes\OrderCleanup;
 use App\Classes\WishList;
 use App\Entity\Newsletter;
 use App\Form\NewsletterType;
@@ -64,8 +65,12 @@ class HomeController extends AbstractController
      * @var SessionInterface
      */
     private $session;
+    /**
+     * @var OrderCleanup
+     */
+    private $orderCleanup;
 
-    public function __construct( EntityManagerInterface $entityManager, ProductRepository $productRepository,CategoryRepository $categoryRepository, VisitStatsRepository $visitStatsRepository,SlideRepository $slideRepository, DiscountBannerRepository $discountBannerRepository,Cart $cart, WishList $wishlist, PopupRepository $popupRepository, SessionInterface $session)
+    public function __construct( EntityManagerInterface $entityManager, ProductRepository $productRepository,CategoryRepository $categoryRepository, VisitStatsRepository $visitStatsRepository,SlideRepository $slideRepository, DiscountBannerRepository $discountBannerRepository,Cart $cart, WishList $wishlist, PopupRepository $popupRepository, SessionInterface $session, OrderCleanup $orderCleanup)
     {
 
         $this->slideRepository = $slideRepository;
@@ -78,6 +83,7 @@ class HomeController extends AbstractController
         $this->discountBannerRepository = $discountBannerRepository;
         $this->popupRepository = $popupRepository;
         $this->session = $session;
+        $this->orderCleanup = $orderCleanup;
     }
 
     /**
@@ -106,8 +112,8 @@ class HomeController extends AbstractController
             return $this->render($path, [
                 'page' => 'home',
                 'categories' => $this->categoryRepository->findAll(),
-//                'products' => $this->productRepository->findBy(['isShow' => 1], array('id' => 'DESC')),
-                'products' => $this->productRepository->findVisibleProducts(),
+                'products' => $this->productRepository->findBy(['isShow' => 1], array('id' => 'DESC')),
+//                'products' => $this->productRepository->findVisibleProducts(),
                 'slides' => $this->slideRepository->findAll(),
                 'cart' => $this->cart->getFull($this->cart->get()),
                 'wishlist' => $this->wishlist->getFull(),

@@ -21,22 +21,23 @@
 
 <div class="main-wrapper">
 
-    <!-- Begin Loading Area -->
-    <div class="loading">
-        <div class="text-center middle">
-            <div class="lds-ellipsis">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
-            </div>
-        </div>
-    </div>
-    <!-- Loading Area End Here -->
+{#    <!-- Begin Loading Area -->#}
+{#    <div class="loading">#}
+{#        <div class="text-center middle">#}
+{#            <div class="lds-ellipsis">#}
+{#                <div></div>#}
+{#                <div></div>#}
+{#                <div></div>#}
+{#                <div></div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{#    <!-- Loading Area End Here -->#}
     {% if page is defined and page == 'home' %}
         <!-- Begin Hiraola's Newsletter Popup Area -->
         {% if popup.isShow %}
             {% if newsletter is defined and not newsletter %}
+                {% cache 'popup;' ~ popup.id ~ ";" ~ popup.updatedAt.timestamp %}
                 <div class="popup_wrapper">
                     <div class="test" style="background-image: url({{ vich_uploader_asset(popup, 'imageFile') }});">
                         <span class="popup_off"><i class="ion-android-close"></i></span>
@@ -57,6 +58,7 @@
                         </div>
                     </div>
                 </div>
+                {% endcache %}
             {% endif %}
         {% endif %}
         <!-- Hiraola's Newsletter Popup Area Here -->

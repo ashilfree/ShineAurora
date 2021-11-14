@@ -85,12 +85,12 @@ class Product
     private $subCategory;
 
     /**
-     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="product", cascade={"persist"}, orphanRemoval=true, fetch="EAGER")
+     * @ORM\OneToMany(targetEntity=Image::class, mappedBy="product", cascade={"persist"}, orphanRemoval=true)
      */
     private $images;
 
     /**
-     * @ORM\OneToMany(targetEntity=Catalog::class, mappedBy="product", cascade={"persist"}, orphanRemoval=true, fetch="EAGER")
+     * @ORM\OneToMany(targetEntity=Catalog::class, mappedBy="product", cascade={"persist"}, orphanRemoval=true)
      */
     private $catalogs;
     /**
@@ -138,6 +138,11 @@ class Product
      */
     private $isShow;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isNew;
+
     public function __construct()
     {
         $this->createdAt = new \DateTime();
@@ -159,7 +164,8 @@ class Product
     public function setName(string $name): self
     {
         $this->name = $name;
-
+        if (null !== $name)
+        $this->updatedAt = new \DateTimeImmutable();
         return $this;
     }
 
@@ -171,7 +177,8 @@ class Product
     public function setSlug(string $slug): self
     {
         $this->slug = $slug;
-
+        if (null !== $slug)
+        $this->updatedAt = new \DateTimeImmutable();
         return $this;
     }
 
@@ -183,7 +190,8 @@ class Product
     public function setDescription(string $description): self
     {
         $this->description = $description;
-
+        if (null !== $description)
+        $this->updatedAt = new \DateTimeImmutable();
         return $this;
     }
 
@@ -195,7 +203,8 @@ class Product
     public function setNameAr(string $nameAr): self
     {
         $this->nameAr = $nameAr;
-
+        if (null !== $nameAr)
+        $this->updatedAt = new \DateTimeImmutable();
         return $this;
     }
 
@@ -207,7 +216,8 @@ class Product
     public function setDescriptionAr(string $descriptionAr): self
     {
         $this->descriptionAr = $descriptionAr;
-
+        if (null !== $descriptionAr)
+        $this->updatedAt = new \DateTimeImmutable();
         return $this;
     }
 
@@ -219,7 +229,8 @@ class Product
     public function setPrice(float $price): self
     {
         $this->price = $price;
-
+        if (null !== $price)
+        $this->updatedAt = new \DateTimeImmutable();
         return $this;
     }
 
@@ -231,7 +242,8 @@ class Product
     public function setDiscountPrice(?float $discountPrice): self
     {
         $this->discountPrice = $discountPrice;
-
+        if (null !== $discountPrice)
+        $this->updatedAt = new \DateTimeImmutable();
         return $this;
     }
 
@@ -279,7 +291,8 @@ class Product
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
-
+        if (null !== $category)
+        $this->updatedAt = new \DateTimeImmutable();
         return $this;
     }
 
@@ -291,7 +304,8 @@ class Product
     public function setSubCategory(?SubCategory $subCategory): self
     {
         $this->subCategory = $subCategory;
-
+        if (null !== $subCategory)
+        $this->updatedAt = new \DateTimeImmutable();
         return $this;
     }
 
@@ -308,6 +322,7 @@ class Product
         if (!$this->images->contains($image)) {
             $this->images[] = $image;
             $image->setProduct($this);
+            $this->updatedAt = new \DateTimeImmutable();
         }
 
         return $this;
@@ -320,6 +335,7 @@ class Product
             if ($image->getProduct() === $this) {
                 $image->setProduct(null);
             }
+            $this->updatedAt = new \DateTimeImmutable();
         }
 
         return $this;
@@ -338,6 +354,7 @@ class Product
         if (!$this->catalogs->contains($catalog)) {
             $this->catalogs[] = $catalog;
             $catalog->setProduct($this);
+            $this->updatedAt = new \DateTimeImmutable();
         }
 
         return $this;
@@ -350,6 +367,7 @@ class Product
             if ($catalog->getProduct() === $this) {
                 $catalog->setProduct(null);
             }
+            $this->updatedAt = new \DateTimeImmutable();
         }
 
         return $this;
@@ -375,7 +393,8 @@ class Product
     public function setLongDescription(string $longDescription): self
     {
         $this->longDescription = $longDescription;
-
+        if (null !== $longDescription)
+        $this->updatedAt = new \DateTimeImmutable();
         return $this;
     }
 
@@ -387,7 +406,8 @@ class Product
     public function setLongDescriptionAr(string $longDescriptionAr): self
     {
         $this->longDescriptionAr = $longDescriptionAr;
-
+        if (null !== $longDescriptionAr)
+        $this->updatedAt = new \DateTimeImmutable();
         return $this;
     }
 
@@ -461,7 +481,8 @@ class Product
     public function setFabricType(?FabricType $fabricType): self
     {
         $this->fabricType = $fabricType;
-
+        if (null !== $fabricType)
+        $this->updatedAt = new \DateTimeImmutable();
         return $this;
     }
 
@@ -473,7 +494,8 @@ class Product
     public function setIsShow(bool $isShow): self
     {
         $this->isShow = $isShow;
-
+        if (null !== $isShow)
+        $this->updatedAt = new \DateTimeImmutable();
         return $this;
     }
 
@@ -507,5 +529,18 @@ class Product
         }else{
             return 'متوفر';
         }
+    }
+
+    public function getIsNew(): ?bool
+    {
+        return $this->isNew;
+    }
+
+    public function setIsNew(bool $isNew): self
+    {
+        $this->isNew = $isNew;
+        if (null !== $isNew)
+        $this->updatedAt = new \DateTimeImmutable();
+        return $this;
     }
 }

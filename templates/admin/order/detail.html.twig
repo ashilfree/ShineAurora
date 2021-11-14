@@ -75,9 +75,11 @@
                                         </div>
 
                                         <div class="col-sm-7 align-self-center">
-                                            <p class="inv-customer-name">{{ order.shippingFullName }}</p>
-                                            <p class="inv-street-addr">{{ order.shippingAddress ~'-'~ order.shippingCity ~'-'~ order.shippingProvince}}</p>
-                                            <p class="inv-email-address">{{ order.shippingEmail }}</p>
+                                            <p class="inv-customer-name"><span class="inv-title">Customer: </span>{{ order.shippingFullName }}</p>
+{#                                            <p class="inv-street-addr">{{ order.shippingAddress ~'-'~ order.shippingCity ~'-'~ order.shippingProvince}}</p>#}
+                                            <p class="inv-email-address"><span class="inv-title">Email: </span>{{ order.shippingEmail }}</p>
+                                            <p class="inv-email-address"><span class="inv-title">Address: </span>{{ order.shippingAddress }}</p>
+                                            <p class="inv-email-address"><span class="inv-title">Phone: </span>{{ order.shippingPhone }}</p>
                                         </div>
                                         <div class="col-sm-5 align-self-center  text-sm-right order-2">
                                             <p class="inv-list-number"><span class="inv-title">Invoice Number : </span> <span class="inv-number">[{{ order.reference }}]</span></p>
@@ -154,6 +156,14 @@
                                                     <div class="col-sm-4 col-5">
                                                         <p class="">{{ (order.total)/100 |number_format(2, '.', ',')~ currency }}</p>
                                                     </div>
+                                                    {% if order.discountValue %}
+                                                    <div class="col-sm-8 col-7">
+                                                        <p class="">Discount: </p>
+                                                    </div>
+                                                    <div class="col-sm-4 col-5">
+                                                        <p class="">-{{ order.discountValue|number_format(2, '.', ',')~ currency }}</p>
+                                                    </div>
+                                                    {% endif %}
                                                     <div class="col-sm-8 col-7">
                                                         <p class="">Delivery: </p>
                                                     </div>
@@ -164,7 +174,7 @@
                                                         <h4 class="">Grand Total : </h4>
                                                     </div>
                                                     <div class="col-sm-4 col-5 grand-total-amount">
-                                                        <h4 class="">{{ (order.total + order.deliveryPrice)/100 |number_format(2, '.', ',')~ currency }}</h4>
+                                                        <h4 class="">{{ (order.totalOrder)/100 |number_format(2, '.', ',')~ currency }}</h4>
                                                     </div>
                                                 </div>
                                             </div>

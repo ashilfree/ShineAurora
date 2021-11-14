@@ -48,6 +48,11 @@ class OrderDetails
      */
     private $total;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $catalogId;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -128,5 +133,17 @@ class OrderDetails
     public function __toString()
     {
 	    return $this->getProduct().' x'.$this->getQuantity();
+    }
+
+    public function getCatalogId(): ?int
+    {
+        return $this->catalogId;
+    }
+
+    public function setCatalogId(int $catalogId): self
+    {
+        $this->catalogId = $catalogId;
+
+        return $this;
     }
 }

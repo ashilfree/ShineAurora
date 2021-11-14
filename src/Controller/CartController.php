@@ -95,6 +95,7 @@ class CartController extends AbstractController
                 'categories' => $this->categoryRepository->findAll(),
                 'banner' =>$this->bannerRepository->findOneBy(['page'=>'Cart']),
                 'newsletterForm' => $newsletterType->createView(),
+                'coupon' => $this->cart->getCoupon(),
             ]);
         }
     }

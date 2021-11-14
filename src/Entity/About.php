@@ -85,7 +85,8 @@ class About
     public function setTitle(string $title): self
     {
         $this->title = $title;
-
+        if (null !== $title)
+        $this->updatedAt = new \DateTimeImmutable();
         return $this;
     }
 
@@ -97,7 +98,8 @@ class About
     public function setDescription(?string $description): self
     {
         $this->description = $description;
-
+        if (null !== $description)
+        $this->updatedAt = new \DateTimeImmutable();
         return $this;
     }
 
@@ -109,7 +111,8 @@ class About
     public function setBtnTitle(string $btnTitle): self
     {
         $this->btnTitle = $btnTitle;
-
+        if (null !== $btnTitle)
+        $this->updatedAt = new \DateTimeImmutable();
         return $this;
     }
 
@@ -121,7 +124,8 @@ class About
     public function setBtnTitleAr(string $btnTitleAr): self
     {
         $this->btnTitleAr = $btnTitleAr;
-
+        if (null !== $btnTitleAr)
+        $this->updatedAt = new \DateTimeImmutable();
         return $this;
     }
 
@@ -133,7 +137,8 @@ class About
     public function setBtnUrl(string $btnUrl): self
     {
         $this->btnUrl = $btnUrl;
-
+        if (null !== $btnUrl)
+        $this->updatedAt = new \DateTimeImmutable();
         return $this;
     }
 
@@ -145,7 +150,8 @@ class About
     public function setTitleAr(string $titleAr): self
     {
         $this->titleAr = $titleAr;
-
+        if (null !== $titleAr)
+        $this->updatedAt = new \DateTimeImmutable();
         return $this;
     }
 
@@ -157,7 +163,8 @@ class About
     public function setDescriptionAr(?string $descriptionAr): self
     {
         $this->descriptionAr = $descriptionAr;
-
+        if (null !== $descriptionAr)
+        $this->updatedAt = new \DateTimeImmutable();
         return $this;
     }
 

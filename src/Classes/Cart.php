@@ -47,6 +47,21 @@ class Cart
         return $this->session->get('cart2order');
     }
 
+    public function setCoupon(array $coup)
+    {
+        $this->session->set('coupon', $coup);
+    }
+
+    public function getCoupon()
+    {
+        return $this->session->get('coupon');
+    }
+
+    public function removeCoupon()
+    {
+        $this->session->remove('coupon');
+    }
+
     public function getDelivery()
     {
         return $this->session->get('delivery');
@@ -80,6 +95,23 @@ class Cart
             }
         }
         return $cartComplete;
+    }
+
+    public function getTotal()
+    {
+        $total = 0;
+        if (!empty($this->get())) {
+            foreach ($this->get() as $id => $quantity) {
+                $cartProduct = $this->catalogRepository->find($id);
+                if (!$cartProduct) {
+                    $this->delete($id);
+                    continue;
+                }
+                $total += ($cartProduct->getProduct()->getDiscountPrice() == 0.0 )? $cartProduct->getProduct()->getPrice()* $quantity:$cartProduct->getProduct()->getDiscountPrice()* $quantity;
+
+            }
+        }
+        return number_format($total/100, 2, '.', ' ');
     }
 
     public function remove()

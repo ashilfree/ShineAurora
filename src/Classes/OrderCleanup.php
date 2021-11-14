@@ -2,6 +2,9 @@
 
 namespace App\Classes;
 
+use App\Entity\Catalog;
+use App\Entity\Coupon;
+use App\Entity\Order;
 use App\Repository\CatalogRepository;
 use App\Repository\OrderRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -41,16 +44,38 @@ class OrderCleanup{
 
         $orders = $this->orderRepository->getOrdersToClean($date);
 
-
+        /**
+         * @var Order $order
+         */
         foreach ($orders as $order){
-            if($this->transaction->check($order, 'order_canceled2'))
+            if($this->transaction->check($order, 'order_canceled2')){
                 $this->transaction->applyWorkFlow($order, 'order_canceled2');
-            if($this->transaction->check($order, 'order_canceled'))
+                $order->setCancelledAt(new \DateTime());
+            }
+            if($this->transaction->check($order, 'order_canceled')){
                 $this->transaction->applyWorkFlow($order, 'order_canceled');
+                $order->setCancelledAt(new \DateTime());
+            }
             foreach ($order->getOrderDetails() as $orderDetail){
-                $catalog = $this->catalogRepository->findByProductName($orderDetail->getProduct(), $orderDetail->getSize());
-                $newQuantity = $catalog->getQuantity() + $orderDetail->getQuantity();
-                $catalog->setQuantity($newQuantity);
+                /**
+                 * @var Catalog $catalog
+                 */
+                $catalog = $this->catalogRepository->findByProductName($orderDetail->getCatalogId());
+
+                if($catalog) {
+                    if($catalog->getSize()->getName() == $orderDetail->getSize() && $catalog->getProduct()->getName() == $orderDetail->getProduct()) {
+                        $newQuantity = $catalog->getQuantity() + $orderDetail->getQuantity();
+                        $catalog->setQuantity($newQuantity);
+                    }
+                }
+            }
+            if($order->getDiscountValue() != 0){
+                /**
+                 * @var Coupon $coupon
+                 */
+                $coupon = $this->entityManager->getRepository(Coupon::class)->findByCode($order->getDiscountCode());
+                $quantity = $coupon->getUsersNumber();
+                $coupon->setUsersNumber($quantity+1);
             }
             $this->entityManager->flush();
         }
