@@ -1,3 +1,0 @@
-#!/bin/sh
-rsync -av ./ -e "ssh -i codeguard_sftp" shineaur@shineaurora.com:~/public_html/test --include=public/build --include=public/.htaccess --exclude-from=.gitignore --exclude=".*"  --exclude=.env
-ssh -i codeguard_sftp shineaur@shineaurora.com 'chmod 750 ~/public_html/test && chmod 755 ~/public_html/test/public && chmod 755 ~/public_html/test/public/assets && chmod 755 ~/public_html/test/public/build && chmod 755 ~/public_html/test/public/js && chmod 755 ~/public_html/test/public/media && chmod 755 ~/public_html/test/public/.htaccess && chmod 755 ~/public_html/test/public/index.php && cd ~/public_html/test && php bin/console cache:clear'
