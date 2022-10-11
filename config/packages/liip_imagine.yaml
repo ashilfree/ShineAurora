@@ -25,18 +25,14 @@ liip_imagine:
       quality: 75
       filters:
         relative_resize:
-
           # given 50x40px, output 75x60px using "heighten" option
           heighten: 500
-#        thumbnail:
-#          size: [ 438,438 ]
-#          mode: outbound
     small:
       quality: 75
       filters:
-        thumbnail:
-          size: [ 68, 85 ]
-          mode: outbound
+        relative_resize:
+          # given 50x40px, output 75x60px using "heighten" option
+          heighten: 100
     very_small:
       quality: 75
       filters:

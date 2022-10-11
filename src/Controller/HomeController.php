@@ -87,7 +87,7 @@ class HomeController extends AbstractController
     }
 
     /**
-     * @Route("/{locale}", name="home", defaults={"locale"="ar"})
+     * @Route("/{locale}", name="home", defaults={"locale"="en"})
      * @param $locale
      * @param Request $request
      * @return Response

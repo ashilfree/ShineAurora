@@ -3296,7 +3296,7 @@ button.li-btn:hover {
 @media (max-width: 575px) {
   .bg-4,
   .bg-5 {
-    min-height: 410px;
+    min-height: 250px;
   }
 }
 .bg-6,
@@ -4613,6 +4613,12 @@ button.li-btn:hover {
   background-position: center;
 }
 
+@media (max-width: 575px) {
+  .static-banner_area .static-banner-image {
+    min-height: 180px!important;
+  }
+}
+
 .static-banner_area .static-banner-image.static-banner-image-2 {
   background-image: url("../images/banner/static-banner-2.png");
 }
@@ -4629,6 +4635,13 @@ button.li-btn:hover {
 @media (max-width: 575px) {
   .static-banner_area .static-banner-content {
     padding-left: 30px;
+  }
+  .static-banner_area .static-banner-content > p {
+    padding-bottom: 5px!important;
+  }
+  .static-banner_area .static-banner-content > h2,
+  .static-banner_area .static-banner-content h3 {
+    padding-bottom: 5px!important;
   }
 }
 

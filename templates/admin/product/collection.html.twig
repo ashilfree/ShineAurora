@@ -6,7 +6,7 @@
     <span class="badge badge-secondary">{{ field.formattedValue }}</span>
 {% else %}
     {% if field.value.first %}
-    <img class="xzoom-gallery" width="80" src="{{ vich_uploader_asset(field.value.first, 'imageFile') }}" >
+    <img class="xzoom-gallery" width="80" src="{{ vich_uploader_asset(field.value.first, 'imageFile') | imagine_filter('medium') }}" >
         {% else %}
             <img class="xzoom-gallery" width="80" src="{{ '/media/images/no-image.png' }}" >
         {% endif %}

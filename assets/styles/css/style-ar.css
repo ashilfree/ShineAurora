@@ -53,7 +53,8 @@ INDEX:
 @import url("https://fonts.googleapis.com/css?family=Dancing+Script:400,700|Lato:300,300i,400,400i,700,700i,900,900i|Pacifico");
 /*@font-face{font-family:hm sans regular;src:url(fonts/HMSans-Regular.woff2) format("woff2"),url(fonts/HMSans-Regular.woff) format("woff");font-weight:400;font-style:normal;font-display:swap}*/
 /*@font-face{font-family:mulish;src:url(fonts/mulish.ttf) format("ttf");font-weight:400;font-style:normal;font-display:swap}*/
-@import url('https://fonts.googleapis.com/css2?family=Mulish&display=swap');
+/*@import url('https://fonts.googleapis.com/css2?family=Mulish&display=swap');*/
+@font-face{font-family:Mulish;src:url(fonts/HMSansArabic-Regular.woff2?jAKPu) format("woff2"),url(fonts/HMSansArabic-Regular.woff?jAKPu) format("woff");font-weight:400;font-style:normal;font-display:swap}
 /*----------------------------------------*/
 /*  00 - Base - Typography
 /*----------------------------------------*/
@@ -74,7 +75,7 @@ h6 {
   font-family: 'Mulish', "Lato", sans-serif;
   color: #333333;
   line-height: 1;
-  font-weight: 700;
+  font-weight: 400;
 }
 
 p {
@@ -1151,7 +1152,7 @@ button, .global-overlay, .quantity .cart-plus-minus > .qtybutton, .popup_wrapper
 
 .popup_wrapper .subscribe_area > h2 {
   color: #333333;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 30px;
   width: 450px;
   text-transform: capitalize;
@@ -1213,7 +1214,7 @@ button, .global-overlay, .quantity .cart-plus-minus > .qtybutton, .popup_wrapper
 }
 
 .popup_wrapper .subscribe_area .subscribe-form-group form.subscribe-form button {
-  font-weight: 700;
+  font-weight: 400;
   background: #bcbdc2;
   color: #333333;
   top: 0;
@@ -2959,7 +2960,7 @@ button.li-btn:hover {
   width: 150px;
   height: 40px;
   line-height: 38px;
-  font-weight: 600;
+  font-weight: 400;
   border: 0;
 }
 
@@ -3029,7 +3030,7 @@ button.li-btn:hover {
 .fb-filter-btn_area .hiraola-filter_btn:before {
   content: "\f00d";
   font-family: 'Mulish', 'Font Awesome 5 Free';
-  font-weight: 600;
+  font-weight: 400;
   padding-right: 10px;
 }
 
@@ -3076,7 +3077,7 @@ button.li-btn:hover {
 }
 
 .hiraola-slider_area .main-slider .slider-content > h5 {
-  font-weight: 500;
+  font-weight: 400;
   text-transform: capitalize;
   margin-bottom: 0;
   padding-bottom: 12px;
@@ -3155,7 +3156,7 @@ button.li-btn:hover {
 }
 
 .hiraola-slider_area-2 .main-slider .slider-content > h5 {
-  font-weight: 500;
+  font-weight: 400;
   text-transform: capitalize;
   margin-bottom: 0;
   padding-bottom: 7px;
@@ -3300,7 +3301,7 @@ button.li-btn:hover {
 @media (max-width: 575px) {
   .bg-4,
   .bg-5 {
-    min-height: 410px;
+    min-height: 250px;
   }
 }
 .bg-6,
@@ -3868,7 +3869,7 @@ button.li-btn:hover {
 
 .offcanvas-navigation .mobile-menu > li > a span {
   position: relative;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 .offcanvas-navigation .mobile-menu li {
@@ -3978,7 +3979,7 @@ button.li-btn:hover {
 
 .offcanvas-menu_wrapper .offcanvas-menu-inner .offcanvas-component .offcanvas-component_title {
   font-size: 16px;
-  font-weight: 900;
+  font-weight: 400;
   display: block;
   padding-bottom: 15px;
   text-transform: uppercase;
@@ -4271,7 +4272,7 @@ button.li-btn:hover {
 .category-menu .category-heading > h2:after {
   content: "\f03c";
   font-family: 'Mulish', 'Font Awesome 5 Free';
-  font-weight: 600;
+  font-weight: 400;
   position: absolute;
   top: 18px;
   left: 20px;
@@ -4286,7 +4287,7 @@ button.li-btn:hover {
 .category-menu .category-heading > h2 > span {
   color: #ffffff;
   padding-left: 50px;
-  font-weight: 600;
+  font-weight: 400;
 }
 
 @media (max-width: 1199px) {
@@ -4343,7 +4344,7 @@ button.li-btn:hover {
 .category-menu .category-menu-list > ul > li.right-menu > a::after {
   content: '\f078';
   font-family: 'Mulish', 'Font Awesome 5 Free';
-  font-weight: 600;
+  font-weight: 400;
   font-size: 12px;
   position: absolute;
   top: 15px;
@@ -4426,7 +4427,7 @@ button.li-btn:hover {
 }
 
 .cat-mega-menu > li.cat-mega-title > a {
-  font-weight: 600;
+  font-weight: 400;
   text-transform: uppercase;
   font-size: 16px;
   margin-bottom: 15px;
@@ -4617,6 +4618,12 @@ button.li-btn:hover {
   background-position: center;
 }
 
+@media (max-width: 575px) {
+  .static-banner_area .static-banner-image {
+    min-height: 180px!important;
+  }
+}
+
 .static-banner_area .static-banner-image.static-banner-image-2 {
   background-image: url("../images/banner/static-banner-2.png");
 }
@@ -4633,6 +4640,13 @@ button.li-btn:hover {
 @media (max-width: 575px) {
   .static-banner_area .static-banner-content {
     padding-left: 30px;
+  }
+  .static-banner_area .static-banner-content > p {
+    padding-bottom: 5px!important;
+  }
+  .static-banner_area .static-banner-content > h2,
+  .static-banner_area .static-banner-content h3 {
+    padding-bottom: 5px!important;
   }
 }
 
@@ -4655,7 +4669,7 @@ button.li-btn:hover {
 .static-banner_area .static-banner-content > p.schedule span {
   font-size: 24px;
   color: #ea3a3c;
-  font-weight: 500;
+  font-weight: 400;
 }
 
 .static-banner_area .static-banner-content > h2,
@@ -5033,7 +5047,7 @@ button.li-btn:hover {
 
 .hiraola-countdown .count span.count-amount {
   display: block;
-  font-weight: 700;
+  font-weight: 400;
   color: #333333;
   font-size: 24px;
 }
@@ -5236,7 +5250,7 @@ button.li-btn:hover {
 .hiraola-product-tab_area-2 .product-tab > ul.product-menu > li > a,
 .hiraola-product-tab_area-3 .product-tab > ul.product-menu > li > a,
 .hiraola-product-tab_area-4 .product-tab > ul.product-menu > li > a {
-  font-weight: 700;
+  font-weight: 400;
   text-transform: uppercase;
   padding: 0 30px;
   position: relative;
@@ -5729,7 +5743,7 @@ button.li-btn:hover {
 }
 
 .breadcrumb-area .breadcrumb-content > h2 {
-  font-weight: 700;
+  font-weight: 400;
   color: #ffffff;
   text-transform: uppercase;
   text-align: center;
@@ -5758,7 +5772,7 @@ button.li-btn:hover {
 .breadcrumb-area .breadcrumb-content ul > li:before {
   content: "\f053";
   font-family: 'Mulish', 'Font Awesome 5 Free';
-  font-weight: 600;
+  font-weight: 400;
   position: absolute;
   left: -15px;
   top: 2px;
@@ -6225,7 +6239,7 @@ button.li-btn:hover {
 
 .header-bottom_area .main-menu_area > nav > ul > li.megamenu-holder > ul > li > span.megamenu-title {
   font-size: 18px;
-  font-weight: 700;
+  font-weight: 400;
   text-transform: uppercase;
   display: block;
   padding-bottom: 15px;
@@ -6244,7 +6258,7 @@ button.li-btn:hover {
 }
 
 .header-bottom_area .main-menu_area > nav > ul > li > a {
-  font-weight: 700;
+  font-weight: 400;
   color: #ffffff;
   display: block;
   padding: 18px 0;
@@ -7462,7 +7476,7 @@ button.li-btn:hover {
 }
 
 .sp-area .sp-nav .sp-content .sp-essential_stuff > ul > li {
-  font-weight: 700;
+  font-weight: 400;
 }
 
 .sp-area .sp-nav .sp-content .sp-essential_stuff > ul > li > a {
@@ -7983,7 +7997,7 @@ button.li-btn:hover {
   width: 100%;
   display: block;
   font-size: 28px;
-  font-weight: 700;
+  font-weight: 400;
 }
 
 .blog-item .blog-content {
@@ -8155,7 +8169,7 @@ button.li-btn:hover {
 
 .hiraola-blog-sidebar-wrapper .hiraola-blog-sidebar .hiraola-blog-sidebar-title {
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 400;
   line-height: 20px;
   text-transform: uppercase;
   position: relative;
@@ -8205,7 +8219,7 @@ button.li-btn:hover {
 .hiraola-blog-sidebar-wrapper .hiraola-blog-sidebar .hiraola-recent-post .hiraola-recent-post-des span {
   display: block;
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 400;
   text-transform: capitalize;
 }
 
@@ -8475,7 +8489,7 @@ button.li-btn:hover {
 
 .hiraola-blog-details .hiraola-tag-line h4 {
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 400;
   text-transform: capitalize;
   display: inline-block;
   padding-right: 5px;
@@ -8508,7 +8522,7 @@ button.li-btn:hover {
 
 .hiraola-blog-details .hiraola-comment-section h3 {
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 400;
   padding-bottom: 25px;
   text-transform: uppercase;
   margin-bottom: 0;
@@ -8558,7 +8572,7 @@ button.li-btn:hover {
 
 .hiraola-blog-details .hiraola-comment-section ul li .comment-body h5 {
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 400;
   padding-bottom: 13px;
   margin-bottom: 0;
   text-transform: capitalize;
@@ -8626,7 +8640,7 @@ button.li-btn:hover {
 
 .hiraola-blog-details .hiraola-blog-comment-wrapper h3 {
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 400;
   padding: 0 0 26px;
   text-transform: uppercase;
   border-bottom: 1px solid #e5e5e5;
@@ -8639,7 +8653,7 @@ button.li-btn:hover {
 }
 
 .hiraola-blog-details .hiraola-blog-comment-wrapper form .comment-post-box label {
-  font-weight: 600;
+  font-weight: 400;
   margin-bottom: 25px;
   display: block;
   text-transform: capitalize;
@@ -8724,7 +8738,7 @@ button.li-btn:hover {
   background: #595959;
   color: #ffffff;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: 400;
   padding: 10px 20px;
 }
 
@@ -8909,7 +8923,7 @@ button.li-btn:hover {
   font-size: 20px;
   line-height: 23px;
   text-transform: capitalize;
-  font-weight: 700;
+  font-weight: 400;
   margin-bottom: 0;
   padding-bottom: 20px;
 }
@@ -8918,7 +8932,7 @@ button.li-btn:hover {
   display: block;
   font-size: 14px;
   margin-bottom: 12px;
-  font-weight: 500;
+  font-weight: 400;
   text-transform: capitalize;
 }
 
@@ -8979,7 +8993,7 @@ button.li-btn:hover {
   display: block;
   content: "\f00c";
   font-family: 'Mulish', 'Font Awesome 5 Free';
-  font-weight: 600;
+  font-weight: 400;
   font-size: 12px;
   line-height: 20px;
   opacity: 0;
@@ -9062,7 +9076,7 @@ button.li-btn:hover {
   text-transform: capitalize;
   padding: 20px 10px;
   text-align: center;
-  font-weight: 500;
+  font-weight: 400;
   vertical-align: middle;
 }
 
@@ -9097,7 +9111,7 @@ button.li-btn:hover {
 
 .table-content table td.hiraola-product_remove > a > i {
   font-size: 14px;
-  font-weight: 600;
+  font-weight: 400;
   -webkit-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
@@ -9105,13 +9119,13 @@ button.li-btn:hover {
 
 .table-content table td.hiraola-product-name {
   font-size: 16px;
-  font-weight: 500;
+  font-weight: 400;
   text-transform: capitalize;
 }
 
 .table-content table td.hiraola-product-price {
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 400;
 }
 
 .table-content table td.hiraola-product-stock-status span.in-stock, .table-content table td.hiraola-product-stock-status span.out-stock {
@@ -9132,7 +9146,7 @@ button.li-btn:hover {
   height: 40px;
   line-height: 43px;
   width: 130px;
-  font-weight: 700;
+  font-weight: 400;
   display: inline-block;
 }
 
@@ -9150,7 +9164,7 @@ button.li-btn:hover {
 
 .table-content table td.product-subtotal {
   font-size: 16px;
-  font-weight: 700;
+  font-weight: 400;
 }
 
 .table-content table td.quantity .cart-plus-minus {
@@ -9189,7 +9203,7 @@ button.li-btn:hover {
   color: #ffffff;
   display: inline-block;
   font-size: 13px;
-  font-weight: 700;
+  font-weight: 400;
   cursor: pointer;
   height: 42px;
   letter-spacing: 1px;
@@ -9224,7 +9238,7 @@ button.li-btn:hover {
 
 .cart-page-total > h2 {
   font-size: 25px;
-  font-weight: 700;
+  font-weight: 400;
   margin-bottom: 20px;
   text-transform: capitalize;
 }
@@ -9238,7 +9252,7 @@ button.li-btn:hover {
   font-size: 15px;
   padding: 10px 30px;
   border-bottom: 1px solid #e5e5e5;
-  font-weight: 700;
+  font-weight: 400;
 }
 
 .cart-page-total > ul li:last-child {
@@ -9290,7 +9304,7 @@ button.li-btn:hover {
   content: "\f133";
   display: inline-block;
   font-family: 'Mulish', 'Font Awesome 5 Free';
-  font-weight: 600;
+  font-weight: 400;
   left: 24px;
   position: absolute;
   top: 16px;
@@ -9322,7 +9336,7 @@ button.li-btn:hover {
 
 .coupon-accordion .coupon-content .coupon-info p.form-row-first label span.required, .coupon-accordion .coupon-content .coupon-info p.form-row-last label span.required {
   color: #ff0000;
-  font-weight: 700;
+  font-weight: 400;
 }
 
 .coupon-accordion .coupon-content .coupon-info p.form-row-first input, .coupon-accordion .coupon-content .coupon-info p.form-row-last input {
@@ -9634,7 +9648,7 @@ button.li-btn:hover {
 }
 
 .payment-method .payment-accordion .panel-title {
-  font-weight: 600;
+  font-weight: 400;
   font-size: 18px;
   cursor: pointer;
 }
@@ -9648,7 +9662,7 @@ button.li-btn:hover {
   border: medium none;
   color: #ffffff;
   font-size: 17px;
-  font-weight: 600;
+  font-weight: 400;
   height: 50px;
   margin: 20px 0 0;
   padding: 0;
@@ -9712,7 +9726,7 @@ button.li-btn:hover {
 
 .compare-table .table tbody tr td .compare-product-name {
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 400;
   margin-bottom: 0;
 }
 
@@ -9788,7 +9802,7 @@ button.li-btn:hover {
 .contact-main-page .contact-page-title {
   font-size: 32px;
   line-height: 32px;
-  font-weight: 500;
+  font-weight: 400;
   margin-bottom: 0;
   padding-bottom: 20px;
 }
@@ -9849,7 +9863,7 @@ button.li-btn:hover {
   display: inline-block;
   padding: 16px 30px;
   border-radius: 3px;
-  font-weight: 500;
+  font-weight: 400;
   font-size: 12px;
   background-color: #595959;
   border: 1px solid #595959;
@@ -9873,7 +9887,7 @@ button.li-btn:hover {
 
 .about-us-area .overview-content > h2 {
   font-size: 32px;
-  font-weight: 500;
+  font-weight: 400;
   margin-bottom: 25px;
   padding-bottom: 20px;
   position: relative;
@@ -10140,7 +10154,7 @@ button.li-btn:hover {
 .frequently-area .frequently-accordion .card-header a.collapsed:before {
   content: "\f067";
   font-family: 'Mulish', 'Font Awesome 5 Free';
-  font-weight: 600;
+  font-weight: 400;
   position: absolute;
   right: 15px;
   top: 15px;
@@ -10156,7 +10170,7 @@ button.li-btn:hover {
 .frequently-area .frequently-accordion .card-header a:after {
   content: "\f068";
   font-family: 'Mulish', 'Font Awesome 5 Free';
-  font-weight: 600;
+  font-weight: 400;
   position: absolute;
   right: 15px;
   top: 15px;
@@ -10306,7 +10320,7 @@ button.li-btn:hover {
 .comming-soon-area .comming-soon-wrap .comming-soon-top > h3 {
   color: #fff;
   font-size: 30px;
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: 12px;
   line-height: 1;
   margin: 58px 0 41px;
@@ -10385,7 +10399,7 @@ button.li-btn:hover {
 .subscribe-area > h4 {
   color: #fff;
   font-size: 18px;
-  font-weight: 500;
+  font-weight: 400;
   letter-spacing: 3px;
   margin: 0 0 14px;
 }
@@ -10416,7 +10430,7 @@ button.li-btn:hover {
   border-radius: 50px;
   color: #e0e0e0;
   cursor: pointer;
-  font-weight: 700;
+  font-weight: 400;
   padding: 2px 40px 2px 30px;
   width: auto;
 }
